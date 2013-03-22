@@ -1,0 +1,11 @@
+/uploads/*
+tags
+*.swp
+*.swo
+*.pyc
+agencia-ssl
+alternativa/ambiente.py
+.coverage
+collectedstatic/
+alternativa/static/bootstrap/
+django.mo

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{%block quienes_somos_active%}active{%endblock%}
+
+{% block content %}
+
+  <h1>{% trans "Quiénes Somos" %}</h1>
+
+  <p>
+    {%blocktrans with url_jsg="http://ar.linkedin.com/pub/sebastian-goldberg/a/48a/589" %}
+    IamSoft es una joven empresa fundada por <a href={{url_jsg}}>Juan Sebastián Goldberg</a>, desempeñada en el desarrollo de aplicaciones informáticas.
+    {%endblocktrans%}
+  </p>
+  <p>
+    {% trans "Las areas de desempeño de la empresa son:" %}
+    <ul>
+      <li>{% trans "Consultoría técnica SAP (ABAP)" %}</li>
+      <li>{% trans "Desarrollo de aplicaciones WEB (Linux/MySQL/Python/Django)" %}</li>
+    </ul>
+  </p>
+
+
+{% endblock %}

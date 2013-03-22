@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{%block home_active%}active{%endblock%}
+
+{% block content %}
+
+  {% block hero %}
+    <div class="hero-unit">
+      {%comment%}
+      <div class='row'>
+      <div class='thumbnail span2'>
+        <img src='{{agencia.logo.url}}'/>
+      </div>
+      <div class='span9'>
+      {%endcomment%}
+        {% include 'hero.html'%}
+
+        <h2>IamSoft, calidad en desarrollo de software</h2>
+        <p>Usted tiene una idea, o una necesidad, pero no sabe como implementarla... nosotros sabemos, y lo hacemos bien.</p>
+        <p>
+          <a href="/iamcast/" class="btn btn-success btn-large">{% trans "Conozca IamCast la solución para agencias de casting" %} &raquo;</a>
+        </p>
+      {%comment%}</div>{%endcomment%}
+    </div>
+  {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{%block home_active%}active{%endblock%}
+
+{% block content %}
+
+<div class='row'>
+
+  <div class='span12 page-header'>
+  <h1>IamCast <small>La solución para su agencia</small></h1>
+  </div>
+</div>
+
+<div class='row'>
+<div class='span9'>
+
+<div id="myCarousel" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-01.jpg" alt="">
+      <div class="carousel-caption">
+        <h4>First Thumbnail label</h4>
+        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-02.jpg" alt="">
+      <div class="carousel-caption">
+        <h4>Second Thumbnail label</h4>
+        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-03.jpg" alt="">
+      <div class="carousel-caption">
+        <h4>Third Thumbnail label</h4>
+        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      </div>
+    </div>
+  </div>
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+
+  <h2 id='introduccion'>{% trans "Introducción" %}</h2>
+  <p>{% trans "IamCast es una aplicación WEB que tiene como objetivo satisfacer la necesidad de las agencias de casting de tener control sobre:" %}</p>
+  <ul>
+    <li>{% trans "El Manejo de la información" %}</li>
+    <li>{% trans "Los Procesos de búsqueda de perfiles" %}</li>
+    <li>{% trans "La Publicación de la información" %}</li>
+  </ul>
+
+  <h2 id='manejo_de_la_informacion'>{% trans "Manejo de la Información" %}</h2>
+  <p>{% trans "El manejo de la información dentro de una agencia de casting debe ser tomado seriamente. Es muy común dejar anotaciones de nombres, telefonos y otros datos, tanto de agenciados, como de productoras y trabajos, en libretas, papeles y cuadernos. Hay varias desventajas en manejarse de esta forma: " %}</p>
+  <ul>
+    <li>{% trans "Es complicado realizar busquedas dentro de la información almacenada de esta forma." %}</li>
+    <li>{% trans "La información no es accesible desde cualquier lugar." %}</li>
+    <li>{% trans "Lleva mucho tiempo reproducir/copiar la información." %}</li>
+    <li>{% trans "En equipos de trabajo, se torna complicada la colaboración." %}</li>
+    <li>{% trans "Muchas veces se trabaja con información desactualizada." %}</li>
+  </ul>
+  <p>{% trans "La aplicación IamCast ofrece la posibilidad de guardar la información en forma centralizada y segura, de forma que la misma sea consistente y su acceso sea simple." %}</p>
+
+  <h3 id='que_se_puede_guardar'>{% trans "¿Qué se puede guardar?" %}</h3>
+  <p>{% trans "La información que se puede guardar en IamCast es la siguiente:" %}</p>
+  <ul>
+    <li>{% trans "Perfil de sus agenciados (incluyendo fotos y videos de youtube)" %}</li>
+    <li>{% trans "Productoras" %}</li>
+    <li>{% trans "Trabajos (por cada trabajo se se pueden tener varios perfiles buscados)" %}</li>
+    <li>{% trans "Portfolio (por cada item del portfolio se puede asociar una foto y/o video de youtube)" %}</li>
+  </ul>
+
+  <h3 id='como_se_guarda_la_informacion'>{% trans "¿Cómo se guarda la información?" %}</h3>
+  <p>{% trans "Existen dos formas para guardar la información:" %}</p>
+  <ul>
+    <li>{% trans "Modulo de administración:" %}
+    <ul>
+      <li>{% trans "A este módulo solo pueden acceder los integrantes de la agencia (agenciadores)." %}</li> 
+      <li>{% trans "Desde el mismo, además de poder administrar agenciados, productoras y trabajos, también se pueden administrar grupos, usuarios y permisos." %}</li>
+    </ul>
+    <li>{% trans "Página web estándar:" %}</li> 
+    <ul>
+      <li>{% trans "Desde la página web usted podrá captar agenciados. Los mismos podrán registrarse y completar su perfil online." %}</li>
+      <li>{% trans "Luego, desde el módulo de administración, usted podrá activar los agenciados en los cuales tenga interés." %}</li>
+      <li>{% trans "Tambien se verán publicados datos de la agencia, trabajos activos (cada trabajo con sus perfiles buscados) y portfolio." %}</li>
+    </ul>
+  </ul>
+
+  <h2 id='procesos_de_busqueda_de_perfiles'>{% trans "Procesos de búsqueda de perfiles" %}</h2>
+  <p>{% trans "Una vez que usted tenga en su sistema agenciados, productoras y trabajos (cada trabajo con sus respectivos perfiles buscados), usted podrá postular agenciados a cada perfil buscado. " %}</p>
+  <p>{% trans "Para poder llevar a cabo esta tarea, en el módulo de administración dispondrá de un listado de agenciados en el cual podrá aplicar filtros por características físicas, habilidades, ubicación geográfica, fecha de nacimiento, etc." %}</p>
+  <p>{% trans "Luego de aplicar los filtros correspondientes, usted podrá seleccionar agenciados y postularlos a alguno de los perfiles buscados." %}</p>
+  <p>{% trans "Una vez que haya terminado el proceso de postulación para cada perfil buscado de un mismo trabajo, podrá realizar el envío de mail automático a la productora solicitante del trabajo." %}</p>
+  <p>{% trans "En dicho mail aparecerá información correspondiente al trabajo, y de cada perfil buscado en dicho trabajo, junto con las postulaciones de agenciados. Por cada agenciado postulado se mostrará: foto, nombre y apellido, fecha de nacimiento." %}</p>
+  <p>{% trans "A medida que se avance en las distintas etapas de un trabajo, se podrá:" %}</p>
+  <ul>
+    <li>{% trans "Agregar y quitar postulaciones." %}</li>
+    <li>{% trans "Modificar estado de postulaciones." %}</li>
+    <li>{% trans "Agregar eventos a trabajos y/o perfiles." %}</li>
+  </ul>
+
+  <h2 id='publicacion_en_pagina_estandar'>{% trans "Publicación en página estándar" %}</h2>
+  <p>{% trans "En la pagina estándar usted podrá tener publicada la siguiente información:" %}</p>
+  <ul>
+    <li>{% trans "Información de contacto de su agencia" %}</li>
+    <li>{% trans "Trabajos y perfiles buscados por cada trabajo" %}</li>
+    <li>{% trans "Portfolio" %}</li>
+  </ul>
+  <p>{% trans "Por otro lado, no solo tendrá información publicada, sino que podrá:" %}</p>
+  <ul>
+    <li>{% trans "Captar nuevos agenciados que se registren y completen su perfil a través de la página." %}</li>
+    <li>{% trans "Autogestión por parte del agenciado de forma que siempre tenga su perfil actualizado." %}</li>
+    <li>{% trans "La posibilidad que cada agenciado se autopostule para una busqueda de perfil en particular." %}</li>
+  </ul>
+
+  <h2 id='beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</h2>
+  <h3 id='aspectos_clave'>{% trans "Aspectos Clave" %}</h3>
+  <ul>
+    <li>{% trans "Estandarización en la forma que se guarda la información." %}</li>
+    <li>{% trans "Estandarización en los procesos de búsqueda de perfiles." %}</li>
+    <li>{% trans "Automatización de tareas frecuentes." %}</li>
+    <li>{% trans "Autogestión del perfil del agenciado (no pierda tiempo y dinero, deje que sus agenciados actualicen su perfil)." %}</li>
+    <li>{% trans "Integración del agenciado en el proceso de selección." %}</li>
+    <li>{% trans "Información centralizada." %}</li>
+    <li>{% trans "Consistencia de datos." %}</li>
+    <li>{% trans "Manejo de grupos de usuarios, usuarios y grupos, para restringir el acceso a la información." %}</li>
+    <li>{% trans "Acceso a la aplicación desde cualquier computadora con conexión a internet." %}</li>
+    <li>{% trans "Conexión encriptada a la aplicación" %}</li>
+    <li>{% trans "Subdominio de iamsoft.com.ar (ejemplo: su-agencia.iamsoft.com.ar)" %}</li>
+  </ul>
+
+  <h3 id='aspectos_opcionales'>{% trans "Aspectos Opcionales" %}</h3>
+  <ul>
+    <li>{% trans "Uso de su propio dominio." %}</li>
+    <li>{% trans "Conexión encriptada con certificado de seguridad para su propio dominio." %}</li>
+    <li>{% trans "Utilización de servidor propio." %}</li>
+    <li>{% trans "Adaptación de la aplicación a requerimientos específicos del cliente." %}</li>
+  </ul>
+
+  <h2 id='como_hago_para_empezar'>{% trans "¿Cómo hago para empezar a utilizar IamCast?" %}</h2>
+  <p>{% trans "Para comenzar a utilizar IamCast, el proceso es casi inmediato. Los pasos a seguir son los siguientes:" %}</p>
+  <ul>
+    <li>{% trans "Completar el formulario de registro de agencia." %}</li>
+    <li>{% trans "Realizar la suscripción por el período seleccionado." %}</li>
+    <li>{% trans "En forma automática se generán los módulos para administrar su agencia y la página web estándar." %}</li>
+    <li>{% trans "Luego de la generación se enviará un e-mail a su casilla con nombre de usuario y clave del super usuario de su módulo de administración." %}</li>
+    <li>{% trans "Comenzar a utilizar la aplicación y sacar el máximo provecho." %}</li>
+  </ul>
+
+  <p>
+    <a href="/iamcast/contratar/" class="btn btn-success btn-large">Contratar y comenzar a utilizar &raquo;</a>
+  </p>
+
+  {%comment%}
+  <h2>{% trans "" %}</h2>
+  <p>{% trans "" %}</p>
+  <ul>
+    <li>{% trans "" %}</li>
+  </ul>
+  {%endcomment%}
+
+</div>
+
+<div class='span3'>
+  <ul class='nav nav-list'>
+    <li><a href='#introduccion'>{% trans "Introduccion" %}</a></li>
+    <li><a href='#manejo_de_la_informacion'>{% trans "Manejo de la Información" %}</a></li>
+    <ul class='nav nav-list'>
+      <li><a href='#que_se_puede_guardar'>{% trans "¿Qué se puede guardar?" %}</a></li>
+      <li><a href='#como_se_guarda_la_informacion'>{% trans "¿Cómo se guarda la información?" %}</a></li>
+    </ul>
+    <li><a href='#procesos_de_busqueda_de_perfiles'>{% trans "Procesos de búsqueda de perfiles" %}</a></li>
+    <li><a href='#publicacion_en_pagina_estandar'>{% trans "Publicación en página estándar" %}</a></li>
+    <li><a href='#beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</a></li>
+    <ul class='nav nav-list'>
+      <li><a href='#aspectos_clave'>{% trans "Aspectos Clave" %}</a></li>
+      <li><a href='#aspectos_opcionales'>{% trans "Aspectos Opcionales" %}</a></li>
+    </ul>
+    <li><a href='#como_hago_para_empezar'>{% trans "¿Cómo hago para empezar a utilizar IamCast?" %}</a></li>
+  </ul>
+  <hr/>
+  <a href="/iamcast/contratar/" class="btn btn-success">Contratar y comenza a utilizar &raquo;</a>
+</div>
+
+</div>
+{% endblock %}
