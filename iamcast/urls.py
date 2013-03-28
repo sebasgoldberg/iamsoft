@@ -16,5 +16,8 @@ urlpatterns = patterns('iamcast.views',
     # Uncomment the next line to enable the admin:
     url(r'^$', 'index'),
     url(r'^contratar/$', 'contratar'),
+    url(r'^configurar/$', 'configurar'),
+    url(r'^notificacion/pago/mp/$', 'notificacion_pago'),
+    #url(r'^resultado/creacion/agencia/$', 'resultado_creacion_agencia'),
 )
 

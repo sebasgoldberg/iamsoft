@@ -1,0 +1,125 @@
+{% load i18n %}
+
+<style type="text/css">
+  .contenedor_imagen_carousel_admin {
+    height:450px;
+    text-align:center;
+    background-color: #888;
+  };
+</style>
+
+{%with id_carousel="carousel_admin"%}
+<div id="{{id_carousel}}" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#{{id_carousel}}" data-slide-to="0" class="active"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="1"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="2"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="3"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="4"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="5"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="6"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="7"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="8"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="9"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="10"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="11"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="12"></li>
+    <li data-target="#{{id_carousel}}" data-slide-to="13"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="item active">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/acceso.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Acceso al Módulo de Administración" %}</h4>
+        <p>{% trans "El acceso al modulo de administración solo lo pueden realizar usuarios que pertenezcan al staff de la agencia. Este acceso, así como toda la información que se envía o recibe de la aplicación, se realiza en forma encriptada de forma de resguardar la información de su agencia." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/inicio.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Inicio del Módulo de Administración" %}</h4>
+        <p>{% trans "En el inicio del módulo de administración podrá encontrar un menu dividido en paquetes. Cada paquete contendrá varias entradas de menú que referencian cada una al listado de un tipo objeto en particular. También se muestra un listado con las últimas acciones realizadas." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/agencia.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Datos de su Agencia" %}</h4>
+        <p>{% trans "Los datos de su agencia podrá modificarlos desde el módulo de administración. Dichas modificaciones se verán actualizadas en forma inmediata en la información de contacto publicada en la página y las firmas de los e-mails generados en forma automática" %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/agenciados.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Listado de Agenciados" %}</h4>
+        <p>{% trans "Contará con un listado de sus agenciados. En este listado usted podrá realizar búsquedas y aplicar distinto tipo de filtros." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/agenciado.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Perfil por Agenciado" %}</h4>
+        <p>{% trans "Podrá acceder al perfil de cada agenciado, en donde podrá encontrar toda la información relativa al mismo. Además tendrá disponible un listado de las postulaciones de dicho agenciado." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/trabajos.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Listado de Trabajos" %}</h4>
+        <p>{% trans "Contará con un listado de sus trabajos. En este listado podrá realizar búsquedas y aplicar distinto tipo de filtros." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/trabajo.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Información por Trabajo" %}</h4>
+        <p>{% trans "Podrá acceder y editar la información de cada trabajo. Podrá encontrar información relativa al trabajo, eventos del mismo y perfiles buscados en cada trabajo." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/seleccion_agenciados_perfil.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Postular Agenciados a Perfil Buscado en Trabajo (1/2)" %}</h4>
+        <p>{% trans "En el listado de agenciados, podrá seleccionar los agenciados que desea postular a un determinado perfil buscado." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/agregar_agenciados_perfil_confirmacion.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Postular Agenciados a Perfil Buscado en Trabajo (2/2)" %}</h4>
+        <p>{% trans "Luego podrá seleccionar el perfil buscado en cual desea postular los agenciados seleccionados. Así mismo podrá seleccionar el estado de dicha postulación" %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/perfil_buscado.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Información por Perfil Buscado de Trabajo" %}</h4>
+        <p>{% trans "Podrá acceder y actualizar la información de cada perfil buscado. Dentro del perfil buscado podrá encontrar la información principal, eventos y el listado de agenciados postulados a dicho perfil (cada uno con su estado de postulación)" %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/envio_email_trabajo.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Envío de Trabajo por e-mail Generado en Forma Automática" %}</h4>
+        <p>{% trans "Una vez que ya haya realizado las postulaciones correspondientes podrá generar un mail en forma automática con toda la información del trabajo, los perfiles buscados y las postulaciones por cada perfil buscado. En cada postulación se mostrarán fotos, nombre y apellido, y fecha de nacimiento, por agenciado." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/portfolio.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Portfolio" %}</h4>
+        <p>{% trans "Contará con un listado de los items de su portfolio en el que podrá realizar búsquedas y visualizar en forma inmediata videos y fotos." %}</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="contenedor_imagen_carousel_admin"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/item_portfolio.jpg" alt=""></div>
+      <div class="carousel-caption">
+        <h4>{% trans "Item de Portfolio" %}</h4>
+        <p>{% trans "Podrá acceder y actualizar cada item de su portfolio indicando un video y una foto, junto con la fecha de realización del trabajo y una descripción del mismo" %}</p>
+      </div>
+    </div>
+  </div>
+  <a class="left carousel-control" href="#{{id_carousel}}" data-slide="prev">&lsaquo;</a>
+  <a class="right carousel-control" href="#{{id_carousel}}" data-slide="next">&rsaquo;</a>
+</div>
+{%endwith%}

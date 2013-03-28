@@ -9,9 +9,7 @@ CRISPY_FAIL_SILENTLY = not DEBUG
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
+ADMINS = ambiente.admins
 
 MANAGERS = ADMINS
 
@@ -156,6 +154,7 @@ INSTALLED_APPS = (
     #'trabajo',
     'home',
     'iamcast',
+    'mercadopago',
 )
 
 if not ambiente.productivo:
@@ -178,7 +177,7 @@ LOGGING = {
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
+            #'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },
@@ -207,7 +206,7 @@ TEMPLATE_CONTEXT_PROCESSORS=(
   "django.contrib.messages.context_processors.messages",
 # La linea que sigue se agrego por uni-form
   'django.core.context_processors.request',
-  #'agencia.context_processors.add_ambiente',
+  'home.context_processors.ambiente',
   #'agencia.context_processors.add_thumbnails_urls',
   #'agencia.context_processors.add_agencia',
 )
@@ -216,3 +215,4 @@ LOCALE_PATHS=(ambiente.project_directory+'locale',)
 
 #CITIES_LIGHT_CITY_SOURCES = ['http://download.geonames.org/export/dump/BR.zip','http://download.geonames.org/export/dump/AR.zip']
 #CITIES_LIGHT_CITY_SOURCES = ['http://download.geonames.org/export/dump/cities5000.zip']
+

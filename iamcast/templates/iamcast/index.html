@@ -15,39 +15,6 @@
 <div class='row'>
 <div class='span9'>
 
-<div id="myCarousel" class="carousel slide">
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-01.jpg" alt="">
-      <div class="carousel-caption">
-        <h4>First Thumbnail label</h4>
-        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      </div>
-    </div>
-    <div class="item">
-      <img src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-02.jpg" alt="">
-      <div class="carousel-caption">
-        <h4>Second Thumbnail label</h4>
-        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      </div>
-    </div>
-    <div class="item">
-      <img src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-03.jpg" alt="">
-      <div class="carousel-caption">
-        <h4>Third Thumbnail label</h4>
-        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      </div>
-    </div>
-  </div>
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-</div>
-
   <h2 id='introduccion'>{% trans "Introducción" %}</h2>
   <p>{% trans "IamCast es una aplicación WEB que tiene como objetivo satisfacer la necesidad de las agencias de casting de tener control sobre:" %}</p>
   <ul>
@@ -92,6 +59,9 @@
     </ul>
   </ul>
 
+  <h3 id='modulo_de_administracion_en_imagenes'>{% trans "Modulo de Administración en Imágenes" %}</h3>
+  {%include "iamcast/carousel/admin.html"%}
+
   <h2 id='procesos_de_busqueda_de_perfiles'>{% trans "Procesos de búsqueda de perfiles" %}</h2>
   <p>{% trans "Una vez que usted tenga en su sistema agenciados, productoras y trabajos (cada trabajo con sus respectivos perfiles buscados), usted podrá postular agenciados a cada perfil buscado. " %}</p>
   <p>{% trans "Para poder llevar a cabo esta tarea, en el módulo de administración dispondrá de un listado de agenciados en el cual podrá aplicar filtros por características físicas, habilidades, ubicación geográfica, fecha de nacimiento, etc." %}</p>
@@ -118,6 +88,9 @@
     <li>{% trans "Autogestión por parte del agenciado de forma que siempre tenga su perfil actualizado." %}</li>
     <li>{% trans "La posibilidad que cada agenciado se autopostule para una busqueda de perfil en particular." %}</li>
   </ul>
+
+  <h3 id='sitio_estandar_en_imagenes'>{% trans "Sitio Estandar en Imágenes" %}</h3>
+  {%include "iamcast/carousel/sitio.html"%}
 
   <h2 id='beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</h2>
   <h3 id='aspectos_clave'>{% trans "Aspectos Clave" %}</h3>
@@ -154,7 +127,7 @@
   </ul>
 
   <p>
-    <a href="/iamcast/contratar/" class="btn btn-success btn-large">Contratar y comenzar a utilizar &raquo;</a>
+    <a href="/iamcast/configurar/" class="btn btn-success btn-large">Configurar y comenzar a utilizar &raquo;</a>
   </p>
 
   {%comment%}
@@ -174,9 +147,13 @@
     <ul class='nav nav-list'>
       <li><a href='#que_se_puede_guardar'>{% trans "¿Qué se puede guardar?" %}</a></li>
       <li><a href='#como_se_guarda_la_informacion'>{% trans "¿Cómo se guarda la información?" %}</a></li>
+      <li><a href='#modulo_de_administracion_en_imagenes'>{% trans "Módulo de Administración en Imágenes" %}</a></li>
     </ul>
     <li><a href='#procesos_de_busqueda_de_perfiles'>{% trans "Procesos de búsqueda de perfiles" %}</a></li>
     <li><a href='#publicacion_en_pagina_estandar'>{% trans "Publicación en página estándar" %}</a></li>
+    <ul class='nav nav-list'>
+      <li><a href='#sitio_estandar_en_imagenes'>{% trans "Sitio Estándar en Imágenes" %}</a></li>
+    </ul>
     <li><a href='#beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</a></li>
     <ul class='nav nav-list'>
       <li><a href='#aspectos_clave'>{% trans "Aspectos Clave" %}</a></li>
@@ -185,7 +162,7 @@
     <li><a href='#como_hago_para_empezar'>{% trans "¿Cómo hago para empezar a utilizar IamCast?" %}</a></li>
   </ul>
   <hr/>
-  <a href="/iamcast/contratar/" class="btn btn-success">Contratar y comenza a utilizar &raquo;</a>
+  <a href="/iamcast/configurar/" class="btn btn-success">Configurar y comenzar a utilizar &raquo;</a>
 </div>
 
 </div>

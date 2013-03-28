@@ -1,0 +1,32 @@
+{% extends "correo/base.html" %}
+{% load i18n %}
+
+{%block mensaje%}
+
+<p>
+  {%blocktrans with nombre_usuario=agencia.user.firstname%}
+  Felicitaciones {{nombre_usuario}}!
+  {%endblocktrans%}
+</p>
+<p>
+  {%blocktrans with nombre_agencia=agencia.nombre%}
+  Tu agencia {{nombre_agencia}}, ya esta creada y lista para ser usada.
+  {%endblocktrans%}
+</p>
+<p>
+  {% trans "Puedes acceder a la administración de tu agencia usando el siguiente link: " %} <a href="{{agencia.url_admin_agencia}}">{{agencia.url_admin_agencia}}</a>
+</p>
+<p>
+  {%blocktrans with nombre_super_usuario=agencia.user.username clave_super_usuario=password%}
+  Para acceder a la administración de tu agencia tienes creado el usuario {{nombre_super_usuario}} con la clave {{clave_super_usuario}} (puedes cambiar la clave una vez que hayas accedido).
+  {%endblocktrans%}
+</p>
+<p>
+  {% trans "Para acceder al sitio estándar de tu agencia tienes el siguiente link: " %} <a href="{{agencia.url_sitio_agencia}}">{{agencia.url_sitio_agencia}}</a>
+</p>
+<p>
+  {% trans "Esperamos que puedas sacar el mayor provecho utilizando iamcast como la solución para administrar la información de tu agencia, y te agradecemos por habernos elegido " %}
+</p>
+
+{%endblock%}
+
