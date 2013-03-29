@@ -13,6 +13,7 @@ from iampacks.cross.correo.mail import Mail
 from iamcast.models import Agencia
 from django.utils.translation import ugettext as _
 from iamcast.forms import AgenciaForm
+from iamcast.models import PagoContrato
 from datetime import datetime
 
 
@@ -33,7 +34,7 @@ def crear_agencia(form, request):
     ])
 
   messages.info(request,_(u'Hemos iniciado el proceso de creación del módulo de administración y página estándar. Este proceso puede demorar varios minutos. Una vez finalizado el proceso le notificaremos por email de forma que pueda comenzar a utilizar la aplicación.'))
-  messages.info(request,_(u'Podrá probar la aplicación por un período de 2 días. Luego para seguir utilizandola deberá realizar el pago correspondiente por el período de tiempo que crea más conveniente.'))
+  messages.info(request,_(u'Podrá probar la aplicación por un período de %s días. Luego para seguir utilizandola deberá realizar el pago correspondiente por el período de tiempo que crea más conveniente.')%settings.DIAS_PRUEBA_IAMCAST)
 
 @login_required
 def configurar(request):
@@ -47,8 +48,8 @@ def configurar(request):
     form = AgenciaForm(request.POST,instance=agencia)
     if form.is_valid():
       crear_agencia(form, request)
-      #next_page = '/iamcast/cuenta/'
-      #return redirect(next_page)
+      next_page = '/cuenta/usuario/'
+      return redirect(next_page)
   else:
     next_page = request.GET.get('next')
     form = AgenciaForm(instance=agencia,initial={'next_page':next_page})
@@ -130,3 +131,19 @@ def resultado_creacion_agencia(request):
 
   return HttpResponse()
 """
+
+def actualizar_pago(request,id):
+  pago=PagoContrato.objects.get(pk=id)
+  pago.actualizar_estado_items()
+  if pago.contratoagencia.pagado():
+    messages.success(request,_(u"Felicitaciones! Nos han confirmado que su pago por '%s' ya se encuentra acreditado. Hemos actualizado la fecha de vencimiento del contrato de su agencia.")%pago.contratoagencia.titulo)
+  else:
+    messages.info(request,_(u"Hemos registrado que el pago por '%s' se encuentra pendiente. Si ya realizó el pago tenga en cuenta que su confirmación puede demorar un tiempo.")%pago.contratoagencia.titulo)
+
+def pago_success(request,id):
+  actualizar_pago(request,id)
+  return redirect('/cuenta/usuario/')
+
+def pago_pending(request,id):
+  actualizar_pago(request,id)
+  return redirect('/cuenta/usuario/')

@@ -33,9 +33,12 @@ class Command(BaseCommand):
         str(agencia.id),
         'iamcast',
         settings.AMBIENTE.path_agencias,
+        agencia.dominio,
+        settings.AMBIENTE.zonomi.api_key
         ]
       output=subprocess.check_output(array_llamada)
       agencia.estado_creacion = Agencia.BORRADA_CON_EXITO
+      agencia.activa = False
       agencia.save()
 
       """
@@ -60,4 +63,4 @@ class Command(BaseCommand):
       raise e
 
     # @todo enviar mail con el resultado de la creación
-    self.stdout.write(u'El estado de borrado de la agencia %s fue: %s\n'%(agencia.nombre,Agencia.DICT_ESTADO_CREACION[agencia.estado_creacion]))
+    self.stdout.write('El estado de borrado de la agencia %s fue: %s\n'%(agencia.nombre,Agencia.DICT_ESTADO_CREACION[agencia.estado_creacion]))

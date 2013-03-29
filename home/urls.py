@@ -17,6 +17,7 @@ urlpatterns = patterns('home.views',
     url(r'^$', 'index'),
     url(r'^quienes/somos/$', 'quienes_somos'),
     url(r'^contacto/$', 'contacto'),
-    url(r'^cuenta/$', 'cuenta'),
+    url(r'^cuenta/usuario/$', 'cuenta_usuario'),
+    url(r'^accounts/profile/$', 'cuenta_usuario'),
 )
 

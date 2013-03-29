@@ -16,5 +16,5 @@ def quienes_somos(request):
   return render(request,'quienes_somos.html')
 
 @login_required
-def cuenta(request):
-  return render(request,'cuenta.html')
+def cuenta_usuario(request):
+  return render(request,'cuenta_usuario.html')

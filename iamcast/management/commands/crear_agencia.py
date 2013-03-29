@@ -58,9 +58,12 @@ class Command(BaseCommand):
         agencia.usuario_gmail,
         agencia.clave_gmail,
         '%s.%s'%(agencia.slug,settings.AMBIENTE.dominio),
+        settings.AMBIENTE.puerto_http,
+        settings.AMBIENTE.puerto_https,
         settings.AMBIENTE.path_agencias,
         agencia.user.username,
         password,
+        settings.AMBIENTE.zonomi.api_key,
         ]
 
       output=subprocess.check_output(array_llamada)
@@ -81,8 +84,6 @@ class Command(BaseCommand):
       
       output=subprocess.check_output(array_llamada)
 
-      self.stdout.write(u'El estado de creacion de la agencia %s fue: %s\n'%(agencia.nombre,Agencia.DICT_ESTADO_CREACION[agencia.estado_creacion]))
-
       if not suprimir_mail:
         asunto = ugettext(u'La Creación de su Agencia Finalizó Exitosamente')
         template = loader.get_template('iamcast/mail/exito_creacion_agencia.html')
@@ -91,6 +92,8 @@ class Command(BaseCommand):
         msg = MailIamSoft(asunto,ugettext(u'El contenido de este email debe ser visualizado en formato HTML'),[agencia.user.email])
         msg.set_html_body(html_content)
         msg.send()
+
+      self.stdout.write(u'Creacion exitosa.\n')
 
     except Exception as e:
       msg = MailIamSoft(u'Error en la creación','%s\n\n%s'%(traceback.format_exc(),array_llamada),[email for _,email in settings.ADMINS])

@@ -1,0 +1,35 @@
+{% load i18n %}
+
+<legend>{% trans "Estado de cuenta de sus agencias" %}</legend>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>{% trans "#" %}</th>
+      <th>{% trans "Nombre" %}</th>
+      <th>{% trans "Fecha de inicio" %}</th>
+      <th>{% trans "Administración" %}</th>
+      <th>{% trans "Página estándar" %}</th>
+      <th>{% trans "Estado de creación" %}</th>
+      <th>{% trans "Activa" %}</th>
+      <th>{% trans "Fecha de vencimiento" %}</th>
+      <th>{% trans "Pagos" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for agencia in user.agencia_set.all %}
+    <tr class="{%if agencia.estado_erroneo%}error{%elif agencia.estado_advertencia%}warning{%elif agencia.estado_exitoso%}success{%else%}info{%endif%}">
+      <td>{{agencia.id}}</td>
+      <td>{{agencia.nombre}}</td>
+      <td>{{agencia.fecha_inicio}}</td>
+      <td><a href="{{agencia.url_admin_agencia}}" class='btn{%if not agencia.estado_exitoso %} disabled{%endif%}'>{% trans "Administrar" %}</a></td>
+      <td><a href="{{agencia.url_sitio_agencia}}" class='btn{%if not agencia.estado_exitoso %} disabled{%endif%}'>{% trans "Ir al sitio" %}</a></td>
+      <td>{{agencia.descripcion_estado_creacion}}</td>
+      <td>{% if agencia.activa %}{% trans "Sí" %}{%else%}{% trans "No" %}{%endif%}</td>
+      <td>{{agencia.fecha_vencimiento}}</td>
+      <td>{%if agencia.activa%}{% include 'mercadopago/boton_pago.html' with pago=agencia.proximo_pago%}{%endif%}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script type="text/javascript" src="{{STATIC_URL}}/mercadopago/js/boton.js"></script>

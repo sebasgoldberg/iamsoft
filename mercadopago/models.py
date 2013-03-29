@@ -1,7 +1,10 @@
+# coding=utf-8
 from django.db import models
 import requests
 import json
 from django.conf import settings
+import hashlib
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class MercadoPago(object):
@@ -52,6 +55,21 @@ class MercadoPago(object):
       )
     return response.json()
 
+  EXTERNAL_REFERENCE='external_reference'
+  
+  STATUS='status'
+  APPROVED='approved'
+
+  STATUS_DETAIL='status_detail'
+  ACCREDITED='accredited'
+
+  def search_pagos_approved_and_accredited_by_external_reference(self,external_reference):
+    response=requests.get(
+      'https://api.mercadolibre.com/collections/search?access_token=%s&external_reference=%s&status=%s&status_detail=%s'%(self.get_access_token(),external_reference,MercadoPago.APPROVED,MercadoPago.ACCREDITED),
+      headers={'Accept':self.MIME_JSON}
+      )
+    return response.json()
+
   def get_pago_notificado(self,id_notificacion_pago):
     response=requests.get(
       'https://api.mercadolibre.com/collections/notifications/%s?access_token=%s'%(id_notificacion_pago,self.get_access_token()),
@@ -59,4 +77,86 @@ class MercadoPago(object):
       )
     return response.json()
     
+class Pago(models.Model):
+
+  class Meta:
+    abstract=True
+    verbose_name = _(u"Pago")
+    verbose_name_plural = _(u"Pagos")
+
+   
+  #<!-- Datos obligatorios del item -->
+  item_title = models.CharField(max_length=200, verbose_name=_(u'Descripción'))
+  item_quantity = models.IntegerField()
+
+  PESO_ARGENTINO = 'ARS' 
+  DOLAR_ESTADOUNIDENSE = 'USD' 
+  REAL = 'BRL' 
+  PESO_MEXICANO = 'MXN' 
+  BOLIVAR_FUERTE= 'VEF' 
   
+  MONEDAS=(
+    (PESO_ARGENTINO, _(u'Peso argentino')),
+    (DOLAR_ESTADOUNIDENSE, _(u'Dólar estadounidense')),
+    (REAL, _(u'Real')),
+    (PESO_MEXICANO, _(u'Peso Mexicano')),
+    (BOLIVAR_FUERTE, _(u'Bolívar fuerte')),
+  )
+
+  DICT_MONEDAS=dict(MONEDAS)
+
+  item_currency_id = models.CharField(max_length=3,verbose_name=_(u'Moneda'), choices=MONEDAS, default=PESO_ARGENTINO)
+  item_unit_price = models.DecimalField(max_digits=10,decimal_places=3, verbose_name=_(u'Precio unitario'))
+  
+  def client_id(self):
+    return settings.AMBIENTE.mercado_pago.client_id
+
+  def md5(self):
+    md5String = settings.AMBIENTE.mercado_pago.client_id + settings.AMBIENTE.mercado_pago.client_secret + str(self.item_quantity) + self.item_currency_id + self.item_unit_price_as_str() + self.item_id() + self.external_reference();
+    return hashlib.md5(md5String).hexdigest()
+
+  def item_id(self):
+    return str(self.id)
+
+  def external_reference(self):
+    return str(self.id)
+
+  #<!-- Datos opcionales -->
+  def payer_name(self):
+    """
+    Este dato es opcional, por eso se devuelve vacío.
+    Igualmente se aconseja redefinirlo y devolver el nombre del 
+    usuario que está realizando el pago.
+    """
+    return u''
+
+  def payer_surname(self):
+    """
+    Este dato es opcional, por eso se devuelve vacío.
+    Igualmente se aconseja redefinirlo y devolver el apellido del 
+    usuario que está realizando el pago.
+    """
+    return u''
+
+  def payer_email(self):
+    """
+    Este dato es opcional, por eso se devuelve vacío.
+    Igualmente se aconseja redefinirlo y devolver el email del 
+    usuario que está realizando el pago.
+    """
+    return u''
+
+  def back_url_success(self):
+    return u''
+
+  def back_url_pending(self):
+    return u''
+
+  def item_unit_price_as_str(self):
+    return str(self.item_unit_price)
+
+  def approved_and_accredited(self):
+    mp=MercadoPago()
+    respuesta=mp.search_pagos_approved_and_accredited_by_external_reference(self.external_reference())
+    return respuesta['paging']['total']>=1
+

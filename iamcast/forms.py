@@ -19,4 +19,4 @@ class AgenciaForm(forms.ModelForm):
 
   class Meta:
     model=Agencia
-    fields = ('nombre', 'usuario_gmail', 'clave_gmail', 'dominio')
+    fields = ('nombre', 'usuario_gmail', 'clave_gmail')
