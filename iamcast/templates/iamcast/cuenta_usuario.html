@@ -21,12 +21,33 @@
       <td>{{agencia.id}}</td>
       <td>{{agencia.nombre}}</td>
       <td>{{agencia.fecha_inicio}}</td>
-      <td><a href="{{agencia.url_admin_agencia}}" class='btn{%if not agencia.estado_exitoso %} disabled{%endif%}'>{% trans "Administrar" %}</a></td>
-      <td><a href="{{agencia.url_sitio_agencia}}" class='btn{%if not agencia.estado_exitoso %} disabled{%endif%}'>{% trans "Ir al sitio" %}</a></td>
+      {%if agencia.estado_exitoso%}
+        <td><a href="{{agencia.url_admin_agencia}}" class='btn'>{% trans "Administrar" %}</a></td>
+        <td><a href="{{agencia.url_sitio_agencia}}" class='btn'>{% trans "Ir al sitio" %}</a></td>
+      {%else%}
+        <td><a href="#" class='btn disabled'>{% trans "Administrar" %}</a></td>
+        <td><a href="#" class='btn disabled'>{% trans "Ir al sitio" %}</a></td>
+      {%endif%}
       <td>{{agencia.descripcion_estado_creacion}}</td>
       <td>{% if agencia.activa %}{% trans "Sí" %}{%else%}{% trans "No" %}{%endif%}</td>
       <td>{{agencia.fecha_vencimiento}}</td>
-      <td>{%if agencia.activa%}{% include 'mercadopago/boton_pago.html' with pago=agencia.proximo_pago%}{%endif%}</td>
+      <td>
+        {% with pago=agencia.proximo_pago %}
+          {%if pago%}
+            {% include 'mercadopago/formulario_pago.html' with pago=pago no_display="True" %}
+            <div class="btn-group">
+              {% include 'mercadopago/boton_para_formulario_pago.html' with pago=pago classes='btn' %}
+              <button class="btn dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>{% include 'mercadopago/link_para_formulario_pago.html' with pago=pago %}</li>
+                <li><a href="/iamcast/ver/historial/pagos/{{agencia.id}}/">{% trans "Ver historial" %}</a></li>
+              </ul>
+            </div>
+          {%endif%}
+        {%endwith%}
+      </td>
     </tr>
     {% endfor %}
   </tbody>

@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^iamcast/', include('iamcast.urls')),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'authentication_form':UsuarioAuthenticationForm}),
     url(r'^', include('home.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 )

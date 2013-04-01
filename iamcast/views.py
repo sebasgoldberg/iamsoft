@@ -147,3 +147,9 @@ def pago_success(request,id):
 def pago_pending(request,id):
   actualizar_pago(request,id)
   return redirect('/cuenta/usuario/')
+
+def ver_historial_pagos(request,id_agencia):
+  agencia=Agencia.objects.get(pk=id_agencia)
+  #agencia.proximo_pago() #Aseguramos que se cree el último pago a ser realizado
+  #contratos=agencia.contratoagencia_set.order_by('-fecha_inicio')
+  return render(request,'iamcast/ver_historial_pagos.html',{'agencia':agencia})

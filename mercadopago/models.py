@@ -107,6 +107,12 @@ class Pago(models.Model):
 
   item_currency_id = models.CharField(max_length=3,verbose_name=_(u'Moneda'), choices=MONEDAS, default=PESO_ARGENTINO)
   item_unit_price = models.DecimalField(max_digits=10,decimal_places=3, verbose_name=_(u'Precio unitario'))
+
+  def total(self):
+    return self.item_quantity*self.item_unit_price
+
+  def descripcion_moneda(self):
+    return Pago.DICT_MONEDAS[self.item_currency_id]
   
   def client_id(self):
     return settings.AMBIENTE.mercado_pago.client_id
@@ -160,3 +166,8 @@ class Pago(models.Model):
     respuesta=mp.search_pagos_approved_and_accredited_by_external_reference(self.external_reference())
     return respuesta['paging']['total']>=1
 
+  def form_id(self):
+    """
+    Devuelve el id a asignar al formulario de pago.
+    """
+    return u"mercadopago_form_%s"%self.id

@@ -21,5 +21,7 @@ urlpatterns = patterns('iamcast.views',
     #url(r'^resultado/creacion/agencia/$', 'resultado_creacion_agencia'),
     url(r'^pago/success/(\d+)/$', 'pago_success'),
     url(r'^pago/pending/(\d+)/$', 'pago_pending'),
+    url(r'^ver/historial/pagos/(\d+)/$', 'ver_historial_pagos'),
+    
 )
 

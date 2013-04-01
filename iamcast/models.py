@@ -26,22 +26,33 @@ class Contrato(models.Model):
   PAGADO='PA'
   ESTADO= (
     (INICIAL,ugettext(u'Inicial')),
-    (PENDIENTE,ugettext(u'Inicial')),
+    (PENDIENTE,ugettext(u'Pendiente')),
     (PAGADO,ugettext(u'Pagado')),
     )
   DICT_ESTADO=dict(ESTADO)
-  estado = models.CharField(max_length=2,default=INICIAL, verbose_name=(u'Estado'), choices=ESTADO)
+  estado = models.CharField(max_length=2,default=PENDIENTE, verbose_name=(u'Estado'), choices=ESTADO)
 
   class Meta:
     abstract = True
     verbose_name = _(u"Contrato")
     verbose_name_plural = _(u"Contratos")
+    ordering=['-fecha_inicio']
 
   def __unicode__(self):
     return self.titulo
 
   def pagado(self):
     return self.estado==Contrato.PAGADO
+
+  def vencido(self):
+    # Si no está pagado y además la fecha de fin está en el pasado.
+    return not self.pagado() and self.fecha_fin < datetime.now()
+
+  def pendiente(self):
+    return self.estado==Contrato.PENDIENTE
+
+  def descripcion_estado(self):
+    return Contrato.DICT_ESTADO[self.estado]
 
 class Agencia(models.Model):
   user = models.ForeignKey(User, null=False, blank=True, editable=False)
@@ -81,15 +92,44 @@ class Agencia(models.Model):
     if not self.dominio:
       self.dominio = '%s.%s'%(self.slug,settings.AMBIENTE.dominio)
 
+  def url_historial_pagos(self):
+    return '/iamcast/historial/pagos/%s/'%self.id
+
+  def borrada(self):
+    return self.estado_creacion in [Agencia.BORRADA_CON_ERRORES, Agencia.BORRADA_CON_EXITO]
+
+  def vencida(self):
+    return self.proximo_contrato().fecha_fin<datetime.now()
+
+  def en_periodo_prueba(self):
+    """
+    Una agencia está en período de prueba si no tiene contratos pagados y la fecha actual es menor que la fecha de vencimiento.
+    """
+    if self.fecha_vencimiento() > datetime.now():
+      if self.contratoagencia_set.exclude(estado=Contrato.PAGADO):
+        return True
+    return False
+
   def clean(self):
     self.slugify()
+    # Se verifica slug
     if self.id:
+      # Verifica que no exista otra agencia con mismo slug (se excluye a si misma)
       agencias=Agencia.objects.filter(slug=self.slug).exclude(id=self.id)
     else:
+      # Verifica que no exista otra agencia con mismo slug
       agencias=Agencia.objects.filter(slug=self.slug)
-
     if agencias:
       raise ValidationError(ugettext('El nombre ingresado ya existe o es muy similar a uno ya existente. Por favor ingrese otro nombre'))
+    # Se verifica cantidad de agencias de un mismo usuario
+    if not self.id:
+      for agencia in self.user.agencia_set.all():
+        if not agencia.id:
+          continue
+        if not agencia.borrada() and agencia.vencida():
+          raise ValidationError(ugettext(u'No hemos registrado el pago de la agencia %s. Para poder crear una nueva agencia, antes deberá abonar el importe correspondiente. Dicho pago podrá realizarlo accediendo a su cuenta.')%(agencia.nombre))
+        if agencia.en_periodo_prueba():
+          raise ValidationError(ugettext(u'Hemos registrado que la agencia %s se encuentra en período de prueba. Para que pueda crear una nueva agencia, antes deberá realizar el pago correspondiente. Dicho pago podrá realizarlo accediendo a su cuenta.')%(agencia.nombre))
 
   def get_nombre_carpeta(self):
     return 'iamcast_%s'%self.id
@@ -142,25 +182,25 @@ class Agencia(models.Model):
       return contrato.fecha_inicio-timedelta(seconds=1)
     return self.fecha_inicio+timedelta(days=settings.DIAS_PRUEBA_IAMCAST)
 
-  def proximo_pago(self):
+  def proximo_contrato(self):
 
     contrato=self.get_contrato_por_pagar()
     if contrato:
-      return contrato.pago
+      return contrato
 
     fecha_vencimiento=self.fecha_vencimiento()
 
     fecha_inicio=fecha_vencimiento+timedelta(seconds=1)
     fecha_fin=fecha_vencimiento+timedelta(days=DIAS_CONTRATO)
 
-    titulo_contrato=u'Contrato servicio IamCast para agencia %s por %s días (desde %s hasta %s)'%(
+    titulo_contrato=ugettext(u'Contrato servicio IamCast para agencia %s por %s días (desde %s hasta %s)')%(
       self.nombre,
       DIAS_CONTRATO,
       fecha_inicio,
       fecha_fin
     ),
 
-    titulo_pago=u'Pago de %s'%titulo_contrato
+    titulo_pago=ugettext(u'Pago de %s')%titulo_contrato
 
     pago=PagoContrato(
       item_title=titulo_pago,
@@ -181,7 +221,10 @@ class Agencia(models.Model):
 
     contrato.save()
 
-    return contrato.pago
+    return contrato
+
+  def proximo_pago(self):
+    return self.proximo_contrato().pago
 
 class PagoContrato(Pago):
 

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{%block content%}
+
+<ul class="breadcrumb">
+  <li><a href="/">{% trans "Home" %}</a> <span class="divider">/</span></li>
+  <li><a href="/cuenta/usuario/">{% trans "Mi Cuenta" %}</a> <span class="divider">/</span></li>
+  <li class="active">{% trans "Historial de pago de contratos de servicio de agencia " %}{{agencia.nombre}}</li>
+</ul>
+
+<legend>{% trans "Historial de pago de contratos de servicio de agencia " %}{{agencia.nombre}}</legend>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>{% trans "# Contrato" %}</th>
+      <th>{% trans "Título" %}</th>
+      <th>{% trans "Fecha de inicio" %}</th>
+      <th>{% trans "Fecha de fin" %}</th>
+      <th>{% trans "Estado" %}</th>
+      <th>{% trans "# Pago" %}</th>
+      <th>{% trans "Título" %}</th>
+      <th>{% trans "Importe" %}</th>
+      <th>{% trans "Moneda" %}</th>
+      <th>{% trans "Acciones" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for contrato in agencia.contratoagencia_set.all %}
+    <tr class="{%if contrato.vencido %}error{%elif contrato.pendiente %}warning{%elif contrato.pagado%}success{%else%}info{%endif%}">
+      <td>{{contrato.id}}</td>
+      <td>{{contrato.titulo}}</td>
+      <td>{{contrato.fecha_inicio}}</td>
+      <td>{{contrato.fecha_fin}}</td>
+      <td>{{contrato.descripcion_estado}}</td>
+      {%with pago=contrato.pago%}
+        <td>{{pago.id}}</td>
+        <td>{{pago.titulo}}</td>
+        <td>{{pago.total}}</td>
+        <td>{{pago.descripcion_moneda}}</td>
+        <td>
+          {%if not pago.contratoagencia.pagado%}
+            {% include 'mercadopago/formulario_pago.html' with pago=pago %}
+          {%endif%}
+        </td>
+      {%endwith%}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script type="text/javascript" src="{{STATIC_URL}}/mercadopago/js/boton.js"></script>
+{%endblock%}

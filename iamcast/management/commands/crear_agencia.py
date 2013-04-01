@@ -67,8 +67,6 @@ class Command(BaseCommand):
         ]
 
       output=subprocess.check_output(array_llamada)
-      agencia.estado_creacion = Agencia.FINALIZADA_CON_EXITO
-      agencia.save()
 
       os.environ['DJANGO_SETTINGS_MODULE'] = "alternativa.settings"
       array_llamada=[
@@ -93,10 +91,19 @@ class Command(BaseCommand):
         msg.set_html_body(html_content)
         msg.send()
 
+      agencia.estado_creacion = Agencia.FINALIZADA_CON_EXITO
+      agencia.activa = True
+      agencia.save()
+
       self.stdout.write(u'Creacion exitosa.\n')
 
     except Exception as e:
-      msg = MailIamSoft(u'Error en la creación','%s\n\n%s'%(traceback.format_exc(),array_llamada),[email for _,email in settings.ADMINS])
+      if hasattr(e,'output'):
+        output=e.output
+      else:
+        output=''
+      cuerpo='%s\n\n%s\n\nsalida:\n%s'%(traceback.format_exc(),array_llamada,output)
+      msg = MailIamSoft(u'Error en la creación',cuerpo,[email for _,email in settings.ADMINS])
       msg.send()
       """
       logger = logging.getLogger(__name__)

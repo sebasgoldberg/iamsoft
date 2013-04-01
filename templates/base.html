@@ -92,10 +92,9 @@
 
   <div class='container'>
 
-
       {% if messages %}
         {% for message in messages %}
-          <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</div>
+          <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message|safe }}{%endautoescape%}</div>
         {% endfor %}
       {% endif %}
 
@@ -114,6 +113,7 @@
     </div>
   {% endblock %}
 
+{% include 'idioma/language_form.html' %}
 
 </body>
 </html>

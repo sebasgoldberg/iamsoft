@@ -5,6 +5,11 @@
 
 {% block content %}
 
+  <ul class="breadcrumb">
+    <li><a href="/">{% trans "Home" %}</a> <span class="divider">/</span></li>
+    <li class="active">{% trans "Mi Cuenta" %}</li>
+  </ul>
+
   {% include 'iamcast/cuenta_usuario.html' %}
 
 {% endblock %}
