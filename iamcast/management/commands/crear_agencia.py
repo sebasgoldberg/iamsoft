@@ -57,7 +57,7 @@ class Command(BaseCommand):
         'iamcast',
         agencia.usuario_gmail,
         agencia.clave_gmail,
-        '%s.%s'%(agencia.slug,settings.AMBIENTE.dominio),
+        agencia.dominio,
         settings.AMBIENTE.puerto_http,
         settings.AMBIENTE.puerto_https,
         settings.AMBIENTE.path_agencias,

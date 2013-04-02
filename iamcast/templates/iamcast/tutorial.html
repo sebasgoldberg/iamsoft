@@ -22,13 +22,31 @@
   <h2 id='introduccion'>{% trans "Introducción" %}</h2>
   <p>{% trans "La idea de este tutorial es brindarle nociones básicas de las primeras tareas a realizar en la administración de su agencia. Las tareas explicadas en este tutorial son las siguientes:" %}</p>
   <ul>
+    <li>{% trans "Acceso a la administración y cambio de clave." %}</li>
     <li>{% trans "Creación de una agencia activa." %}</li>
     <li>{% trans "Carga de datos de sus agenciados." %}</li>
     <li>{% trans "Creación de trabajos." %}</li>
     <li>{% trans "Creación de perfiles buscados por trabajo." %}</li>
     <li>{% trans "Asignación de agenciados a perfiles buscados." %}</li>
     <li>{% trans "Envío de un trabajo por mail." %}</li>
+    <li>{% trans "Creación de grupos de usuarios" %}</li>
+    <li>{% trans "Creación de usuarios" %}</li>
+    <li>{% trans "Datos maestros" %}</li>
   </ul>
+
+  <h2 id='accediendo_a_la_administracion'>{% trans "Accediendo a la administración" %}</h2>
+  <h3 id='usuario_y_contraseña_del_super_usuario'>{% trans "Usuario y contraseña del super usuario" %}</h3>
+  <p>
+  {% blocktrans with nombre_usuario=agencia.user.username url_reiniciar_clave=agencia.url_reiniciar_clave %}
+    Para acceder a la administración de su agencia se ha creado el super usuario {{nombre_usuario}}. La clave de este usuario se le ha enviado en el email que notifica la correcta creación de su agencia. Si no encuentra dicho email, puede acceder al siguiente link y recuperar su contraseña: <a target="_blank" href={{url_reiniciar_clave}}>{{url_reiniciar_clave}}</a>.
+    Una vez que tenga su usuario y contraseña podrá acceder a la administración de su sitio.
+  {% endblocktrans %}
+  </p>
+
+  <h3 id='cambio_de_clave_del_super_usuario'>{% trans "Cambio de clave del super usuario" %}</h3>
+  <p>{% trans "Sabemos que la contraseña de su super usuario es bastante dificil de recordar. Es por esto que lo primero que haremos en este tutorial será cambiar está contraseña a una que usted pueda recordar." %}</p>
+  <p>{% trans "Para esto deberá acceder a su administración, y con su usuario y contraseña actual, hacer clic en el link de cambio de contraseña. En el formulario de cambio de contraseña se le pedirá contraseña actual, nueva contraseña y una confirmación de la nueva contraseña." %}</p>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}password_change/">{% trans "Cambiar contraseña de super usuario en la administración de" %} "{{agencia.nombre}}"</a>
 
   <h2 id='creacion_agencia_activa'>{% trans "Creación de una agencia activa" %}</h2>
   <p>{% trans "En toda aplicación es necesario crear una agencia activa. En dicha agencia se definirá la siguiente información:" %}</p>
@@ -106,6 +124,7 @@
       <dd>{% trans "Una postulación es la acción de proponer un agenciado para un perfil buscado de un determinado trabajo. Cada postulación tendrá un determinado estado que tiene como objetivo indicar por ejemplo si el agenciado se encuentra solamente postulado, si ya fué seleccionado, si realizó el trabajo o si ya sele pagó el trabajo." %}</dd>
   </dl>
   <p>{% trans "Ahora que ya tenemos una idea de cómo es la organización de los distintos objetos en el módulo de trabajo, vamos a ver más en detalle cada uno de los mismos." %}</p>
+
   <h3 id='creacion_de_trabajos'>{% trans "Creación de Trabajos" %}</h3>
   <p>{% trans "Los información a asignar en los campos del formulario para crear un trabajo es bastante trivial. Mencionaremos los campos que merecen alguna explicación:" %}</p>
   <dl>
@@ -122,13 +141,106 @@
   </dl>
   <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/trabajo/add/">{% trans "Crear un trabajo en la administración de" %} "{{agencia.nombre}}"</a>
 
-  <h2 id=''>{% trans "" %}</h2>
-  <p>{% trans "" %}</p>
-  <dl>
-    <dt>{% trans "" %}</dt>
-      <dd>{% trans "" %}</dd>
-  </dl>
-  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}">{% trans "en la administración de" %} "{{agencia.nombre}}"</a>
+<h3 id='editando_perfiles_buscados_de_trabajo'>{% trans "Editando perfiles buscados de un trabajo" %}</h3>
+<p>{% trans "Una vez ya creado algún trabajo, usted podrá editar los perfiles buscados que haya creado en dicho trabajo. En la edición del perfil buscado podrá cambiar los datos principales, editar los eventos, y editar las postulaciones de agenciados. En la proxima sección explicaremos una forma muy útil de realizar portulaciones de agenciados a un perfil buscado." %}</p>
+<p>{% trans "Si usted aún no ha creado un perfil buscado podrá hacerlo haciendo clic en el siguiente botón:" %}</p>
+<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/rol/add/">{% trans "Agregar perfil buscado en la administración de" %} "{{agencia.nombre}}"</a>
+
+<h3 id='postulando_agenciados'>{% trans "Postulando agenciados" %}</h3>
+<p>{% trans "Una vez creado un perfil buscado para algún trabajo podemos comenzar a realizar postulaciones de agenciados en dicho perfil buscado." %}</p>
+<p>{% trans "Si bien es posible realizar postulaciones desde el perfil (en la sección Postulaciones), puede ser bastante tedioso cuando tenemos miles de agenciados en nuestro sistema, o cuando buscamos agenciados con ciertas características." %}</p>
+<p>{% trans "Para solucionar esto, y agilizar el proceso de postulación, usted podrá realizar postulaciones desde el mismo listado de agenciados." %}</p>
+<p>
+  {% trans "La idea es que, al acceder al listado de agenciados, realice las siguientes tareas:" %}
+  <li>{% trans "Aplique los filtros pertinentes." %}</li>
+  <li>{% trans "En el listado de agenciados resultante, cada agenciado contará con una casilla de verificación a su izquierda. Seleccione del listado los agenciados que desea postular" %}</li>
+  <li>{% trans "En la cabecera del listado tendrá una sección que dice 'Acción' con una casilla de selección. Seleccione la opción 'Agregar agenciados seleccionados a perfil buscado en trabajo'. Luego seleccione el botón ir" %}</li>
+  <li>
+    {% trans "Se mostrará un formulario donde deberá indicar:" %}
+    <dl>
+      <dt>{% trans "Perfil" %}</dt>
+        <dd>{% trans "El perfil buscado donde postulará los agenciados seleccionados." %}</dd>
+      <dt>{% trans "Estado" %}</dt>
+        <dd>
+          {% trans "El estado de la postulación. A continuación se explica lo que representa cada estado:" %}
+          <dl>
+            <dt>{% trans "Postulación hecha por el agenciado" %}</dt>
+              <dd>{% trans "Este estado no debería seleccionarlo. Este es un estado que se asigna automáticamente en caso que el agenciado se auto postule para un perfil buscado desde el sitio estándar de su agencia." %}</dd>
+            <dt>{% trans "Postulado para casting" %}</dt>
+              <dd>{% trans "En caso que esté postulando agenciados para un casting pero todavía no los haya seleccionado." %}</dd>
+            <dt>{% trans "Seleccionado para casting" %}</dt>
+              <dd>{% trans "En caso que este seleccionando los agenciados para realizar el casting." %}</dd>
+            <dt>{% trans "Seleccionado para trabajo" %}</dt>
+              <dd>{% trans "En caso que los agenciados seleccionados vayan a realizar el trabajo del perfil buscado." %}</dd>
+            <dt>{% trans "Trabajo realizado" %}</dt>
+              <dd>{% trans "En caso que los agenciados seleccionados ya hayan realizado el trabajo del perfil buscado." %}</dd>
+            <dt>{% trans "Trabajo pagado" %}</dt>
+              <dd>{% trans "En caso que ya haya realizado el pago del trabajo realizado por los agenciados seleccionados." %}</dd>
+          </dl>
+        </dd>
+    </dl>
+  </li>
+  <li>{% trans "Una vez completado el formulario seleccionar el botón 'Agregar agenciados'" %}</li>
+  <li>{% trans "Por último visualizará el resultado de haber intentado postular los agenciados seleccionados al perfil buscado seleccionado." %}</li>
+</p>
+<p>{% trans "Luego de haber realizado este proceso, si accede al perfil buscado utilizado, podrá verificar que los agenciados seleccionados se encuentran postulados a dicho perfil." %}</p>
+<p>{% trans "También, al acceder a la información de cada agenciado, podrá ver en la parte inferior, en la sección 'Postulaciones', las postulaciones del agenciado con su correspondiente estado por postulación." %}</p>
+<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/">{% trans "Postular agenciados en la administración de" %} "{{agencia.nombre}}"</a>
+
+<h3 id='envio_de_trabajo_por_email'>{% trans "Envío de trabajo por email" %}</h3>
+<p>{% trans "Una vez que ya ha creado un trabajo para alguna productora, que dicho trabajo tiene perfiles buscados, y que para cada perfil ha realizado postulaciones, es muy común la necesidad de enviar dicha información por email." %}</p>
+<p>{% trans "Para realizar esta tarea tediosa y repetitiva, usted tiene la posibilidad de generar un email con toda la información del trabajo." %}</p>
+<p>{% trans "Los pasos que debe realizar para llevar a cabo esta tarea son:" %}</p>
+<ul>
+  <li>{% trans "Acceder al detalle de algún trabajo." %}</li>
+  <li>{% trans "En la parte superior derecha debe hacer clic en el botón 'e-mail Productora'" %}</li>
+  <li>{% trans "Se presentará una pantalla con la siguiente información:" %}</li>
+  <ul>
+    <li>{% trans "Formulario en el que podrá completar los destinatarios (viene cargado por defecto el email de la productora), y modificar el asunto. Tenga en cuenta que se enviará una copia al email del usuario que está realizando el envío y al email que tenga registrado su agencia activa." %}</li>
+    <li>{% trans "Por otro lado podrá pre visualizar el cuerpo del email a enviar. En dicho email se enviará información principal del trabajo, de los perfiles buscados y las postulaciones de cada perfil. Tenga en cuenta que por cada postulación solo se enviarán las fotos del agenciado, nombre, apellido, fecha de nacimiento y estado de la postulación, de forma de resguardar la información de sus agenciados (no se envían telefonos, direcciones de email, etc.)." %}</li>
+  </ul>
+  <li>{% trans "Por ultimo, para concretar el envío, debe seleccionar el botón enviar." %}</li>
+</ul>
+<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/trabajo/">{% trans "Seleccione algún trabajo y envíe un email en la administración de" %} "{{agencia.nombre}}"</a>
+
+<h2 id='seguridad_grupos_usuarios_y_permisos'>{% trans "Seguridad, grupos, usuarios y permisos" %}</h2>
+<p>{% trans "Como bien sabe, usted cuenta con un super usuario para realizar todas las operaciones en la administración de su agencia. Este usuario tiene permisos para realizar cualquier tarea dentro de la administración." %}</p>
+<p>{% trans "Seguramente usted esté interesado en que sus empleados accedan a la administración de su agencia para realizar distintas tareas, pero sería incorrecto si todos accedieran con el mismo usuario." %}</p>
+<p>{% trans "Es por esto que usted tiene la posibilidad de crear nuevos usuarios que sean parte del staff (su equipo de trabajo). No solo eso, sino que podrá especificar para cada usuario las tareas que podrá realizar (esto se realiza indicando los permisos que tiene cada usuario)" %}</p>
+<p>{% trans "Por otro lado, es muy común que tenga usuarios que cumplen las mismas tareas. En estos casos entra el concepto de grupo. Usted podrá definir grupos. Por cada grupo podrá indicar los permisos del grupo. Luego al crear usuarios podrá asignarlos a distintos grupos." %}</p>
+<p>{% trans "Por defecto, durante el proceso de creación de su agencia, se creó el grupo 'agenciadores'. Este grupo cuenta con todos los permisos menos con los permisos relativos a la creación de usuarios y grupos. " %}</p>
+
+<h3 id=''>{% trans "Crear usuarios" %}</h3>
+<p>{% trans "La creación de usuarios es relativamente simple. Los pasos a seguir son los siguientes:" %}</p>
+<ul>
+  <li>{% trans "Acceder al formulario de creación de usuarios." %}</li>
+  <li>{% trans "Completar nombre de usuario y contraseña junto con su confirmación." %}</li>
+  <li>{% trans "Seleccionar 'Grabar'" %}</li>
+  <li>
+    {% trans "Luego se mostrará un formulario con el resto de los datos a completar:" %}
+    <dl>
+      <dt>{% trans "Información personal" %}</dt>
+        <dd>{% trans "Los datos como nombre, apellido, etc." %}</dd>
+      <dt>{% trans "Activo" %}</dt>
+        <dd>{% trans "Indica si el usuario se encuentra activo. Si lo deja destildado el usuario no estará activo y por lo tanto no podrá acceder a su cuenta" %}</dd>
+      <dt>{% trans "Es staff" %}</dt>
+        <dd>{% trans "Indica si el usuario forma parte de su equipo de trabajo. Todo usuario que tenga tildada esta opción podrá acceder a la administración de su agencia. Tenga cuidado con esta casilla de verificación." %}</dd>
+      <dt>{% trans "Es super usuario" %}</dt>
+        <dd>{% trans "Indica si el usuario es super usuario. Como se explicó antes un super usuario puede realizar cualquier tipo de operación. Tenga mucho cuidado con esta casilla de verificación." %}</dd>
+      <dt>{% trans "Grupos" %}</dt>
+        <dd>{% trans "Los grupos en los cuales estará asignado el usuario que se está creando o editando. En general los grupos en los que esté asignado el usuario definirán los permisos que tendrá el usuario." %}</dd>
+      <dt>{% trans "Permisos de usuario" %}</dt>
+        <dd>{% trans "Son los permisos específicos para este usuario. Los permisos que tendrá el usuario son el resultado de la unión de los permisos asignados a los grupos a los que pertenerce y los permisos específicos de usuario." %}</dd>
+    </dl>
+  </li>
+  <li>{% trans "Por último solo resta grabar." %}</li>
+</ul>
+<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/user/add/">{% trans "Crear un usuario en la administración de" %} "{{agencia.nombre}}"</a></p>
+<p>{% trans "Por último tenga en cuenta que sus empleados podrán registrarse en la agencia como cualquier otro usuario desde" %} <a target="_blank" href="{{agencia.url_sitio_agencia}}usuario/registro/?next=/agenciado/">{% trans "el registro de usuarios de la página estándar" %}</a>.</p>
+<p>{% trans "Luego usted podrá editar cada usuario que precise desde el listado de usuario y asignarle los permisos correspondientes." %}</p>
+<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/user/">{% trans "Acceder al listado de usuarios en la administración de" %} "{{agencia.nombre}}"</a></p>
+
+{%comment%}
 
   <h2 id=''>{% trans "" %}</h2>
   <p>{% trans "" %}</p>
@@ -136,7 +248,12 @@
     <dt>{% trans "" %}</dt>
       <dd>{% trans "" %}</dd>
   </dl>
-  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}">{% trans "en la administración de" %} "{{agencia.nombre}}"</a>
+  <ul>
+    <li>{% trans "" %}</li>
+  </ul>
+  <p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}">{% trans "en la administración de" %} "{{agencia.nombre}}"</a></p>
+
+{%endcomment%}
 
 </div>
 

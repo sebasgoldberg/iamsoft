@@ -125,4 +125,10 @@ def borrar_agencia(request):
 @login_required
 def tutorial(request,id):
   agencia=Agencia.objects.get(pk=id)
+  if agencia.user.username!=request.user.username:
+    messages.error(request,_(u'El tutorial al que está intentando acceder es de una agencia que no forma parte de su cuenta.'))
+    return redirect('/cuenta/usuario/')
+  if not agencia.activa:
+    messages.error(request,_(u'El tutorial al que está intentando acceder es de una agencia que no se encuentra activa.'))
+    return redirect('/cuenta/usuario/')
   return render(request,'iamcast/tutorial.html', {'agencia':agencia})

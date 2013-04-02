@@ -58,7 +58,7 @@ class Agencia(models.Model):
   user = models.ForeignKey(User, null=False, blank=True, editable=False)
   nombre = models.CharField(max_length=60, verbose_name=_(u'Nombre'), unique=True, help_text=_('Nombre de su agencia'))
   slug = models.CharField(max_length=60, verbose_name=_(u'Slug'), unique=True)
-  usuario_gmail = models.EmailField(max_length=60, verbose_name=_(u'Email de gmail'), help_text=_(u'Este usuario es necesario para que su aplicación pueda enviar mails (tenga en cuenta que esta casilla enviará emails a los usuarios que interactuen con su agencia: productoras, agenciados, etc.). Preferentemente debe ser una cuenta a la que nadie tenga acceso. Si no tiene una cuenta en gmail, por favor creela en <a href="%s" target="_blank">%s</a> y suministrenos usuario y contraseña de dicha cuenta.')%(GMAIL_SIGNUP_URL,GMAIL_SIGNUP_URL))
+  usuario_gmail = models.EmailField(max_length=60, verbose_name=_(u'Email de gmail'), help_text=_(u'Este usuario es necesario para que su aplicación pueda enviar mails (tenga en cuenta que esta casilla enviará emails a los usuarios que interactuen con su agencia: productoras, agenciados, etc.). Preferentemente debe ser una cuenta a la que nadie tenga acceso. Si no tiene una cuenta en gmail, por favor creela en %s y suministrenos usuario y contraseña de dicha cuenta.')%('<a href="%s" target="_blank">%s</a>'%(GMAIL_SIGNUP_URL,GMAIL_SIGNUP_URL)))
   clave_gmail = models.CharField(max_length=60, verbose_name=_(u'Clave gmail'), help_text=_(u'Clave del usuario gmail.'))
   dominio = models.CharField(max_length=100, unique=True, verbose_name=_(u'Dominio'), null=False, blank=True, help_text=_(u'Si no utilizará su propio dominio DEJELO VACIO. Tenga en cuenta que si coloca algún valor aqui, habrá que solicitar a la entidad registrante de su dominio que apunte a nuestros servidores DNS. Por otro lado en caso de usar su propio dominio, se deberá contratratar un certificado de seguridad con alguna entidad reconocida de forma que su sitio se vea seguro para los usuarios que lo utilizan.'))
   CREACION_INICIADA='CI'
@@ -90,7 +90,7 @@ class Agencia(models.Model):
     if not self.slug:
       self.slug = slugify_filter(self.nombre)
     if not self.dominio:
-      self.dominio = '%s.%s'%(self.slug,settings.AMBIENTE.dominio)
+      self.dominio = '%s.%s'%(self.slug,settings.AMBIENTE.dominio_agencias)
 
   def url_historial_pagos(self):
     return '/iamcast/historial/pagos/%s/'%self.id
@@ -151,6 +151,9 @@ class Agencia(models.Model):
   def url_admin_agencia(self):
     return u'%s/admin/'%self.url_base_agencia()
 
+  def url_reiniciar_clave(self):
+    return '%s%s'%(self.url_sitio_agencia(),'usuario/reiniciar/clave/')
+
   def descripcion_estado_creacion(self):
     return Agencia.DICT_ESTADO_CREACION[self.estado_creacion]
 
@@ -198,12 +201,12 @@ class Agencia(models.Model):
     fecha_inicio=fecha_vencimiento+timedelta(seconds=1)
     fecha_fin=fecha_vencimiento+timedelta(days=DIAS_CONTRATO)
 
-    titulo_contrato=ugettext(u'Contrato servicio IamCast para agencia %s por %s días (desde %s hasta %s)')%(
-      self.nombre,
-      DIAS_CONTRATO,
-      fecha_inicio,
-      fecha_fin
-    )
+    titulo_contrato=ugettext(u'Contrato servicio IamCast para agencia %(agencia)s por %(dias)s días (desde %(fecha_inicio)s hasta %(fecha_fin)s)')%{
+      'agencia':self.nombre,
+      'dias':DIAS_CONTRATO,
+      'fecha_inicio':fecha_inicio,
+      'fecha_fin':fecha_fin
+    }
 
     titulo_pago=ugettext(u'Pago de %s')%titulo_contrato
 
