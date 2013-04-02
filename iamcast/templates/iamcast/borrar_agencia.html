@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{%block content%}
+
+  <ul class="breadcrumb">
+    <li><a href="/">{% trans "Home" %}</a> <span class="divider">/</span></li>
+    <li><a href="/cuenta/usuario/">{% trans "Mi Cuenta" %}</a> <span class="divider">/</span></li>
+    <li class="active">{% trans "Borrar agencia" %} {{agencia.nombre}}</li>
+  </ul>
+
+  <legend>{% trans "Borrado de agencia" %} {{agencia.nombre}}</legend>
+  {% crispy form %}
+{%endblock%}

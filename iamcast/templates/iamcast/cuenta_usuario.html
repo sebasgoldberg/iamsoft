@@ -12,7 +12,7 @@
       <th>{% trans "Estado de creación" %}</th>
       <th>{% trans "Activa" %}</th>
       <th>{% trans "Fecha de vencimiento" %}</th>
-      <th>{% trans "Pagos" %}</th>
+      <th>{% trans "Acciones" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -36,13 +36,17 @@
           {%if pago%}
             {% include 'mercadopago/formulario_pago.html' with pago=pago no_display="True" %}
             <div class="btn-group">
-              {% include 'mercadopago/boton_para_formulario_pago.html' with pago=pago classes='btn' %}
-              <button class="btn dropdown-toggle" data-toggle="dropdown">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                {% trans "Acciones" %}
                 <span class="caret"></span>
-              </button>
+              </a>
               <ul class="dropdown-menu">
-                <li>{% include 'mercadopago/link_para_formulario_pago.html' with pago=pago %}</li>
-                <li><a href="/iamcast/ver/historial/pagos/{{agencia.id}}/">{% trans "Ver historial" %}</a></li>
+                <li><a href="/iamcast/ver/historial/pagos/{{agencia.id}}/">{% trans "Ver historial de pagos" %}</a></li>
+                {% if not agencia.borrada %}
+                  <li>{% include 'mercadopago/link_para_formulario_pago.html' with pago=pago %}</li>
+                  <li><a href="/iamcast/tutorial/{{agencia.id}}/">{% trans "Acceder al tutorial" %}</a></li>
+                  {%if agencia.creada %}<li><a href="/iamcast/borrar/agencia/?id={{agencia.id}}">{% trans "Borrar agencia" %}</a></li>{%endif%}
+                {%endif%}
               </ul>
             </div>
           {%endif%}
@@ -52,5 +56,7 @@
     {% endfor %}
   </tbody>
 </table>
+
+<a href="/iamcast/configurar/" class="btn btn-success">{% trans "Configurar aplicación para su agencia" %} &raquo;</a>
 
 <script type="text/javascript" src="{{STATIC_URL}}/mercadopago/js/boton.js"></script>

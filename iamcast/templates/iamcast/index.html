@@ -23,6 +23,31 @@
     <li>{% trans "La Publicación de la información" %}</li>
   </ul>
 
+  <h2 id='beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</h2>
+  <h3 id='aspectos_clave'>{% trans "Aspectos Clave" %}</h3>
+  <ul>
+    <li>{% trans "Información centralizada." %}</li>
+    <li>{% trans "Acceso a la aplicación desde cualquier computadora con conexión a internet." %}</li>
+    <li>{% trans "Conexión encriptada a la aplicación" %}</li>
+    <li>{% trans "Estandarización en la forma que se guarda la información." %}</li>
+    <li>{% trans "Estandarización en los procesos de búsqueda de perfiles." %}</li>
+    <li>{% trans "Automatización de tareas frecuentes." %}</li>
+    <li>{% trans "Autogestión del perfil del agenciado (no pierda tiempo y dinero, deje que sus agenciados actualicen su perfil)." %}</li>
+    <li>{% trans "Integración del agenciado en el proceso de selección." %}</li>
+    <li>{% trans "Consistencia de datos." %}</li>
+    <li>{% trans "Manejo de usuarios, grupos y permisos para restringir el acceso a la información." %}</li>
+    <li>{% trans "Subdominio de iamcast.com.ar (ejemplo: su-agencia.iamcast.com.ar)" %}</li>
+  </ul>
+
+  <h3 id='aspectos_opcionales'>{% trans "Aspectos Opcionales" %}</h3>
+  <ul>
+    <li>{% trans "Uso de su propio dominio." %}</li>
+    <li>{% trans "Conexión encriptada con certificado de seguridad para su propio dominio." %}</li>
+    <li>{% trans "Diseño exlusivo para la página estándar." %}</li>
+    <li>{% trans "Adaptación de la aplicación a requerimientos específicos del cliente." %}</li>
+    <li>{% trans "Utilización de servidor propio." %}</li>
+  </ul>
+
   <h2 id='manejo_de_la_informacion'>{% trans "Manejo de la Información" %}</h2>
   <p>{% trans "El manejo de la información dentro de una agencia de casting debe ser tomado seriamente. Es muy común dejar anotaciones de nombres, telefonos y otros datos, tanto de agenciados, como de productoras y trabajos, en libretas, papeles y cuadernos. Hay varias desventajas en manejarse de esta forma: " %}</p>
   <ul>
@@ -92,35 +117,10 @@
   <h3 id='sitio_estandar_en_imagenes'>{% trans "Sitio Estandar en Imágenes" %}</h3>
   {%include "iamcast/carousel/sitio.html"%}
 
-  <h2 id='beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</h2>
-  <h3 id='aspectos_clave'>{% trans "Aspectos Clave" %}</h3>
-  <ul>
-    <li>{% trans "Estandarización en la forma que se guarda la información." %}</li>
-    <li>{% trans "Estandarización en los procesos de búsqueda de perfiles." %}</li>
-    <li>{% trans "Automatización de tareas frecuentes." %}</li>
-    <li>{% trans "Autogestión del perfil del agenciado (no pierda tiempo y dinero, deje que sus agenciados actualicen su perfil)." %}</li>
-    <li>{% trans "Integración del agenciado en el proceso de selección." %}</li>
-    <li>{% trans "Información centralizada." %}</li>
-    <li>{% trans "Consistencia de datos." %}</li>
-    <li>{% trans "Manejo de grupos de usuarios, usuarios y grupos, para restringir el acceso a la información." %}</li>
-    <li>{% trans "Acceso a la aplicación desde cualquier computadora con conexión a internet." %}</li>
-    <li>{% trans "Conexión encriptada a la aplicación" %}</li>
-    <li>{% trans "Subdominio de iamsoft.com.ar (ejemplo: su-agencia.iamsoft.com.ar)" %}</li>
-  </ul>
-
-  <h3 id='aspectos_opcionales'>{% trans "Aspectos Opcionales" %}</h3>
-  <ul>
-    <li>{% trans "Uso de su propio dominio." %}</li>
-    <li>{% trans "Conexión encriptada con certificado de seguridad para su propio dominio." %}</li>
-    <li>{% trans "Utilización de servidor propio." %}</li>
-    <li>{% trans "Adaptación de la aplicación a requerimientos específicos del cliente." %}</li>
-  </ul>
-
   <h2 id='como_hago_para_empezar'>{% trans "¿Cómo hago para empezar a utilizar IamCast?" %}</h2>
   <p>{% trans "Para comenzar a utilizar IamCast, el proceso es casi inmediato. Los pasos a seguir son los siguientes:" %}</p>
   <ul>
     <li>{% trans "Completar el formulario de registro de agencia." %}</li>
-    <li>{% trans "Realizar la suscripción por el período seleccionado." %}</li>
     <li>{% trans "En forma automática se generán los módulos para administrar su agencia y la página web estándar." %}</li>
     <li>{% trans "Luego de la generación se enviará un e-mail a su casilla con nombre de usuario y clave del super usuario de su módulo de administración." %}</li>
     <li>{% trans "Comenzar a utilizar la aplicación y sacar el máximo provecho." %}</li>
@@ -143,6 +143,11 @@
 <div class='span3'>
   <ul class='nav nav-list'>
     <li><a href='#introduccion'>{% trans "Introduccion" %}</a></li>
+    <li><a href='#beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</a></li>
+    <ul class='nav nav-list'>
+      <li><a href='#aspectos_clave'>{% trans "Aspectos Clave" %}</a></li>
+      <li><a href='#aspectos_opcionales'>{% trans "Aspectos Opcionales" %}</a></li>
+    </ul>
     <li><a href='#manejo_de_la_informacion'>{% trans "Manejo de la Información" %}</a></li>
     <ul class='nav nav-list'>
       <li><a href='#que_se_puede_guardar'>{% trans "¿Qué se puede guardar?" %}</a></li>
@@ -153,11 +158,6 @@
     <li><a href='#publicacion_en_pagina_estandar'>{% trans "Publicación en página estándar" %}</a></li>
     <ul class='nav nav-list'>
       <li><a href='#sitio_estandar_en_imagenes'>{% trans "Sitio Estándar en Imágenes" %}</a></li>
-    </ul>
-    <li><a href='#beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</a></li>
-    <ul class='nav nav-list'>
-      <li><a href='#aspectos_clave'>{% trans "Aspectos Clave" %}</a></li>
-      <li><a href='#aspectos_opcionales'>{% trans "Aspectos Opcionales" %}</a></li>
     </ul>
     <li><a href='#como_hago_para_empezar'>{% trans "¿Cómo hago para empezar a utilizar IamCast?" %}</a></li>
   </ul>

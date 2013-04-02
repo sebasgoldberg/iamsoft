@@ -22,7 +22,7 @@
       <th>{% trans "Título" %}</th>
       <th>{% trans "Importe" %}</th>
       <th>{% trans "Moneda" %}</th>
-      <th>{% trans "Acciones" %}</th>
+      {%if not agencia.borrada%}<th>{% trans "Acciones" %}</th>{%endif%}
     </tr>
   </thead>
   <tbody>
@@ -38,11 +38,13 @@
         <td>{{pago.titulo}}</td>
         <td>{{pago.total}}</td>
         <td>{{pago.descripcion_moneda}}</td>
-        <td>
-          {%if not pago.contratoagencia.pagado%}
-            {% include 'mercadopago/formulario_pago.html' with pago=pago %}
-          {%endif%}
-        </td>
+        {%if not agencia.borrada%}
+          <td>
+            {%if not pago.contratoagencia.pagado%}
+              {% include 'mercadopago/formulario_pago.html' with pago=pago %}
+            {%endif%}
+          </td>
+        {%endif%}
       {%endwith%}
     </tr>
     {% endfor %}

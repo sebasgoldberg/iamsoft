@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<ul class="breadcrumb">
+  <li><a href="/">{% trans "Home" %}</a> <span class="divider">/</span></li>
+  <li><a href="/cuenta/usuario/">{% trans "Mi Cuenta" %}</a> <span class="divider">/</span></li>
+  <li class="active">{% trans "Tutorial para agencia" %} {{agencia.nombre}}</li>
+</ul>
+
+<div class='row'>
+
+  <div class='span12 page-header'>
+  <h1>Tutorial <small>Sepa como administrar su agencia '{{agencia.nombre}}'</small></h1>
+  </div>
+</div>
+
+<div class='row'>
+<div class='span9'>
+
+  <h2 id='introduccion'>{% trans "Introducción" %}</h2>
+  <p>{% trans "La idea de este tutorial es brindarle nociones básicas de las primeras tareas a realizar en la administración de su agencia. Las tareas explicadas en este tutorial son las siguientes:" %}</p>
+  <ul>
+    <li>{% trans "Creación de una agencia activa." %}</li>
+    <li>{% trans "Carga de datos de sus agenciados." %}</li>
+    <li>{% trans "Creación de trabajos." %}</li>
+    <li>{% trans "Creación de perfiles buscados por trabajo." %}</li>
+    <li>{% trans "Asignación de agenciados a perfiles buscados." %}</li>
+    <li>{% trans "Envío de un trabajo por mail." %}</li>
+  </ul>
+
+  <h2 id='creacion_agencia_activa'>{% trans "Creación de una agencia activa" %}</h2>
+  <p>{% trans "En toda aplicación es necesario crear una agencia activa. En dicha agencia se definirá la siguiente información:" %}</p>
+  <dl>
+    <dt>{% trans "Nombre" %}</dt>
+      <dd>{% trans "El nombre de su agencia." %}</dd>
+    <dt>{% trans "E-mail" %}</dt>
+      <dd>{% trans "E-mail donde desea ser contactado. Este e-mail será utilizado en los datos de contacto de su agencia, y será la dirección a donde se dirigirán las respuestas de los mail generados en forma automática." %}</dd>
+    <dt>{% trans "Activo" %}</dt>
+      <dd>{% trans "Debe estar tildado en la agencia que desea tener activa. En su caso, como recién está comenzando a configurar su aplicación, debe dejarlo tildado." %}</dd>
+    <dt>{% trans "Favicon" %}</dt>
+      <dd>{% trans "Esta es una pequeña imagen que se muestra en los browsers (como Chrome o Firefox), en la parte de la pestaña donde aparece el título del sitio." %}</dd>
+    <dt>{% trans "Titulo página inicial" %}</dt>
+      <dd>{% trans "Este será el título que verán los usuarios cuando accedan a su página estándar." %}</dd>
+    <dt>{% trans "Presentación página inicial" %}</dt>
+      <dd>{% trans "Este es el texto que aparece debajo del título y presenta su agencia." %}</dd>
+    <dt>{% trans "Mapa página de contacto" %}</dt>
+      <dd>{% trans "La información que debe colocar aqui es la obtenida en google maps. Debe ingresar a" %} <a target="_blank" href='https://maps.google.com/'>google maps</a> {% trans "y buscar la dirección de su agencia. Debe seleccionar el botón de enlace (al lado del botón imprimir) y copiar el HTML para ser insertado en un sitio WEB. Este contenido debe pegarlo en Mapa página de contacto." %}</dd>
+    <dt>{% trans "Direcciones" %}</dt>
+      <dd>{% trans "Ingrese la o las direcciones de su agencia." %}</dd>
+    <dt>{% trans "Teléfonos" %}</dt>
+      <dd>{% trans "Ingrese el o los teléfonos de su agencia." %}</dd>
+  </dl>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agencia/add/">{% trans "Crear agencia en la administración de" %} "{{agencia.nombre}}"</a>
+
+  <h2 id='agenciados'>{% trans "Agenciados" %}</h2>
+  <h3 id='carga_de_agenciados'>{% trans "Carga de Agenciados" %}</h3>
+  <p>{% trans "Luego de haber creado los datos de su agencia, es el momento de cargar los agenciados. Tenga en cuenta que existen dos formas para la creación de agenciados en su agencia:" %}</p>
+  <dl>
+    <dt>{% trans "Carga a través de la administración de " %} "{{agencia.nombre}}"</dt>
+      <dd>{% trans "Aqui usted o sus agenciadores son los encargados de ingresar la información de cada agenciado. Por default el agenciado se crea como 'Activo' (este es un campo del formulario de cada agenciado)" %}</dd>
+  </dl>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/add/">{% trans "Crear agenciado en la administración de" %} "{{agencia.nombre}}"</a>
+  <dl>
+    <dt>{% trans "Carga a través del sitio estándar de " %} "{{agencia.nombre}}"</dt>
+      <dd>{% trans "Aqui sus agenciados son los responsables de ingresar sus datos. Previamente deben registrarse. Una vez registrados serán redireccionados al formulario donde podrán cargar toda la información de su perfil. Todo agenciado creado de está forma se creará como 'No Activo' (campo 'Activo' del formulario del perfil destildado). De está forma usted podrá distinguir los agenciados aprobados para su agencia de los no aprobados. " %}</dd>
+  </dl>
+
+  <h3 id='listado_de_agenciados'>{% trans "Listado de Agenciados" %}</h3>
+  <p>{% trans "Luego de haber creado algunos agenciados, usted habrá notado que cuenta con un listado de estos. En dicho listado podrá realizar busquedas y aplicar distinto tipo de filtros." %}</p>
+  <dl>
+    <dt>{% trans "Busquedas" %}</dt>
+      <dd>{% trans "Algunas de las busquedas que podrá realizar son a partir del ID de un agenciado, nombre, apellido, email, etc." %}</dd>
+    <dt>{% trans "Filtros" %}</dt>
+      <dd>{% trans "Podrá aplicar varios filtros a las bússquedas que realice. Algunos de los filtros son: si está activo o inactivo, características físicas, habilidades, fecha de agenciamiento y ubicación (país, región, ciudad)." %}</dd>
+  </dl>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/">{% trans "Acceder al listado de agenciados en la administración de" %} "{{agencia.nombre}}"</a>
+
+
+  <h2 id='trabajos'>{% trans "Trabajos" %}</h2>
+  <p>{% trans "Ahora que haz ingresado algunos agenciados en tu sistema, podemos empezar a ver el módulo de trabajos en la administración de tu agencia. Antes vamos a hacer una breve explicación de algunos conceptos." %}</p>
+  <p>{% trans "Dentro del módulo de trabajo podemos encontrar los siguientes objetos:" %}</p>
+  <dl>
+    <dt>{% trans "Productora" %}</dt>
+      <dd>{% trans "Las productoras en general son los clientes de los trabajos que realizamos con nuestra agencia." %}</dd>
+    <dt>{% trans "Trabajo" %}</dt>
+      <dd>
+        {% trans "Es cada trabajo a realizar por nuestra agencia. Cada trabajo se realiza para alguna productora. Los componentes de un trabajo son:" %}
+        <ul>
+          <li>{% trans "Productora (el cliente del trabajo)" %}</li>
+          <li>{% trans "Eventos del trabajo (los eventos asociados al trabajo: casting, callback, prueba de ropa, realización)" %}</li>
+          <li>{% trans "Perfiles buscados (Los distintos perfiles buscados)" %}</li>
+        </ul>
+      </dd>
+    <dt>{% trans "Perfil Buscado" %}</dt>
+      <dd>
+        {% trans "Un perfil buscado es un componente de un trabajo. Un trabajo puede tener asociado varios perfiles buscados, por ejemplo, para la filmación de una pelicula (el trabajo) podemos buscar protagonistas y extras (los perfiles buscados). Protagonistas es un perfil buscado y Extras es otro perfil buscado. Ambos pertenecen al trabajo película. Cada uno tendrá asociadas determinadas características, cache, etc. Un perfil buscado está compuesto por" %}
+        <ul>
+          <li>{% trans "Pertenece a un trabajo" %}</li>
+          <li>{% trans "Eventos del perfil buscado (similar a los eventos del trabajo pero en este caso son eventos específicos del perfil)" %}</li>
+          <li>{% trans "Postulaciones (las postulaciones de los agenciados hechas a los distintos perfiles)" %}</li>
+        </ul>
+      </dd>
+    <dt>{% trans "Postulación" %}</dt>
+      <dd>{% trans "Una postulación es la acción de proponer un agenciado para un perfil buscado de un determinado trabajo. Cada postulación tendrá un determinado estado que tiene como objetivo indicar por ejemplo si el agenciado se encuentra solamente postulado, si ya fué seleccionado, si realizó el trabajo o si ya sele pagó el trabajo." %}</dd>
+  </dl>
+  <p>{% trans "Ahora que ya tenemos una idea de cómo es la organización de los distintos objetos en el módulo de trabajo, vamos a ver más en detalle cada uno de los mismos." %}</p>
+  <h3 id='creacion_de_trabajos'>{% trans "Creación de Trabajos" %}</h3>
+  <p>{% trans "Los información a asignar en los campos del formulario para crear un trabajo es bastante trivial. Mencionaremos los campos que merecen alguna explicación:" %}</p>
+  <dl>
+    <dt>{% trans "Productora" %}</dt>
+      <dd>{% trans "La productora que es cliente del trabajo. Una vez grabado el trabajo se presentará un link a la productora elegida." %}</dd>
+    <dt>{% trans "Estado" %}</dt>
+      <dd>{% trans "El estado del trabajo. La idea es que a medidda que vamos pasando las distintas etapas de un trabajo se vaya cambiando su estado. " %}</dd>
+    <dt>{% trans "Publicado" %}</dt>
+      <dd>{% trans "Este campo si está tildado indica que el trabajo debe ser publicado en la página estándar de la agencia. Su publicación se verá en la sección de búsquedas (Actualmente no debe tener ningún trabajo publicado):" %} <a target="_blank" href="{{agencia.url_sitio_agencia}}trabajo/busquedas/">{% trans "Ir a página de búsquedas en página estándar de" %} {{agencia.nombre}}</a></dd>
+    <dt>{% trans "Eventos del trabajo" %}</dt>
+      <dd>{% trans "Los eventos asociados al trabajo: casting, callback, prueba de ropa, realización." %}</dd>
+    <dt>{% trans "Perfiles buscados" %}</dt>
+      <dd>{% trans "Los perfiles buscados dentro del trabajo. Podrá ingresar la información principal de cada perfil buscado. Luego, al grabar el trabajo, se presentará un link a cada perfil buscado, de forma que pueda completar la información de detalle de cada perfil buscado." %}</dd>
+  </dl>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/trabajo/add/">{% trans "Crear un trabajo en la administración de" %} "{{agencia.nombre}}"</a>
+
+  <h2 id=''>{% trans "" %}</h2>
+  <p>{% trans "" %}</p>
+  <dl>
+    <dt>{% trans "" %}</dt>
+      <dd>{% trans "" %}</dd>
+  </dl>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}">{% trans "en la administración de" %} "{{agencia.nombre}}"</a>
+
+  <h2 id=''>{% trans "" %}</h2>
+  <p>{% trans "" %}</p>
+  <dl>
+    <dt>{% trans "" %}</dt>
+      <dd>{% trans "" %}</dd>
+  </dl>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}">{% trans "en la administración de" %} "{{agencia.nombre}}"</a>
+
+</div>
+
+<div class='span3'>
+  <ul class='nav nav-list'>
+    <li><a href='#introduccion'>{% trans "Introduccion" %}</a></li>
+    <li><a href='#beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</a></li>
+    <ul class='nav nav-list'>
+      <li><a href='#aspectos_clave'>{% trans "Aspectos Clave" %}</a></li>
+      <li><a href='#aspectos_opcionales'>{% trans "Aspectos Opcionales" %}</a></li>
+    </ul>
+    <li><a href='#manejo_de_la_informacion'>{% trans "Manejo de la Información" %}</a></li>
+    <ul class='nav nav-list'>
+      <li><a href='#que_se_puede_guardar'>{% trans "¿Qué se puede guardar?" %}</a></li>
+      <li><a href='#como_se_guarda_la_informacion'>{% trans "¿Cómo se guarda la información?" %}</a></li>
+      <li><a href='#modulo_de_administracion_en_imagenes'>{% trans "Módulo de Administración en Imágenes" %}</a></li>
+    </ul>
+    <li><a href='#procesos_de_busqueda_de_perfiles'>{% trans "Procesos de búsqueda de perfiles" %}</a></li>
+    <li><a href='#publicacion_en_pagina_estandar'>{% trans "Publicación en página estándar" %}</a></li>
+    <ul class='nav nav-list'>
+      <li><a href='#sitio_estandar_en_imagenes'>{% trans "Sitio Estándar en Imágenes" %}</a></li>
+    </ul>
+    <li><a href='#como_hago_para_empezar'>{% trans "¿Cómo hago para empezar a utilizar IamCast?" %}</a></li>
+  </ul>
+  <hr/>
+</div>
+
+</div>
+{% endblock %}

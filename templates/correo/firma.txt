@@ -1,0 +1,4 @@
+{% load i18n %}
+{% trans "Saludos cordiales" %}
+{% trans "El equipo de IamSoft" %}
+{{ ambiente.get_base_url }}/

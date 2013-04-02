@@ -12,7 +12,7 @@ from mercadopago.models import MercadoPago
 from iampacks.cross.correo.mail import Mail
 from iamcast.models import Agencia
 from django.utils.translation import ugettext as _
-from iamcast.forms import AgenciaForm
+from iamcast.forms import AgenciaForm, BorrarAgenciaForm
 from iamcast.models import PagoContrato
 from datetime import datetime
 
@@ -55,45 +55,7 @@ def configurar(request):
     form = AgenciaForm(instance=agencia,initial={'next_page':next_page})
   return render(request,'iamcast/configurar.html',{'form':form})
 
-@login_required
-def contratar(request):
-
-  cantidad = '1'
-  moneda = 'ARS'
-  importe = '0.01'
-  id_contrato_agencia = '123'
-  id_agencia = '456'
-
-  item_id = id_contrato_agencia
-  external_reference = id_agencia
-
-  md5String = settings.AMBIENTE.mercado_pago.client_id + settings.AMBIENTE.mercado_pago.client_secret + cantidad + moneda + importe + item_id + external_reference;
-
-  md5 = hashlib.md5(md5String).hexdigest()
-
-  pago = {
-      "client_id":settings.AMBIENTE.mercado_pago.client_id,
-      "md5":md5,
-     
-      #<!-- Datos obligatorios del item -->
-      "item_title":u"Contratación mensual IamCast",
-      "item_quantity":cantidad,
-      "item_currency_id":moneda,
-      "item_unit_price":importe,
-      
-      #<!-- Datos opcionales -->
-      "item_id":item_id,
-      "external_reference":external_reference,
-      "item_picture_url":'',
-      "payer_name":request.user.first_name,
-      "payer_surname":request.user.last_name,
-      "payer_email":request.user.email,
-      "back_url_success":"",
-      "back_url_pending":""
-    }
-
-  return render(request,'iamcast/contratar.html',{'pago':pago})
-
+"""
 def notificacion_pago(request):
   if request.GET['topic']!='payment':
     raise Exception(u'No se ha encontrado en GET parámetro "topic" con valor "payment"')
@@ -107,26 +69,6 @@ def notificacion_pago(request):
   pago=mp.get_pago_notificado(id_notificacion_pago)
 
   msg = Mail('Notificacion de pago MP',str(pago),['sebas.goldberg@gmail.com'])
-  msg.send()
-
-  return HttpResponse()
-
-"""
-def resultado_creacion_agencia(request):
-  id_agencia=request.GET['id_agencia']
-  resultado=request.GET['resultado']
-  if not id_agencia:
-    raise Exception('No se ha informado el parámetro id_agencia.')
-  if not resultado:
-    raise Exception('No se ha informado el parámetro resultado.')
-  agencia=Agencia.objects.get(pk=id_agencia)
-  if agencia.creacion_exitosa is None:
-    agencia.creacion_exitosa = (resultado == '0')
-    agencia.save()
-
-  destinatarios= [ mail for _, mail in settings.AMBIENTE.admins ]
-  cuerpo=u"El resultado de la creación de la agencia '%s' fue '%s'" % (agencia.nombre, resultado)
-  msg = Mail('Resultado de creación de agencia',str(pago),destinatarios)
   msg.send()
 
   return HttpResponse()
@@ -148,8 +90,39 @@ def pago_pending(request,id):
   actualizar_pago(request,id)
   return redirect('/cuenta/usuario/')
 
+@login_required
 def ver_historial_pagos(request,id_agencia):
   agencia=Agencia.objects.get(pk=id_agencia)
   #agencia.proximo_pago() #Aseguramos que se cree el último pago a ser realizado
   #contratos=agencia.contratoagencia_set.order_by('-fecha_inicio')
   return render(request,'iamcast/ver_historial_pagos.html',{'agencia':agencia})
+
+@login_required
+def borrar_agencia(request):
+
+  if request.method == 'POST':
+    form = BorrarAgenciaForm(request.POST)
+    if form.is_valid():
+      agencia=Agencia.objects.get(pk=form.cleaned_data.get('agencia_id'))
+      output=Popen([
+        '%s/manage.py'%settings.AMBIENTE.project_directory,
+        'borrar_agencia',
+        '--id=%s'%agencia.id,
+        '&'
+        ])
+      messages.info(request,_(u'Hemos iniciado el proceso de borrado de la agencia %s. Este proceso puede demorar varios minutos. Una vez finalizado el proceso podrá verificar el estado de su agencia en su cuenta')%agencia.nombre)
+      return redirect('/cuenta/usuario/')
+  else:
+    id = request.GET.get('id')
+    form = BorrarAgenciaForm(initial={'agencia_id':id})
+
+  agencia=Agencia.objects.get(pk=form['agencia_id'].value())
+
+  messages.warning(request,_(u'ATENCION! Si lleva a cabo este proceso no tendrá posibilidad de recuperar los datos de la agencia %s')%agencia.nombre)
+
+  return render(request,'iamcast/borrar_agencia.html',{'form':form, 'agencia':agencia})
+
+@login_required
+def tutorial(request,id):
+  agencia=Agencia.objects.get(pk=id)
+  return render(request,'iamcast/tutorial.html', {'agencia':agencia})
