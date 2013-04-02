@@ -10,7 +10,6 @@
 </ul>
 
 <div class='row'>
-
   <div class='span12 page-header'>
   <h1>Tutorial <small>Sepa como administrar su agencia '{{agencia.nombre}}'</small></h1>
   </div>
@@ -24,13 +23,14 @@
   <ul>
     <li>{% trans "Acceso a la administración y cambio de clave." %}</li>
     <li>{% trans "Creación de una agencia activa." %}</li>
+    <li>{% trans "Datos de diccionario." %}</li>
     <li>{% trans "Carga de datos de sus agenciados." %}</li>
     <li>{% trans "Creación de trabajos." %}</li>
     <li>{% trans "Creación de perfiles buscados por trabajo." %}</li>
     <li>{% trans "Asignación de agenciados a perfiles buscados." %}</li>
     <li>{% trans "Envío de un trabajo por mail." %}</li>
-    <li>{% trans "Creación de grupos de usuarios" %}</li>
     <li>{% trans "Creación de usuarios" %}</li>
+    <li>{% trans "Creación de grupos de usuarios" %}</li>
     <li>{% trans "Datos maestros" %}</li>
   </ul>
 
@@ -71,6 +71,33 @@
       <dd>{% trans "Ingrese el o los teléfonos de su agencia." %}</dd>
   </dl>
   <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agencia/add/">{% trans "Crear agencia en la administración de" %} "{{agencia.nombre}}"</a>
+
+  <h2 id='diccionario_de_datos'>{% trans "Diccionario de datos" %}</h2>
+  <p>{% trans "Llamaremos diccionario de datos al conjunto de objetos en la administración que estén constituidos simplemente por una descripción y sirvan para definir objetos más complejos como por ejemplo una agencia, un agenciado, un trabajo, etc." %}</p>
+  <p>{% trans "Algunos de los objetos que pertenecen al diccionario de datos son: Ojos, Pelos, Pieles, Deportes, Compañias de teléfono, etc." %}</p>
+  <p>{% trans "Estos objetos son muy fáciles de mantener, se pueden listar, crear, modificar y borrar." %}</p>
+  <p>{% trans "En la mayoría de los casos cada tipo de objeto de diccionario viene provisto de datos cargados durante la creación de su agencia." %}</p>
+  <p>{% trans "A continuación se ofrecen los accesos a los listados de cada tipo de objeto de diccionario:" %}</p>
+
+  <div class="btn-group">
+    <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+      {% trans "Listados de diccionarios de datos" %}
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <!-- dropdown menu links -->
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/danza/">{% trans "Listar danzas en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/deporte/">{% trans "Listar deportes en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/idioma/">{% trans "Listar idiomas en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/instrumento/">{% trans "Listar instrumentos en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/estadodientes/">{% trans "Listar estado dientes en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/ojos/">{% trans "Listar ojos en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/pelo/">{% trans "Listar pelos en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/piel/">{% trans "Listar pieles en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/talle/">{% trans "Listar talles en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}telefono/compania/">{% trans "Listar compañias de teléfono en la administración de" %} "{{agencia.nombre}}"</a></li>
+    </ul>
+  </div>
 
   <h2 id='agenciados'>{% trans "Agenciados" %}</h2>
   <h3 id='carga_de_agenciados'>{% trans "Carga de Agenciados" %}</h3>
@@ -210,7 +237,7 @@
 <p>{% trans "Por otro lado, es muy común que tenga usuarios que cumplen las mismas tareas. En estos casos entra el concepto de grupo. Usted podrá definir grupos. Por cada grupo podrá indicar los permisos del grupo. Luego al crear usuarios podrá asignarlos a distintos grupos." %}</p>
 <p>{% trans "Por defecto, durante el proceso de creación de su agencia, se creó el grupo 'agenciadores'. Este grupo cuenta con todos los permisos menos con los permisos relativos a la creación de usuarios y grupos. " %}</p>
 
-<h3 id=''>{% trans "Crear usuarios" %}</h3>
+<h3 id='crear_usuarios'>{% trans "Crear usuarios" %}</h3>
 <p>{% trans "La creación de usuarios es relativamente simple. Los pasos a seguir son los siguientes:" %}</p>
 <ul>
   <li>{% trans "Acceder al formulario de creación de usuarios." %}</li>
@@ -236,9 +263,20 @@
   <li>{% trans "Por último solo resta grabar." %}</li>
 </ul>
 <p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/user/add/">{% trans "Crear un usuario en la administración de" %} "{{agencia.nombre}}"</a></p>
-<p>{% trans "Por último tenga en cuenta que sus empleados podrán registrarse en la agencia como cualquier otro usuario desde" %} <a target="_blank" href="{{agencia.url_sitio_agencia}}usuario/registro/?next=/agenciado/">{% trans "el registro de usuarios de la página estándar" %}</a>.</p>
+<p>{% trans "Tenga en cuenta que sus empleados podrán registrarse en la agencia como cualquier otro usuario desde" %} <a target="_blank" href="{{agencia.url_sitio_agencia}}usuario/registro/?next=/agenciado/">{% trans "el registro de usuarios de la página estándar" %}</a>.</p>
 <p>{% trans "Luego usted podrá editar cada usuario que precise desde el listado de usuario y asignarle los permisos correspondientes." %}</p>
 <p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/user/">{% trans "Acceder al listado de usuarios en la administración de" %} "{{agencia.nombre}}"</a></p>
+
+<h3 id='crear_grupos'>{% trans "Crear grupos" %}</h3>
+<p>{% trans "Crear grupos puede ser muy util para definir en un único objeto los permisos que se asignarán a distintos usuarios (en lugar de definir estos permisos usuario por usuario)." %}</p>
+<p>{% trans "Para crear un grupo simplemente debe acceder al formulario de creación de grupo y definir:" %}</p>
+<dl>
+  <dt>{% trans "Nombre" %}</dt>
+    <dd>{% trans "El nombre del grupo." %}</dd>
+  <dt>{% trans "Permisos" %}</dt>
+    <dd>{% trans "Los permisos que tendrán los usuarios a los que se les asigne dicho grupo." %}</dd>
+</dl>
+<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/group/add/">{% trans "Crear un grupo en la administración de" %} "{{agencia.nombre}}"</a></p>
 
 {%comment%}
 
@@ -259,24 +297,34 @@
 
 <div class='span3'>
   <ul class='nav nav-list'>
-    <li><a href='#introduccion'>{% trans "Introduccion" %}</a></li>
-    <li><a href='#beneficios_de_la_aplicacion'>{% trans "Beneficios de la Aplicación" %}</a></li>
+
+
+    <li><a href='#introduccion'>{% trans "Introducción" %}</a></li>
+    <li><a href='#accediendo_a_la_administracion'>{% trans "Accediendo a la administración" %}</a></li>
     <ul class='nav nav-list'>
-      <li><a href='#aspectos_clave'>{% trans "Aspectos Clave" %}</a></li>
-      <li><a href='#aspectos_opcionales'>{% trans "Aspectos Opcionales" %}</a></li>
+      <li><a href='#usuario_y_contraseña_del_super_usuario'>{% trans "Usuario y contraseña del super usuario" %}</a></li>
+      <li><a href='#cambio_de_clave_del_super_usuario'>{% trans "Cambio de clave del super usuario" %}</a></li>
     </ul>
-    <li><a href='#manejo_de_la_informacion'>{% trans "Manejo de la Información" %}</a></li>
+    <li><a href='#creacion_agencia_activa'>{% trans "Creación de una agencia activa" %}</a></li>
+    <li><a href='#diccionario_de_datos'>{% trans "Diccionario de datos" %}</a></li>
+    <li><a href='#agenciados'>{% trans "Agenciados" %}</a></li>
     <ul class='nav nav-list'>
-      <li><a href='#que_se_puede_guardar'>{% trans "¿Qué se puede guardar?" %}</a></li>
-      <li><a href='#como_se_guarda_la_informacion'>{% trans "¿Cómo se guarda la información?" %}</a></li>
-      <li><a href='#modulo_de_administracion_en_imagenes'>{% trans "Módulo de Administración en Imágenes" %}</a></li>
+      <li><a href='#carga_de_agenciados'>{% trans "Carga de Agenciados" %}</a></li>
+      <li><a href='#listado_de_agenciados'>{% trans "Listado de Agenciados" %}</a></li>
     </ul>
-    <li><a href='#procesos_de_busqueda_de_perfiles'>{% trans "Procesos de búsqueda de perfiles" %}</a></li>
-    <li><a href='#publicacion_en_pagina_estandar'>{% trans "Publicación en página estándar" %}</a></li>
+    <li><a href='#trabajos'>{% trans "Trabajos" %}</a></li>
     <ul class='nav nav-list'>
-      <li><a href='#sitio_estandar_en_imagenes'>{% trans "Sitio Estándar en Imágenes" %}</a></li>
+      <li><a href='#creacion_de_trabajos'>{% trans "Creación de Trabajos" %}</a></li>
+      <li><a href='#editando_perfiles_buscados_de_trabajo'>{% trans "Editando perfiles buscados de un trabajo" %}</a></li>
+      <li><a href='#postulando_agenciados'>{% trans "Postulando agenciados" %}</a></li>
+      <li><a href='#envio_de_trabajo_por_email'>{% trans "Envío de trabajo por email" %}</a></li>
     </ul>
-    <li><a href='#como_hago_para_empezar'>{% trans "¿Cómo hago para empezar a utilizar IamCast?" %}</a></li>
+    <li><a href='#seguridad_grupos_usuarios_y_permisos'>{% trans "Seguridad, grupos, usuarios y permisos" %}</a></li>
+    <ul class='nav nav-list'>
+      <li><a href='#crear_usuarios'>{% trans "Crear usuarios" %}</a></li>
+      <li><a href='#crear_grupos'>{% trans "Crear grupos" %}</a></li>
+    </ul>
+
   </ul>
   <hr/>
 </div>
