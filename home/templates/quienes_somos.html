@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{%block quienes_somos_active%}active{%endblock%}
+
+{% block content %}
+
+  <h1>{% trans "Quiénes Somos" %}</h1>
+
+  <p>
+    {%blocktrans with url_jsg="http://ar.linkedin.com/pub/sebastian-goldberg/a/48a/589" %}
+    IamSoft es una joven empresa fundada por <a target="_blank" href={{url_jsg}}>Juan Sebastián Goldberg</a>, desempeñada en el desarrollo de aplicaciones informáticas.
+    {%endblocktrans%}
+  </p>
+  <p>
+    {% trans "Las areas de desempeño de la empresa son:" %}
+    <ul>
+      <li>{% trans "Consultoría técnica SAP (ABAP)" %}</li>
+      <li>{% trans "Desarrollo de aplicaciones WEB (Linux/MySQL/Python/Django)" %}</li>
+    </ul>
+  </p>
+
+  <h2 id="consultoria_tecnica_sap">{% trans "Consultoría técnica SAP (ABAP)" %}</h2>
+  <p>{% trans "La experiencia laboral de Juan Sebastián Goldber como consultor técnico SAP certificado es amplia." %}</p>
+<p>{% trans "Ha participado en un total de diez proyectos SAP. Seis de ellos de implementación. Tres de ellos en inglés. Cinco de ellos realizados bajo el modelo CMMI-DEV." %}</p>
+<p>{% trans "Respecto de las herramientas y frameworks en los que tiene experiencia como desarrollador se pueden encontrar:" %}</p>
+<ul>
+  <li>{% trans "Workflow" %}</li>
+  <li>{% trans "ALE/IDOC, BAPI, Batch input, LSMW" %}</li>
+  <li>{% trans "Web Dynpro for ABAP" %}</li>
+  <li>{% trans "Archiving" %}</li>
+  <li>{% trans "Smartform, SAP Script" %}</li>
+  <li>{% trans "Enhancement spots, BADI, Exit, Field exit" %}.</li>
+  <li>{% trans "Análisis de performance" %}</li>
+  <li>{% trans "ALV" %}</li>
+  <li>{% trans "ECATT" %}</li>
+  <li>{% trans "Módulos particulares: FI, SD, MM, HCM" %}</li>
+  <li>{% trans "Soluciones: ERP, CRM" %}</li>
+</ul>
+<p>{% trans "Obviamente tiene sólidos conocimientos en programación orientada a objetos, base para varias de las herramientas y frameworks mencionados." %}</p>
+
+<h2 id="desarrollo_web">{% trans "Desarrollo de aplicaciones WEB (Linux/MySQL/Python/Django)" %}</h2>
+<p>{% trans "El desarrollo de aplicaciones WEB es un area que se encuentra en crecimiento dentro de nuestra empresa." %}</p>
+<p>{% trans "Actualmente brindamos consultoría en el desarrollo de aplicaciones web basadas en software libre." %}</p>
+<p>{% trans "Nos destacamos por utilizar las siguientes herramientas/tecnologías:" %}</p>
+<ul>
+  <li>{% trans "Basamos nuestros desarrollos utilizando el sistema operativo Linux. Particularmente nos focalizamos en la distribución " %}<a target="_blank" href="http://www.ubuntu.com/">Ubuntu</a>{% trans ". Este es uno de los sistemas operativos más confiables y versatiles existentes en el mercado." %}</li>
+  <li>{% trans "Trabajamos utilizando uno de los sistema de bases de datos más seguros y robustos del mercado: " %}<a target="_blank" href="http://www.mysql.com/">MySQL</a>{% trans ". Si sus datos son importantes para usted, para nosotros son aún más." %}</li>
+  <li>{% trans "Empleamos uno de los frameworks más poderos en cuanto al desarrollo de aplicaciones web: " %}<a target="_blank" href="https://www.djangoproject.com/">Django</a>{% trans ". Esto nos permite realizar desarrollos en forma agil y adaptarnos al continuo cambio del negocio de nuestros clientes. Este framework está basado en el lenguaje de programación python, uno de los lenguajes más poderosos existentes hasta el momento." %}</li>
+</ul>
+<p>{% trans "Todas las herramientas/tecnologías mencionadas, son de código abierto lo que implica libertad. Libertad de uso y de modificación" %}</p>
+<p>{% trans "Esto nos permite no depender de grandes corporaciones, lo que hace que no tengamos que lidiar con los altos costos, problemas legales y burocracias que acarrean. Somos libres. Y así podemos ofrecer libertad a nuestros clientes." %}</p>
+<p>{% trans "A partir de estas herramientas/tecnologías las fronteras son solo la imaginación nuestra y de nuestros clientes." %}</p>
+{% endblock %}

@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-04 10:24-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: templates/base.html:56 templates/quienes_somos.html:8
+msgid "Quiénes Somos"
+msgstr ""
+
+#: templates/base.html:63
+msgid "Productos "
+msgstr ""
+
+#: templates/base.html:65
+msgid "IamCast"
+msgstr ""
+
+#: templates/cuenta_usuario.html:9
+msgid "Home"
+msgstr ""
+
+#: templates/cuenta_usuario.html:10
+msgid "Mi Cuenta"
+msgstr ""
+
+#: templates/index.html:23
+msgid "Conozca IamCast la solución para agencias de casting"
+msgstr ""
+
+#: templates/quienes_somos.html:11
+#, python-format
+msgid ""
+"\n"
+"    IamSoft es una joven empresa fundada por <a href=%(url_jsg)s>Juan "
+"Sebastián Goldberg</a>, desempeñada en el desarrollo de aplicaciones "
+"informáticas.\n"
+"    "
+msgstr ""
+
+#: templates/quienes_somos.html:16
+msgid "Las areas de desempeño de la empresa son:"
+msgstr ""
+
+#: templates/quienes_somos.html:18
+msgid "Consultoría técnica SAP (ABAP)"
+msgstr ""
+
+#: templates/quienes_somos.html:19
+msgid "Desarrollo de aplicaciones WEB (Linux/MySQL/Python/Django)"
+msgstr ""
