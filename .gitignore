@@ -7,7 +7,7 @@ agencia-ssl
 ambiente.py
 .coverage
 collectedstatic/
-alternativa/static/bootstrap/
+alternativa/static
 django.mo
 multiple_edit.sh
 todo

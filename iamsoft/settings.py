@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     # Aplicaciones de la agencia
     #'direccion',
     #'telefono',
+    'iampacks.cross.estatico',
     'iampacks.cross.correo',
     'iampacks.cross.usuario',
     #'perfil',
