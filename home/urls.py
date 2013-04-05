@@ -15,7 +15,7 @@ urlpatterns = patterns('home.views',
 
     # Uncomment the next line to enable the admin:
     url(r'^$', 'index'),
-    url(r'^quienes/somos/$', 'quienes_somos'),
+    url(r'^servicios/$', 'servicios'),
     url(r'^contacto/$', 'contacto'),
     url(r'^cuenta/usuario/$', 'cuenta_usuario'),
     url(r'^accounts/profile/$', 'cuenta_usuario'),

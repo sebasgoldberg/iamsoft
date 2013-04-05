@@ -6,27 +6,54 @@
 {% block content %}
 
   <div class="row">
-    
+
     <div class="span4">
       {% block hero %}
         <div class="hero-unit">
-            {% include 'hero.html'%}
 
             <h2>IamSoft, calidad en desarrollo de software</h2>
-            <p>Usted tiene una idea, o una necesidad, pero no sabe como implementarla... nosotros sabemos, y lo hacemos bien.</p>
-            {%comment%}
-            <p>
-              <a href="/iamcast/" class="btn btn-success btn-large">{% trans "Conozca IamCast la solución para agencias de casting" %} &raquo;</a>
-            </p>
-            {%endcomment%}
+            <p>Usted tiene una idea, pero no sabe como implementarla... nosotros sabemos, y lo hacemos bien.</p>
 
         </div>
       {% endblock %}
     </div>
 
-    <div class="span8">
+    <div class="span8" >
       {%include "carousel.html"%}
     </div>
+  </div>
+
+  <div class='row'>
+
+    <div class="span4">
+      <h2>{% trans "Quiénes Somos" %}</h2>
+      <p>
+        {%blocktrans with url_jsg="http://ar.linkedin.com/pub/sebastian-goldberg/a/48a/589" %}
+        IamSoft es una joven empresa fundada por <a target="_blank" href={{url_jsg}}>Juan Sebastián Goldberg</a>, desempeñada en el desarrollo de aplicaciones informáticas.
+        {%endblocktrans%}
+      </p>
+      <p>
+        {% trans "Las areas de desempeño de la empresa son:" %}
+        <ul>
+          <li>{% trans "Consultoría técnica SAP (ABAP)" %}</li>
+          <li>{% trans "Desarrollo de aplicaciones WEB (Linux/MySQL/Django)" %}</li>
+        </ul>
+      </p>
+    </div>
+
+    <div class="span4">
+      <h2 id="desarrollo_web">{% trans "Desarrollo de aplicaciones WEB (Linux/MySQL/Django)" %}</h2>
+      <p>{% trans "El desarrollo de aplicaciones WEB es un area que se encuentra en crecimiento dentro de nuestra empresa." %}</p>
+      <p>{% trans "Brindamos consultoría en el desarrollo de aplicaciones web basadas en software libre." %}</p>
+      <p>{% trans "Esto nos permite no depender de grandes corporaciones, lo que hace que no tengamos que lidiar con los altos costos, problemas legales y burocracia. Somos libres. Y así podemos ofrecer libertad a nuestros clientes." %}</p>
+    </div>
+
+    <div class="span4">
+      <h2 id="consultoria_tecnica_sap">{% trans "Consultoría técnica SAP (ABAP)" %}</h2>
+      <p>{% trans "Nuestra experiencia en consultoría técnica SAP certificada es amplia." %}</p>
+      <p>{% trans "Hemos participado en una amplia cantidad de proyectos, en todos ellos aplicando metodologías de desarrollo que aseguren la alta calidad de los entregables." %}</p>
+    </div>
+
   </div>
 
 {% endblock %}
