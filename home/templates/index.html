@@ -5,28 +5,26 @@
 
 {% block content %}
 
-  {% block hero %}
-    <div class="hero-unit">
-      {%comment%}
-      <div class='row'>
-      <div class='thumbnail span2'>
-        <img src='{{agencia.logo.url}}'/>
-      </div>
-      <div class='span9'>
-      {%endcomment%}
-        {% include 'hero.html'%}
-
-        <h2>IamSoft, calidad en desarrollo de software</h2>
-        <p>Usted tiene una idea, o una necesidad, pero no sabe como implementarla... nosotros sabemos, y lo hacemos bien.</p>
-        <p>
-          <a href="/iamcast/" class="btn btn-success btn-large">{% trans "Conozca IamCast la solución para agencias de casting" %} &raquo;</a>
-        </p>
-      {%comment%}</div>{%endcomment%}
-    </div>
-  {% endblock %}
-
   <div class="row">
-    <div class="span12">
+    
+    <div class="span4">
+      {% block hero %}
+        <div class="hero-unit">
+            {% include 'hero.html'%}
+
+            <h2>IamSoft, calidad en desarrollo de software</h2>
+            <p>Usted tiene una idea, o una necesidad, pero no sabe como implementarla... nosotros sabemos, y lo hacemos bien.</p>
+            {%comment%}
+            <p>
+              <a href="/iamcast/" class="btn btn-success btn-large">{% trans "Conozca IamCast la solución para agencias de casting" %} &raquo;</a>
+            </p>
+            {%endcomment%}
+
+        </div>
+      {% endblock %}
+    </div>
+
+    <div class="span8">
       {%include "carousel.html"%}
     </div>
   </div>

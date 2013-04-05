@@ -2,7 +2,7 @@
 
 <style type="text/css">
   .contenedor_imagen_carousel_sitio {
-    height:500px;
+    height:400px;
     text-align:center;
     background-color: #888;
   };
@@ -17,83 +17,28 @@
     <li data-target="#{{id_carousel}}" data-slide-to="0" class="active"></li>
     <li data-target="#{{id_carousel}}" data-slide-to="1"></li>
     <li data-target="#{{id_carousel}}" data-slide-to="2"></li>
-    <li data-target="#{{id_carousel}}" data-slide-to="3"></li>
-    <li data-target="#{{id_carousel}}" data-slide-to="4"></li>
-    <li data-target="#{{id_carousel}}" data-slide-to="5"></li>
-    <li data-target="#{{id_carousel}}" data-slide-to="6"></li>
-    <li data-target="#{{id_carousel}}" data-slide-to="7"></li>
-    <li data-target="#{{id_carousel}}" data-slide-to="8"></li>
-    <li data-target="#{{id_carousel}}" data-slide-to="9"></li>
   </ol>
   <div class="carousel-inner">
     <div class="item active">
       <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/images/index/sap.jpg" alt=""></div>
       <div class="carousel-caption">
-        <h4>{% trans "Consultoría técnica SAP (ABAP)" %}</h4>
-        <p>{% trans "Nos especializamos en todo tipo de desarrollos ABAP. Implementamos todo tipo de interfaces, ampliaciones, workflow, reportes, etc., para distintas soluciones como puede ser ERP, CRM, HCM, Retail." %} <a class="btn btn-mini btn-primary" href="/quienes/somos/#consultoria_tecnica_sap">{% trans "Ver más" %}</a></p>
+        <h4>{% trans "Consultoría técnica SAP (ABAP)" %} <a class="btn btn-primary" href="/quienes/somos/#consultoria_tecnica_sap">{% trans "Ver más" %} &raquo;</a></h4>
+        <p>{% trans "Nos especializamos en todo tipo de desarrollos ABAP. Implementamos todo tipo de interfaces, ampliaciones, workflow, reportes, etc., para distintas soluciones como puede ser ERP, CRM, HCM, Retail." %} </p>
       </div>
     </div>
     <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/home_recientes.jpg" alt=""></div>
+      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/images/index/ubuntu_mysql_django.jpg" alt=""></div>
       <div class="carousel-caption">
-        <h4>{% trans "Home del sitio de su agencia (2/2)" %}</h4>
-        <p>{% trans "En el Home del sitio de su agencia podrá encontrar los items recientes de portfolio junto con los últimos trabajos publicados." %}</p>
+        <h4>{% trans "Desarrollo de aplicaciones WEB (Linux/MySQL/Django)" %} <a class="btn btn-primary" href="/quienes/somos/#desarrollo_web">{% trans "Ver más" %} &raquo;</a></h4>
+        <p>{% trans "Nos destacamos por utilizar herramientas/tecnologías de código abierto. Esto implica libertad. Libertad de uso y de modificación. Somos libres, y así podemos ofrecer libertad a nuestros clientes. Las fronteras son solo la imaginación." %}</p>
+        
       </div>
     </div>
     <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/busqueda.jpg" alt=""></div>
+      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/seleccion_agenciados_perfil.jpg" alt=""></div>
       <div class="carousel-caption">
-        <h4>{% trans "Detalles de cada trabajo" %}</h4>
-        <p>{% trans "En su sitio aparecerá el detalle de cada trabajo que tenga publicado, permitiendo a los agenciados que hayan completado su perfil, autopostularse a los trabajos que le interesen. La auto postulación de cada agenciado se verá reflejada en la administración de su agencia." %}</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/portfolio.jpg" alt=""></div>
-      <div class="carousel-caption">
-        <h4>{% trans "Portfolio" %}</h4>
-        <p>{% trans "Página de portfolio con todos los items cargados en su administración. Se muestra video o imagen del item según corresponda." %}</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/ingreso.jpg" alt=""></div>
-      <div class="carousel-caption">
-        <h4>{% trans "Perfil del agenciado (1/5)" %}</h4>
-        <p>{% trans "Cada agenciado podrá acceder a su perfil con su usuario y contraseña." %}</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/registro.jpg" alt=""></div>
-      <div class="carousel-caption">
-        <h4>{% trans "Perfil del agenciado (2/5)" %}</h4>
-        <p>{% trans "En caso que el agenciado no tenga una cuenta, podra crearla ingresando unos pocos datos." %}</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/perfil_datos.jpg" alt=""></div>
-      <div class="carousel-caption">
-        <h4>{% trans "Perfil del agenciado (3/5)" %}</h4>
-        <p>{% trans "El agenciado dentro de los datos de su perfil tendrá asociada información administrativa." %}</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/perfil_fisico.jpg" alt=""></div>
-      <div class="carousel-caption">
-        <h4>{% trans "Perfil del agenciado (4/5)" %}</h4>
-        <p>{% trans "Junto con información de su perfil físico y habilidades." %}</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/perfil_media.jpg" alt=""></div>
-      <div class="carousel-caption">
-        <h4>{% trans "Perfil del agenciado (5/5)" %}</h4>
-        <p>{% trans "Y también tendrá asociadas fotos y videos. Toda esta información será actualizable por el agenciado y los cambios se verán en forma inmediata en la administración de su agencia." %}</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/site/contacto.jpg" alt=""></div>
-      <div class="carousel-caption">
-        <h4>{% trans "Información de contacto" %}</h4>
-        <p>{% trans "En su sitio contará con una página de contacto que se verá actualizada en forma inmediata si usted cambia la información de contacto en la administración de su agencia." %}</p>
+        <h4>{% trans "IamCast, la solución para su agencia" %} <a class="btn btn-primary" href="/iamcast/">{% trans "Ver más" %} &raquo;</a></h4>
+        <p>{% trans "IamCast es una aplicación WEB que tiene como objetivo satisfacer la necesidad de las agencias de casting de tener control sobre: el manejo de la información, los procesos de búsqueda de perfiles, la publicación de la información." %}</p>
       </div>
     </div>
   </div>
