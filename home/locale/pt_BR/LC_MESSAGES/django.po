@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-04 10:24-0700\n"
+"POT-Creation-Date: 2013-04-05 13:16-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: templates/base.html:56 templates/quienes_somos.html:8
-msgid "Quiénes Somos"
+#: templates/base.html:56
+msgid "Servicios"
 msgstr ""
 
 #: templates/base.html:63
@@ -30,6 +30,48 @@ msgstr ""
 msgid "IamCast"
 msgstr ""
 
+#: templates/carousel.html:25 templates/index.html:38
+#: templates/index.html.py:52 templates/servicios.html:8
+msgid "Consultoría técnica SAP (ABAP)"
+msgstr ""
+
+#: templates/carousel.html:25 templates/carousel.html.py:32
+#: templates/carousel.html:40
+msgid "Ver más"
+msgstr ""
+
+#: templates/carousel.html:26
+msgid ""
+"Nos especializamos en todo tipo de desarrollos ABAP. Implementamos todo tipo "
+"de interfaces, ampliaciones, workflow, reportes, etc., para distintas "
+"soluciones como puede ser ERP, CRM, HCM, Retail."
+msgstr ""
+
+#: templates/carousel.html:32 templates/index.html:39
+#: templates/index.html.py:45
+msgid "Desarrollo de aplicaciones WEB (Linux/MySQL/Django)"
+msgstr ""
+
+#: templates/carousel.html:33
+msgid ""
+"Nos destacamos por utilizar herramientas/tecnologías de código abierto. Esto "
+"implica libertad. Libertad de uso y de modificación. Somos libres, y así "
+"podemos ofrecer libertad a nuestros clientes. Las fronteras son solo la "
+"imaginación."
+msgstr ""
+
+#: templates/carousel.html:40
+msgid "IamCast, la solución para su agencia"
+msgstr ""
+
+#: templates/carousel.html:41
+msgid ""
+"IamCast es una aplicación WEB que tiene como objetivo satisfacer la "
+"necesidad de las agencias de casting de tener control sobre: el manejo de la "
+"información, los procesos de búsqueda de perfiles, la publicación de la "
+"información."
+msgstr ""
+
 #: templates/cuenta_usuario.html:9
 msgid "Home"
 msgstr ""
@@ -38,28 +80,156 @@ msgstr ""
 msgid "Mi Cuenta"
 msgstr ""
 
-#: templates/index.html:23
-msgid "Conozca IamCast la solución para agencias de casting"
+#: templates/index.html:29
+msgid "Quiénes Somos"
 msgstr ""
 
-#: templates/quienes_somos.html:11
+#: templates/index.html:31
 #, python-format
 msgid ""
 "\n"
-"    IamSoft es una joven empresa fundada por <a href=%(url_jsg)s>Juan "
-"Sebastián Goldberg</a>, desempeñada en el desarrollo de aplicaciones "
-"informáticas.\n"
-"    "
+"        IamSoft es una joven empresa fundada por <a target=\"_blank\" href="
+"%(url_jsg)s>Juan Sebastián Goldberg</a>, desempeñada en el desarrollo de "
+"aplicaciones informáticas.\n"
+"        "
 msgstr ""
 
-#: templates/quienes_somos.html:16
+#: templates/index.html:36
 msgid "Las areas de desempeño de la empresa son:"
 msgstr ""
 
-#: templates/quienes_somos.html:18
-msgid "Consultoría técnica SAP (ABAP)"
+#: templates/index.html:46 templates/servicios.html:27
+msgid ""
+"El desarrollo de aplicaciones WEB es un area que se encuentra en crecimiento "
+"dentro de nuestra empresa."
 msgstr ""
 
-#: templates/quienes_somos.html:19
+#: templates/index.html:47 templates/servicios.html:28
+msgid ""
+"Brindamos consultoría en el desarrollo de aplicaciones web basadas en "
+"software libre."
+msgstr ""
+
+#: templates/index.html:48 templates/servicios.html:36
+msgid ""
+"Esto nos permite no depender de grandes corporaciones, lo que hace que no "
+"tengamos que lidiar con los altos costos, problemas legales y burocracia. "
+"Somos libres. Y así podemos ofrecer libertad a nuestros clientes."
+msgstr ""
+
+#: templates/index.html:53 templates/servicios.html:9
+msgid "Nuestra experiencia en consultoría técnica SAP certificada es amplia."
+msgstr ""
+
+#: templates/index.html:54 templates/servicios.html:10
+msgid ""
+"Hemos participado en una amplia cantidad de proyectos, en todos ellos "
+"aplicando metodologías de desarrollo que aseguren la alta calidad de los "
+"entregables."
+msgstr ""
+
+#: templates/servicios.html:11
+msgid ""
+"Respecto de las herramientas y frameworks en los que tenemos experiencia y "
+"ofrecemos servicio son los siguientes:"
+msgstr ""
+
+#: templates/servicios.html:13
+msgid "Workflow"
+msgstr ""
+
+#: templates/servicios.html:14
+msgid "ALE/IDOC, BAPI, Batch input, LSMW"
+msgstr ""
+
+#: templates/servicios.html:15
+msgid "Web Dynpro for ABAP"
+msgstr ""
+
+#: templates/servicios.html:16
+msgid "Archiving"
+msgstr ""
+
+#: templates/servicios.html:17
+msgid "Smartform, SAP Script"
+msgstr ""
+
+#: templates/servicios.html:18
+msgid "Enhancement spots, BADI, Exit, Field exit"
+msgstr ""
+
+#: templates/servicios.html:19
+msgid "Análisis de performance"
+msgstr ""
+
+#: templates/servicios.html:20
+msgid "ALV"
+msgstr ""
+
+#: templates/servicios.html:21
+msgid "ECATT"
+msgstr ""
+
+#: templates/servicios.html:22
+msgid "Módulos particulares: FI, SD, MM, HCM"
+msgstr ""
+
+#: templates/servicios.html:23
+msgid "Soluciones: ERP, CRM, Retail, Banking"
+msgstr ""
+
+#: templates/servicios.html:26
 msgid "Desarrollo de aplicaciones WEB (Linux/MySQL/Python/Django)"
+msgstr ""
+
+#: templates/servicios.html:29
+msgid "Nos destacamos por utilizar las siguientes herramientas/tecnologías:"
+msgstr ""
+
+#: templates/servicios.html:31
+msgid ""
+"Basamos nuestros desarrollos utilizando el sistema operativo Linux. "
+"Particularmente nos focalizamos en la distribución "
+msgstr ""
+
+#: templates/servicios.html:31
+msgid ""
+". Este es uno de los sistemas operativos más confiables y versatiles "
+"existentes en el mercado."
+msgstr ""
+
+#: templates/servicios.html:32
+msgid ""
+"Trabajamos utilizando uno de los sistema de bases de datos más seguros y "
+"robustos del mercado: "
+msgstr ""
+
+#: templates/servicios.html:32
+msgid ". Si sus datos son importantes para usted, para nosotros son aún más."
+msgstr ""
+
+#: templates/servicios.html:33
+msgid ""
+"Empleamos uno de los frameworks más poderos en cuanto al desarrollo de "
+"aplicaciones web: "
+msgstr ""
+
+#: templates/servicios.html:33
+msgid ""
+". Esto nos permite realizar desarrollos en forma agil y adaptarnos al "
+"continuo cambio del negocio de nuestros clientes. Este framework está basado "
+"en el lenguaje de programación python, uno de los lenguajes más poderosos "
+"existentes hasta el momento."
+msgstr ""
+
+#: templates/servicios.html:35
+msgid ""
+"Todas las herramientas/tecnologías mencionadas, son de código abierto lo que "
+"implica libertad. Libertad de uso y de modificación"
+msgstr ""
+
+#: templates/servicios.html:37
+msgid ""
+"A partir de estas herramientas/tecnologías las fronteras son solo la "
+"imaginación nuestra y de nuestros clientes."
 msgstr ""
