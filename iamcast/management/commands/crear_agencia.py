@@ -64,6 +64,7 @@ class Command(BaseCommand):
         agencia.user.username,
         password,
         settings.AMBIENTE.zonomi.api_key,
+        agencia.idioma,
         ]
 
       output=subprocess.check_output(array_llamada)
@@ -76,7 +77,7 @@ class Command(BaseCommand):
         '--first_name=%s'%agencia.user.first_name,
         '--last_name=%s'%agencia.user.last_name,
         '--email=%s'%agencia.user.email,
-        '--password=%s'%password,
+        '--password=%s'%agencia.user.password,
       ]
       del os.environ['DJANGO_SETTINGS_MODULE']
       

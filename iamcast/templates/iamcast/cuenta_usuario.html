@@ -7,6 +7,7 @@
       <th>{% trans "#" %}</th>
       <th>{% trans "Nombre" %}</th>
       <th>{% trans "Fecha de inicio" %}</th>
+      <th>{% trans "Tutorial" %}</th>
       <th>{% trans "Administración" %}</th>
       <th>{% trans "Página estándar" %}</th>
       <th>{% trans "Estado de creación" %}</th>
@@ -22,9 +23,11 @@
       <td>{{agencia.nombre}}</td>
       <td>{{agencia.fecha_inicio}}</td>
       {%if agencia.estado_exitoso%}
-        <td><a href="{{agencia.url_admin_agencia}}" class='btn'>{% trans "Administrar" %}</a></td>
-        <td><a href="{{agencia.url_sitio_agencia}}" class='btn'>{% trans "Ir al sitio" %}</a></td>
+        <td><a target="_blank" href="/iamcast/tutorial/{{agencia.id}}/" class='btn'>{% trans "Tutorial" %}</a></td>
+        <td><a target="_blank" href="{{agencia.url_admin_agencia}}" class='btn'>{% trans "Administrar" %}</a></td>
+        <td><a target="_blank" href="{{agencia.url_sitio_agencia}}" class='btn'>{% trans "Ir al sitio" %}</a></td>
       {%else%}
+        <td><a href="#" class='btn disabled'>{% trans "Tutorial" %}</a></td>
         <td><a href="#" class='btn disabled'>{% trans "Administrar" %}</a></td>
         <td><a href="#" class='btn disabled'>{% trans "Ir al sitio" %}</a></td>
       {%endif%}
@@ -42,7 +45,6 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a href="/iamcast/ver/historial/pagos/{{agencia.id}}/">{% trans "Ver historial de pagos" %}</a></li>
-                {% if agencia.creada %}<li><a href="/iamcast/tutorial/{{agencia.id}}/">{% trans "Acceder al tutorial" %}</a></li>{%endif%}
                 {% if not agencia.borrada %}
                   <li>{% include 'mercadopago/link_para_formulario_pago.html' with pago=pago %}</li>
                   {%if agencia.creada %}<li><a href="/iamcast/borrar/agencia/?id={{agencia.id}}">{% trans "Borrar agencia" %}</a></li>{%endif%}
@@ -57,6 +59,11 @@
   </tbody>
 </table>
 
-<a href="/iamcast/configurar/" class="btn btn-success">{% trans "Configurar aplicación para su agencia" %} &raquo;</a>
+
+{% if user.agencia_set.all %}
+  <a href="/iamcast/configurar/" class="btn">{% trans "Configurar otra agencia" %} &raquo;</a>
+{% else %}
+  <a href="/iamcast/configurar/" class="btn btn-success">{% trans "Configurar aplicación para su agencia" %} &raquo;</a>
+{%endif%}
 
 <script type="text/javascript" src="{{STATIC_URL}}/mercadopago/js/boton.js"></script>

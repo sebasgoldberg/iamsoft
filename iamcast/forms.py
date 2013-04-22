@@ -35,7 +35,7 @@ class AgenciaForm(forms.ModelForm):
 
   class Meta:
     model=Agencia
-    fields = ('nombre', 'usuario_gmail', 'clave_gmail', 'clave_gmail2')
+    fields = ('nombre', 'idioma', 'usuario_gmail', 'clave_gmail', 'clave_gmail2')
 
 class BorrarAgenciaForm(forms.Form):
   agencia_id=forms.IntegerField(widget=forms.widgets.HiddenInput, required=True)

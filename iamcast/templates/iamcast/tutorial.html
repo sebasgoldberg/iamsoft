@@ -38,15 +38,11 @@
   <h3 id='usuario_y_contraseña_del_super_usuario'>{% trans "Usuario y contraseña del super usuario" %}</h3>
   <p>
   {% blocktrans with nombre_usuario=agencia.user.username url_reiniciar_clave=agencia.url_reiniciar_clave %}
-    Para acceder a la administración de su agencia se ha creado el super usuario {{nombre_usuario}}. La clave de este usuario se le ha enviado en el email que notifica la correcta creación de su agencia. Si no encuentra dicho email, puede acceder al siguiente link y recuperar su contraseña: <a target="_blank" href={{url_reiniciar_clave}}>{{url_reiniciar_clave}}</a>.
+    Para acceder a la administración simplemente lo puede realizar con su usuario y contraseña. Si no recuerda su usuario y/o contraseña, puede acceder al siguiente link y recuperar su contraseña: <a target="_blank" href={{url_reiniciar_clave}}>{{url_reiniciar_clave}}</a>.
     Una vez que tenga su usuario y contraseña podrá acceder a la administración de su sitio.
   {% endblocktrans %}
   </p>
-
-  <h3 id='cambio_de_clave_del_super_usuario'>{% trans "Cambio de clave del super usuario" %}</h3>
-  <p>{% trans "Sabemos que la contraseña de su super usuario es bastante dificil de recordar. Es por esto que lo primero que haremos en este tutorial será cambiar está contraseña a una que usted pueda recordar." %}</p>
-  <p>{% trans "Para esto deberá acceder a su administración, y con su usuario y contraseña actual, hacer clic en el link de cambio de contraseña. En el formulario de cambio de contraseña se le pedirá contraseña actual, nueva contraseña y una confirmación de la nueva contraseña." %}</p>
-  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}password_change/">{% trans "Cambiar contraseña de super usuario en la administración de" %} "{{agencia.nombre}}"</a>
+  <p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}">{% trans "Acceda a la administración de" %} "{{agencia.nombre}}"</a></p>
 
   <h2 id='creacion_agencia_activa'>{% trans "Creación de una agencia activa" %}</h2>
   <p>{% trans "En toda aplicación es necesario crear una agencia activa. En dicha agencia se definirá la siguiente información:" %}</p>
@@ -73,11 +69,11 @@
   <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agencia/add/">{% trans "Crear agencia en la administración de" %} "{{agencia.nombre}}"</a>
 
   <h2 id='diccionario_de_datos'>{% trans "Diccionario de datos" %}</h2>
-  <p>{% trans "Llamaremos diccionario de datos al conjunto de objetos en la administración que estén constituidos simplemente por una descripción y sirvan para definir objetos más complejos como por ejemplo una agencia, un agenciado, un trabajo, etc." %}</p>
-  <p>{% trans "Algunos de los objetos que pertenecen al diccionario de datos son: Ojos, Pelos, Pieles, Deportes, Compañias de teléfono, etc." %}</p>
-  <p>{% trans "Estos objetos son muy fáciles de mantener, se pueden listar, crear, modificar y borrar." %}</p>
-  <p>{% trans "En la mayoría de los casos cada tipo de objeto de diccionario viene provisto de datos cargados durante la creación de su agencia." %}</p>
-  <p>{% trans "A continuación se ofrecen los accesos a los listados de cada tipo de objeto de diccionario:" %}</p>
+  <p>{% trans "Son los datos básicos necesarios para crear agenciados, trabajos, etc." %}</p>
+  <p>{% trans "Ejemplos de estos datos básicos son: Ojos, Pelos, Pieles, Deportes, Compañias de teléfono, etc." %}</p>
+  <p>{% trans "Dichos datos son muy fáciles de mantener, se pueden listar, crear, modificar y borrar." %}</p>
+  <p>{% trans "En la mayoría de los casos, cada uno viene provisto de datos cargados durante la creación de su agencia." %}</p>
+  <p>{% trans "A continuación se ofrecen los accesos a los listados de cada item del diccionario de datos:" %}</p>
 
   <div class="btn-group">
     <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
@@ -153,10 +149,10 @@
   <p>{% trans "Ahora que ya tenemos una idea de cómo es la organización de los distintos objetos en el módulo de trabajo, vamos a ver más en detalle cada uno de los mismos." %}</p>
 
   <h3 id='creacion_de_trabajos'>{% trans "Creación de Trabajos" %}</h3>
-  <p>{% trans "Los información a asignar en los campos del formulario para crear un trabajo es bastante trivial. Mencionaremos los campos que merecen alguna explicación:" %}</p>
+  <p>{% trans "Crear un trabajo es relativamente simple. A continuación describimos la información a cargar:" %}</p>
   <dl>
     <dt>{% trans "Productora" %}</dt>
-      <dd>{% trans "La productora que es cliente del trabajo. Una vez grabado el trabajo se presentará un link a la productora elegida." %}</dd>
+      <dd>{% trans "La productora que es cliente del trabajo." %}</dd>
     <dt>{% trans "Estado" %}</dt>
       <dd>{% trans "El estado del trabajo. La idea es que a medidda que vamos pasando las distintas etapas de un trabajo se vaya cambiando su estado. " %}</dd>
     <dt>{% trans "Publicado" %}</dt>
@@ -303,7 +299,6 @@
     <li><a href='#accediendo_a_la_administracion'>{% trans "Accediendo a la administración" %}</a></li>
     <ul class='nav nav-list'>
       <li><a href='#usuario_y_contraseña_del_super_usuario'>{% trans "Usuario y contraseña del super usuario" %}</a></li>
-      <li><a href='#cambio_de_clave_del_super_usuario'>{% trans "Cambio de clave del super usuario" %}</a></li>
     </ul>
     <li><a href='#creacion_agencia_activa'>{% trans "Creación de una agencia activa" %}</a></li>
     <li><a href='#diccionario_de_datos'>{% trans "Diccionario de datos" %}</a></li>

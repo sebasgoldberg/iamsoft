@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from datetime import datetime, timedelta
 from mercadopago.models import Pago
+from subprocess import Popen
 
 GMAIL_SIGNUP_URL=u'https://accounts.google.com/SignUp'
 DIAS_CONTRATO=settings.AMBIENTE.iamcast.dias_contrato
@@ -79,6 +80,7 @@ class Agencia(models.Model):
   estado_creacion = models.CharField(max_length=2,default=CREACION_INICIADA, verbose_name=(u'Estado creación'), choices=ESTADO_CREACION)
   activa = models.BooleanField(default=True, verbose_name=(u'Activa'))
   fecha_inicio = models.DateTimeField(verbose_name=_(u'Fecha inicio'), null=False, blank=False, default=datetime.now())
+  idioma = models.CharField(max_length=10, verbose_name=(u'Idioma preferido'), choices=settings.LANGUAGES, null=True, blank=False)
   #fecha_vencimiento = models.DateTimeField(verbose_name=_(u'Fecha vencimiento'), null=False, blank=False, default=datetime.now()+timedelta(days=settings.DIAS_PRUEBA_IAMCAST))
 
   class Meta:
@@ -234,6 +236,41 @@ class Agencia(models.Model):
   def proximo_pago(self):
     return self.proximo_contrato().pago
 
+  def crear(self):
+    pass
+
+  def borrar(self):
+    pass
+
+  def activar(self):
+    pass
+
+  def get_scripts_id(self):
+    return u"%s_%s"%(self.slug,self.id)
+
+  def get_apache_site(self):
+    return u"iamcast_%s"%self.id
+
+  def get_apache_ssl_site(self):
+    return u"iamcast_%s-ssl"%self.id
+
+  def testDesactivar(self):
+    if not self.activa:
+      raise Exception('La agencia %s, ya se encuentra inactiva.'%self.id)
+
+  def doDesactivar(self):
+    output=Popen([
+      'sudo',
+      '%s/manage.py'%settings.AMBIENTE.project_directory,
+      'desactivar_agencia',
+      '--id=%s'%self.id,
+      '&'
+      ])
+
+  def desactivar(self):
+    self.testDesactivar()
+    self.doDesactivar()
+
 class PagoContrato(Pago):
 
   def payer_name(self):
@@ -280,6 +317,3 @@ class ContratoAgencia(Contrato):
 def callback_pre_save_agencia(sender, instance, raw, using, **kwargs):
   instance.slugify()
 """
-
-#class ContratoAgencia(Contrato):
-  #agencia = models.ForeignKey(Agencia,on_delete=models.PROTECT,verbose_name = _(u'Agencia'))

@@ -33,8 +33,8 @@ def crear_agencia(form, request):
     '&'
     ])
 
-  messages.info(request,_(u'Hemos iniciado el proceso de creación del módulo de administración y página estándar. Este proceso puede demorar varios minutos. Una vez finalizado el proceso le notificaremos por email de forma que pueda comenzar a utilizar la aplicación.'))
-  messages.info(request,_(u'Podrá probar la aplicación por un período de %s días. Luego para seguir utilizandola deberá realizar el pago correspondiente por el período de tiempo que crea más conveniente.')%settings.DIAS_PRUEBA_IAMCAST)
+  messages.success(request,_(u'Hemos iniciado el proceso de creación del módulo de administración y página estándar. Este proceso puede demorar varios minutos. Una vez finalizado el proceso le notificaremos por email de forma que pueda comenzar a utilizar la aplicación.'))
+  messages.success(request,_(u'Podrá probar la aplicación por un período de %s días. Luego para seguir utilizandola deberá realizar el pago correspondiente por el período de tiempo que crea más conveniente.')%settings.DIAS_PRUEBA_IAMCAST)
 
 @login_required
 def configurar(request):
