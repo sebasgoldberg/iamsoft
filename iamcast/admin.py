@@ -1,6 +1,6 @@
 from django.contrib import admin
 from iamcast.models import Agencia, ContratoAgencia, PagoContrato
-from mercadopago.admin import PagoAdmin
+from iampacks.cross.mercadopago.admin import PagoAdmin
 
 class AgenciaAdmin(admin.ModelAdmin):
   list_display=['id', 'nombre', 'estado_creacion',  'dominio', 'vencida']

@@ -10,9 +10,12 @@ from iamcast.models import Agencia, Contrato
 from django.contrib.auth.models import User
 import datetime
 from django.core.exceptions import ValidationError
+from django.conf import settings
 
 class IamCastTest(TestCase):
+
   def test_obtencion_proximo_pago(self):
+    
     user = User.objects.create_user(
       'test_obtencion_proximo_pago', 
       'test_obtencion_proximo_pago@gmail.com', 
@@ -136,3 +139,158 @@ class IamCastTest(TestCase):
     )
     
     self.assertRaises(ValidationError,agencia.clean)
+
+  def test_creacion_agencia(self):
+
+    if settings.AMBIENTE.productivo:
+      raise Exception('No se pueden crear servicios de agencias de prueba en un sistema productivo')
+
+    nombre=u'creacion_agencia'
+
+    user = User.objects.create_user(
+      nombre, 
+      '%s@gmail.com'%nombre, 
+      's3cr3t'
+    )
+
+    user.save()
+
+    agencia=Agencia(
+      user=user,
+      nombre=nombre,
+      usuario_gmail=u'test.agencia@gmail.com',
+      clave_gmail = u'agencia1234',
+    )
+    
+    agencia.clean()
+    agencia.save()
+
+    agencia=Agencia.objects.get(pk=agencia.id)
+    
+    try:
+      agencia.crear_servicio()
+
+      agencia=Agencia.objects.get(pk=agencia.id)
+
+      self.assertTrue(agencia.isActiva())
+      self.assertFalse(agencia.vencida())
+      self.assertFalse(agencia.borrada())
+      self.assertTrue(agencia.en_periodo_prueba())
+      self.assertTrue(agencia.estado_exitoso())
+      self.assertFalse(agencia.estado_advertencia())
+      self.assertFalse(agencia.estado_erroneo())
+    finally:
+      agencia=Agencia.objects.get(pk=agencia.id)
+      agencia.borrar_servicio()
+
+
+  def test_desactivar_activar_servicio_agencia(self):
+  
+    if settings.AMBIENTE.productivo:
+      raise Exception('No se pueden crear servicios de agencias de prueba en un sistema productivo')
+
+    nombre=u'desactivar_servicio_agencia'
+
+    user = User.objects.create_user(
+      nombre, 
+      '%s@gmail.com'%nombre, 
+      's3cr3t'
+    )
+
+    user.save()
+
+    agencia=Agencia(
+      user=user,
+      nombre=nombre,
+      usuario_gmail=u'test.agencia@gmail.com',
+      clave_gmail = u'agencia1234',
+    )
+    
+    agencia.clean()
+    agencia.save()
+
+    agencia=Agencia.objects.get(pk=agencia.id)
+    
+    try:
+      agencia.crear_servicio()
+
+      agencia=Agencia.objects.get(pk=agencia.id)
+
+      agencia.desactivar()
+
+      self.assertFalse(agencia.isActiva())
+      self.assertFalse(agencia.borrada())
+      self.assertFalse(agencia.estado_exitoso())
+      self.assertFalse(agencia.estado_advertencia())
+      self.assertTrue(agencia.estado_erroneo())
+
+      agencia.activar()
+
+      self.assertTrue(agencia.isActiva())
+      self.assertFalse(agencia.vencida())
+      self.assertFalse(agencia.borrada())
+      self.assertTrue(agencia.en_periodo_prueba())
+      self.assertTrue(agencia.estado_exitoso())
+      self.assertFalse(agencia.estado_advertencia())
+      self.assertFalse(agencia.estado_erroneo())
+
+    finally:
+      agencia=Agencia.objects.get(pk=agencia.id)
+      agencia.borrar_servicio()
+
+from django.test.client import Client
+
+class IamCastClientTest(TestCase):
+
+  def test_creacion_agencia(self):
+
+    password = 's3cr3t3'
+    user = User.objects.create_user(
+      'test_creacion_agencia', 
+      email='test_creacion_agencia@gmail.com', 
+      password=password
+    )
+
+    user.save()
+    
+    self.assertEqual('test_creacion_agencia',user.username)
+    self.assertNotEqual(password,user.password)
+
+    c = Client()
+
+    self.assertTrue(c.login(username=user.username,password=password))
+
+    response = c.get('/iamcast/configurar/', follow=True)
+    self.assertEqual(response.status_code,200)
+    print response.redirect_chain
+    self.assertTrue('iamcast/configurar.html' in [t.name for t in response.templates])
+
+    nombre_nueva_agencia = 'test_creacion_agencia'
+    response = c.post('/iamcast/configurar/',{
+      'nombre': nombre_nueva_agencia,
+      'idioma': 'es',
+      'usuario_gmail': 'test_creacion_agencia@gmail.com',
+      'clave_gmail': password,
+      'clave_gmail2': password,
+      }, follow = True)
+    self.assertEqual(response.status_code,200)
+    self.assertTrue('iamcast/cuenta_usuario.html' in [t.name for t in response.templates])
+
+    nueva_agencia = Agencia.objects.get(nombre=nombre_nueva_agencia)
+
+    nueva_agencia.borrar_servicio(modificar_estado=False)
+
+    self.assertEqual(Agencia.CREACION_INICIADA,nueva_agencia.estado_creacion)
+
+    from django.core.management import call_command
+
+    call_command('crear_agencias_pendientes')
+
+    nueva_agencia = Agencia.objects.get(nombre=nombre_nueva_agencia)
+
+    self.assertEqual(
+      Agencia.DICT_ESTADO_CREACION[Agencia.FINALIZADA_CON_EXITO],
+      Agencia.DICT_ESTADO_CREACION[nueva_agencia.estado_creacion]
+      )
+    
+    nueva_agencia.borrar_servicio()

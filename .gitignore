@@ -10,3 +10,4 @@ collectedstatic/
 django.mo
 multiple_edit.sh
 todo
+/log/*.log

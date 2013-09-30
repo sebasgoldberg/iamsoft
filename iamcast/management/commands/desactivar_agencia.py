@@ -30,17 +30,17 @@ class Command(BaseCommand):
     try:
       agencia=Agencia.objects.get(pk=id)
       
-      subprocess.check_call([
+      subprocess.check_output([
         'a2dissite',
         agencia.get_apache_site(),
         ])
 
-      subprocess.check_call([
+      subprocess.check_output([
         'a2dissite',
         agencia.get_apache_ssl_site(),
         ])
 
-      subprocess.check_call([
+      subprocess.check_output([
         'service',
         'apache2',
         'reload'
@@ -52,8 +52,6 @@ class Command(BaseCommand):
 
       agencia.activa = False
       agencia.save()
-
-      self.stdout.write('Agencia %s desactivada con éxito.\n'%(agencia.nombre))
 
     except Exception as e:
       #msg = MailIamSoft(u'Error al desactivar agencia %s'%agencia.id,'%s\n\n'%(traceback.format_exc()),[email for _,email in settings.ADMINS])

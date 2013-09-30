@@ -9,8 +9,16 @@ from django.template.defaultfilters import slugify as slugify_filter
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from datetime import datetime, timedelta
-from mercadopago.models import Pago
+from iampacks.cross.mercadopago.models import Pago
 from subprocess import Popen
+import traceback
+from home.mail import MailIamSoft
+import subprocess
+import os
+from django.template import loader
+from django.template import Context
+from iampacks.cross.zonomi.models import Zonomi
+import logging
 
 GMAIL_SIGNUP_URL=u'https://accounts.google.com/SignUp'
 DIAS_CONTRATO=settings.AMBIENTE.iamcast.dias_contrato
@@ -59,8 +67,6 @@ class Agencia(models.Model):
   user = models.ForeignKey(User, null=False, blank=True, editable=False)
   nombre = models.CharField(max_length=60, verbose_name=_(u'Nombre'), unique=True, help_text=_('Nombre de su agencia'))
   slug = models.CharField(max_length=60, verbose_name=_(u'Slug'), unique=True)
-  usuario_gmail = models.EmailField(max_length=60, verbose_name=_(u'Email de gmail'), help_text=_(u'Este usuario es necesario para que su aplicación pueda enviar mails (tenga en cuenta que esta casilla enviará emails a los usuarios que interactuen con su agencia: productoras, agenciados, etc.). Preferentemente debe ser una cuenta a la que nadie tenga acceso. Si no tiene una cuenta en gmail, por favor creela en %s y suministrenos usuario y contraseña de dicha cuenta.')%('<a href="%s" target="_blank">%s</a>'%(GMAIL_SIGNUP_URL,GMAIL_SIGNUP_URL)))
-  clave_gmail = models.CharField(max_length=60, verbose_name=_(u'Clave gmail'), help_text=_(u'Clave del usuario gmail.'))
   dominio = models.CharField(max_length=100, unique=True, verbose_name=_(u'Dominio'), null=False, blank=True, help_text=_(u'Si no utilizará su propio dominio DEJELO VACIO. Tenga en cuenta que si coloca algún valor aqui, habrá que solicitar a la entidad registrante de su dominio que apunte a nuestros servidores DNS. Por otro lado en caso de usar su propio dominio, se deberá contratratar un certificado de seguridad con alguna entidad reconocida de forma que su sitio se vea seguro para los usuarios que lo utilizan.'))
   CREACION_INICIADA='CI'
   CREACION_EN_PROCESO='CP'
@@ -138,11 +144,47 @@ class Agencia(models.Model):
         if agencia.en_periodo_prueba():
           raise ValidationError(ugettext(u'Hemos registrado que la agencia %s se encuentra en período de prueba. Para que pueda crear una nueva agencia, antes deberá realizar el pago correspondiente. Dicho pago podrá realizarlo accediendo a su cuenta.')%(agencia.nombre))
 
-  def get_nombre_carpeta(self):
+  def get_alfa_id(self):
     return 'iamcast_%s'%self.id
 
+  def get_nombre_carpeta(self):
+    return self.get_alfa_id()
+
+  def get_db_name(self):
+    return self.get_alfa_id()
+
+  def get_db_user(self):
+    return self.get_alfa_id()
+
+  def get_ruta_instalacion(self):
+    return '%s/%s'%(settings.AMBIENTE.path_agencias,self.get_nombre_carpeta())
+
   def get_manage_script(self):
-    return '%s/%s/manage.py'%(settings.AMBIENTE.path_agencias,self.get_nombre_carpeta())
+    return '%s/manage.py'%self.get_ruta_instalacion()
+
+  def get_ambiente_file_path(self):
+    return '%s/alternativa/ambiente.py'%self.get_ruta_instalacion()
+
+  def get_wsgi_file_path(self):
+    return '%s/alternativa/wsgi.py'%self.get_ruta_instalacion()
+
+  def get_puerto_http(self):
+    return settings.AMBIENTE.puerto_http
+
+  def get_puerto_https(self):
+    return settings.AMBIENTE.puerto_https
+
+  def get_mail_server(self):
+    return settings.AMBIENTE.email.host
+
+  def get_user(self):
+    return self.slug
+
+  def get_mail_user(self):
+    return self.get_user()
+
+  def get_mail_port(self):
+    return settings.AMBIENTE.email.port
 
   def url_base_agencia(self):
     return u'http://%s:%s'%(self.dominio,settings.AMBIENTE.puerto_http)
@@ -242,8 +284,40 @@ class Agencia(models.Model):
   def borrar(self):
     pass
 
+  def testActivar(self):
+    if self.activa:
+      raise Exception('La agencia %s, ya se encuentra activa.'%self.id)
+
+  def doActivar(self):
+    self.__callScript([
+      'sudo',
+      'a2ensite',
+      self.get_apache_site(),
+      ])
+
+    self.__callScript([
+      'sudo',
+      'a2ensite',
+      self.get_apache_ssl_site(),
+      ])
+
+    self.__callScript([
+      'sudo',
+      'service',
+      'apache2',
+      'reload'
+      ])
+
+    ddns = Zonomi(settings.AMBIENTE.zonomi.api_key)
+    ddns.domain_update(self.get_dominio())
+    ddns.add_domain_update_to_crontab(self.get_dominio(),settings.AMBIENTE.default_user)
+
+    self.activa = True
+    self.save()
+
   def activar(self):
-    pass
+    self.testActivar()
+    self.doActivar()
 
   def get_scripts_id(self):
     return u"%s_%s"%(self.slug,self.id)
@@ -254,22 +328,305 @@ class Agencia(models.Model):
   def get_apache_ssl_site(self):
     return u"iamcast_%s-ssl"%self.id
 
+  def get_apache_ssl_config_file_path(self):
+    return u'%s/%s'%(settings.AMBIENTE.apache.available_sites_dir, self.get_apache_ssl_site())
+
+  def get_apache_config_file_path(self):
+    return u'%s/%s'%(settings.AMBIENTE.apache.available_sites_dir, self.get_apache_site())
+
   def testDesactivar(self):
     if not self.activa:
       raise Exception('La agencia %s, ya se encuentra inactiva.'%self.id)
 
   def doDesactivar(self):
-    output=Popen([
-      'sudo',
-      '%s/manage.py'%settings.AMBIENTE.project_directory,
-      'desactivar_agencia',
-      '--id=%s'%self.id,
-      '&'
-      ])
+    
+    try:
+      self.__callScript([
+        'sudo',
+        'a2dissite',
+        self.get_apache_site(),
+        ])
+    except:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+
+    try:
+      self.__callScript([
+        'sudo',
+        'a2dissite',
+        self.get_apache_ssl_site(),
+        ])
+    except:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+
+    try:
+      self.__callScript([
+        'sudo',
+        'service',
+        'apache2',
+        'reload'
+        ])
+    except:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+    
+    try:
+      os.remove(self.get_apache_config_file_path())
+    except:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+
+    try:
+      os.remove(self.get_apache_ssl_config_file_path())
+    except:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+
+    try:
+      ddns = Zonomi(settings.AMBIENTE.zonomi.api_key)
+
+      try:
+        ddns.delete_domain(self.get_dominio())
+      except:
+        logger = logging.getLogger(__name__)
+        logger.error(traceback.format_exc())
+
+      try:
+        ddns.remove_domain_update_from_crontab(self.get_dominio(),settings.AMBIENTE.default_user)
+      except:
+        logger = logging.getLogger(__name__)
+        logger.error(traceback.format_exc())
+
+    except:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+
+    self.activa = False
+    self.save()
+
+  def get_dominio(self):
+    return self.dominio
 
   def desactivar(self):
     self.testDesactivar()
     self.doDesactivar()
+
+  def __callScript(self,args,shell=False):
+    try:
+      return subprocess.check_output(args,shell=shell)
+    except subprocess.CalledProcessError as e:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+      logger.error('Generated output from executed command: %s'%e.output)
+      raise e
+
+  def crear_servicio(self):
+    
+    if self.estado_creacion != Agencia.CREACION_INICIADA:
+      raise Exception('Se ha intentado crear servicio para agencia %s pero su estado de creación %s es distinto de %s.'%(
+        self.id,
+        Agencia.DICT_ESTADO_CREACION[self.estado_creacion],
+        Agencia.DICT_ESTADO_CREACION[Agencia.CREACION_INICIADA]
+        ))
+
+    self.estado_creacion=Agencia.CREACION_EN_PROCESO
+    self.save()
+    password = User.objects.make_random_password()
+
+    """
+    array_llamada=[]
+
+    array_llamada = [
+      str(settings.AMBIENTE.script_crear_agencia),
+      str(self.id),
+      str('iamcast'),
+      str(self.usuario_gmail),
+      str(self.clave_gmail),
+      str(self.dominio),
+      str(settings.AMBIENTE.puerto_http),
+      str(settings.AMBIENTE.puerto_https),
+      str(settings.AMBIENTE.path_agencias),
+      str(self.user.username),
+      str(password),
+      str(settings.AMBIENTE.zonomi.api_key),
+      str(self.idioma),
+      ]
+    """
+
+    try:
+      #self.__callScript(array_llamada)
+
+      os.makedirs(self.get_ruta_instalacion())
+      os.chdir(self.get_ruta_instalacion())
+      self.__callScript(['git', 'init'])
+      self.__callScript(['git', 'pull', settings.AMBIENTE.iamcast.agencia_git_url])
+
+      import MySQLdb 
+
+      mysql_connection = MySQLdb.connect(
+        'localhost', 
+        settings.AMBIENTE.iamcast.mysql_user,
+        settings.AMBIENTE.iamcast.mysql_pass
+        )
+
+      cursor = mysql_connection.cursor()
+
+      cursor.execute("create database %s character set utf8"%self.get_db_name())
+      cursor.execute("create user '%s'@'localhost' identified by '%s'"%(self.get_db_user(),password))
+      cursor.execute("grant all on %s.* to %s"%(self.get_db_name(),self.get_db_user()))
+
+      self.__callScript("adduser %s" % self.get_user(), shell=True)
+
+      template = loader.get_template('iamcast/servicio/ambiente.py')
+      context = Context({ 'agencia':self, 'password':password })
+      ambiente_content = template.render(context)
+      ambiente_file = open(self.get_ambiente_file_path(),'w')
+      ambiente_file.write(ambiente_content)
+      ambiente_file.close()
+
+      self.__callScript([
+        'sed',
+        '-i',
+        "s#sys.path.append(.*)#sys.path.append('%s')#"%self.get_ruta_instalacion(),
+        self.get_wsgi_file_path(),
+        ])
+
+      os.makedirs('uploads/agenciados/fotos')
+      os.makedirs('uploads/cache/agenciados/fotos')
+      os.makedirs('uploads/agencias/logos')
+      self.__callScript([
+        'chmod', '777', '-R', 'uploads'
+        ])
+      os.makedirs('collectedstatic')
+
+      os.environ['DJANGO_SETTINGS_MODULE'] = "alternativa.settings"
+
+      #self.__callScript('echo -e "no\n" | %s syncdb'%self.get_manage_script(),shell=True)
+      self.__callScript([self.get_manage_script(), 'syncdb', '--noinput'])
+      self.__callScript([self.get_manage_script(), 'migrate'])
+      #self.__callScript('echo -e "yes\\n" | %s collectstatic'%self.get_manage_script(),shell=True)
+      self.__callScript([self.get_manage_script(), 'collectstatic','--noinput'])
+      self.__callScript([self.get_manage_script(), 'compilemessages'])
+      self.__callScript([self.get_manage_script(), 'loadperfil', '--idioma=%s'%self.idioma ])
+      self.__callScript([self.get_manage_script(), 'loadgroups'])
+
+      del os.environ['DJANGO_SETTINGS_MODULE']
+
+      db_name_ciudades = settings.AMBIENTE.iamcast.db_name_ciudades
+      cursor.execute("insert into %s.cities_light_country select * from %s.cities_light_country"%(self.get_db_name(),db_name_ciudades))
+      cursor.execute("insert into %s.cities_light_region select * from %s.cities_light_region"%(self.get_db_name(),db_name_ciudades))
+      cursor.execute("insert into %s.cities_light_city select * from %s.cities_light_city"%(self.get_db_name(),db_name_ciudades))
+
+      """
+      @todo Implementar lo que sigue
+      sudo "$INSTALL_SCRIPTS_DIR/install/create_apache_conf.sh" "$AGENCIA" "$DOMINIO" "$PUERTO_HTTP" "$PUERTO_HTTPS" "$WD_AGENCIA" "$INSTALL_SCRIPTS_DIR/templates"
+      sudo "$INSTALL_SCRIPTS_DIR/install/set_ddns.sh" "$DOMINIO" "cerebro" "$ZONOMI_API_KEY"
+      """
+
+      mysql_connection.close()
+
+    except e:
+      self.estado_creacion = Agencia.FINALIZADA_CON_ERRORES
+      self.save()
+      raise e
+
+    os.environ['DJANGO_SETTINGS_MODULE'] = "alternativa.settings"
+    array_llamada=[
+      self.get_manage_script(),
+      'crear_super_usuario',
+      '--username=%s'%self.user.username,
+      '--first_name=%s'%self.user.first_name,
+      '--last_name=%s'%self.user.last_name,
+      '--email=%s'%self.user.email,
+      '--password=%s'%self.user.password,
+    ]
+    del os.environ['DJANGO_SETTINGS_MODULE']
+    
+    try:
+      self.__callScript(array_llamada)
+    except subprocess.CalledProcessError as e:
+      self.estado_creacion = Agencia.FINALIZADA_CON_ERRORES
+      self.save()
+      raise e
+
+    asunto = ugettext(u'La Creación de su Agencia Finalizó Exitosamente')
+    template = loader.get_template('iamcast/mail/exito_creacion_agencia.html')
+    context = Context({'agencia':self, 'password':password, 'ambiente': settings.AMBIENTE})
+    html_content = template.render(context)
+    msg = MailIamSoft(asunto,ugettext(u'El contenido de este email debe ser visualizado en formato HTML'),[self.user.email])
+    msg.set_html_body(html_content)
+    msg.send()
+
+    self.estado_creacion = Agencia.FINALIZADA_CON_EXITO
+    self.activa = True
+    self.save()
+
+  def borrar_servicio(self, modificar_estado=True):
+
+    error = False
+    import MySQLdb 
+
+    try:
+
+      try:
+        self.desactivar()
+      except:
+        logger = logging.getLogger(__name__)
+        logger.error(traceback.format_exc())
+        error = True
+
+      mysql_connection = MySQLdb.connect(
+        'localhost', 
+        settings.AMBIENTE.iamcast.mysql_user,
+        settings.AMBIENTE.iamcast.mysql_pass
+        )
+
+      cursor = mysql_connection.cursor()
+
+      try:
+        cursor.execute("drop user '%s'"%self.get_db_user())
+      except:
+        logger = logging.getLogger(__name__)
+        logger.error(traceback.format_exc())
+        error = True
+
+      try:
+        cursor.execute("drop user '%s'@'localhost'"%self.get_db_user())
+      except:
+        logger = logging.getLogger(__name__)
+        logger.error(traceback.format_exc())
+        error = True
+      try:
+        cursor.execute("drop database %s"%self.get_db_name())
+      except:
+        logger = logging.getLogger(__name__)
+        logger.error(traceback.format_exc())
+        error = True
+      
+      mysql_connection.close()
+    except:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+      error = True
+
+    try:
+      self.__callScript(['rm', '-rf', self.get_ruta_instalacion()])
+    except:
+      logger = logging.getLogger(__name__)
+      logger.error(traceback.format_exc())
+      error = True
+
+    if modificar_estado:
+      if error:
+        self.estado_creacion = Agencia.BORRADA_CON_ERRORES
+      else:
+        self.estado_creacion = Agencia.BORRADA_CON_EXITO
+      self.activa = False
+      self.save()
+
+  def isActiva(self):
+    return self.activa
 
 class PagoContrato(Pago):
 

@@ -305,7 +305,7 @@ msgstr ""
 
 #: templates/iamcast/configurar.html:6
 msgid ""
-"Configuración para la creación de módulos de administración y página estándar"
+"Configuración para la creación de módulos de administración y sitio web de la agencia"
 msgstr ""
 
 #: templates/iamcast/cuenta_usuario.html:3
@@ -471,7 +471,7 @@ msgid ""
 msgstr ""
 
 #: templates/iamcast/index.html:46
-msgid "Diseño exlusivo para la página estándar."
+msgid "Diseño exlusivo paral sitio web de la agencia."
 msgstr ""
 
 #: templates/iamcast/index.html:47
@@ -656,12 +656,12 @@ msgid "Agregar eventos a trabajos y/o perfiles."
 msgstr ""
 
 #: templates/iamcast/index.html:103 templates/iamcast/index.html.py:159
-msgid "Publicación en página estándar"
+msgid "Publicación en sitio web de la agencia"
 msgstr ""
 
 #: templates/iamcast/index.html:104
 msgid ""
-"En la pagina estándar usted podrá tener publicada la siguiente información:"
+"En el sitio web de la agencia usted podrá tener publicada la siguiente información:"
 msgstr ""
 
 #: templates/iamcast/index.html:106
@@ -720,7 +720,7 @@ msgstr ""
 #: templates/iamcast/index.html:124
 msgid ""
 "En forma automática se generán los módulos para administrar su agencia y la "
-"página web estándar."
+"sitio web de la agencia."
 msgstr ""
 
 #: templates/iamcast/index.html:125
@@ -1240,12 +1240,12 @@ msgstr ""
 #: templates/iamcast/tutorial.html:163
 msgid ""
 "Este campo si está tildado indica que el trabajo debe ser publicado en la "
-"página estándar de la agencia. Su publicación se verá en la sección de "
+"sitio web de la agencia de la agencia. Su publicación se verá en la sección de "
 "búsquedas (Actualmente no debe tener ningún trabajo publicado):"
 msgstr ""
 
 #: templates/iamcast/tutorial.html:163
-msgid "Ir a página de búsquedas en página estándar de"
+msgid "Ir a página de búsquedas en sitio web de la agencia de"
 msgstr ""
 
 #: templates/iamcast/tutorial.html:164
@@ -1652,7 +1652,7 @@ msgid ""
 msgstr ""
 
 #: templates/iamcast/tutorial.html:266
-msgid "el registro de usuarios de la página estándar"
+msgid "el registro de usuarios de el sitio web de la agencia"
 msgstr ""
 
 #: templates/iamcast/tutorial.html:267
@@ -1992,7 +1992,7 @@ msgstr ""
 msgid ""
 "En tu cuenta IamSoft podrás encontrar todo lo necesario para administrar tus "
 "agencias. Por cada agencia tendrás: acceso a administración, acceso a la "
-"página estándar, acceso al tutorial, realización de pagos, visualización del "
+"sitio web de la agencia, acceso al tutorial, realización de pagos, visualización del "
 "historial de pagos."
 msgstr ""
 

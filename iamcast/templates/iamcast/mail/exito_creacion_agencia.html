@@ -14,7 +14,7 @@
   {%endblocktrans%}
 </p>
 <p>
-  {% trans "En tu cuenta IamSoft podrás encontrar todo lo necesario para administrar tus agencias. Por cada agencia tendrás: acceso a administración, acceso a la página estándar, acceso al tutorial, realización de pagos, visualización del historial de pagos." %} <a href="{{ambiente.get_base_url}}/cuenta/usuario/">{% trans "Accede a tu cuenta IamSoft" %}</a>
+  {% trans "En tu cuenta IamSoft podrás encontrar todo lo necesario para administrar tus agencias. Por cada agencia tendrás: acceso a administración, acceso al sitio web de la agencia, acceso al tutorial, realización de pagos, visualización del historial de pagos." %} <a href="{{ambiente.get_base_url}}/cuenta/usuario/">{% trans "Accede a tu cuenta IamSoft" %}</a>
 </p>
 <p>
   {% trans "En caso que sea tu primera agencia, te recomendamos que comiences leyendo el tutorial que hemos preparado para ti. En este tutorial te guiamos en los primeros pasos que debes realizar para realizar una correcta administración de tu agencia." %} <a href="{{ambiente.get_base_url}}/iamcast/tutorial/{{agencia.id}}">{% trans "Accede al tutorial de" %} '{{agencia.nombre}}'</a>
@@ -26,7 +26,7 @@
   {% trans "Puedes acceder a la administración de tu agencia usando el siguiente link: " %} <a href="{{agencia.url_admin_agencia}}">{{agencia.url_admin_agencia}}</a>
 </p>
 <p>
-  {% trans "Para acceder al sitio estándar de tu agencia tienes el siguiente link: " %} <a href="{{agencia.url_sitio_agencia}}">{{agencia.url_sitio_agencia}}</a>
+  {% trans "Para acceder al sitio web de tu agencia tienes el siguiente link: " %} <a href="{{agencia.url_sitio_agencia}}">{{agencia.url_sitio_agencia}}</a>
 </p>
 <p>
   {% trans "Esperamos que puedas sacar el mayor provecho utilizando iamcast como la solución para administrar la información de tu agencia, y te agradecemos por habernos elegido " %}

@@ -148,14 +148,12 @@ INSTALLED_APPS = (
     'iampacks.cross.estatico',
     'iampacks.cross.correo',
     'iampacks.cross.usuario',
-    #'perfil',
     'iampacks.cross.idioma',
-    #'agencia',
-    #'agenciado',
-    #'trabajo',
+    'iampacks.cross.mercadopago',
+    'iampacks.cross.crontab',
+    'iampacks.cross.zonomi',
     'home',
     'iamcast',
-    'mercadopago',
 )
 
 if not ambiente.productivo:
@@ -170,6 +168,11 @@ if not ambiente.productivo:
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters':{
+      'verbose':{
+        'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+      },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
@@ -180,6 +183,12 @@ LOGGING = {
             'level': 'ERROR',
             #'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'debug_file':{
+            'level': 'DEBUG',
+            'filename': '%slog/debug.log'%ambiente.project_directory,
+            'class': 'logging.FileHandler',
+            'formatter': 'verbose',
         }
     },
     'loggers': {
@@ -188,10 +197,15 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'iamcast':{
+            'handlers': ['debug_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
     }
 }
 
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = ambiente.email.use_tls
 EMAIL_HOST = ambiente.email.host
 EMAIL_HOST_USER = ambiente.email.user
 EMAIL_HOST_PASSWORD = ambiente.email.password

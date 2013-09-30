@@ -8,7 +8,7 @@ from django.contrib import messages
 import hashlib
 from django.conf import settings
 from django.http import HttpResponse
-from mercadopago.models import MercadoPago
+from iampacks.cross.mercadopago.models import MercadoPago
 from iampacks.cross.correo.mail import Mail
 from iamcast.models import Agencia
 from django.utils.translation import ugettext as _
@@ -26,14 +26,15 @@ def crear_agencia(form, request):
   """
   form.save()
 
+  """
   output=Popen([
     '%s/manage.py'%settings.AMBIENTE.project_directory,
-    'crear_agencia',
-    '--id=%s'%form.instance.id,
+    'crear_agencias_pendientes',
     '&'
     ])
+  """
 
-  messages.success(request,_(u'Hemos iniciado el proceso de creación del módulo de administración y página estándar. Este proceso puede demorar varios minutos. Una vez finalizado el proceso le notificaremos por email de forma que pueda comenzar a utilizar la aplicación.'))
+  messages.success(request,_(u'Hemos iniciado el proceso de creación del módulo de administración y sitio web de la agencia. Este proceso puede demorar varios minutos. Una vez finalizado el proceso le notificaremos por email de forma que pueda comenzar a utilizar la aplicación.'))
   messages.success(request,_(u'Podrá probar la aplicación por un período de %s días. Luego para seguir utilizandola deberá realizar el pago correspondiente por el período de tiempo que crea más conveniente.')%settings.DIAS_PRUEBA_IAMCAST)
 
 @login_required

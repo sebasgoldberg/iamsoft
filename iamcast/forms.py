@@ -9,9 +9,6 @@ from django.contrib.auth.hashers import check_password
 
 class AgenciaForm(forms.ModelForm):
 
-  clave_gmail=forms.CharField(widget=forms.widgets.PasswordInput, required=True, label=_('Clave de gmail'),max_length=60)
-  clave_gmail2=forms.CharField(widget=forms.widgets.PasswordInput, required=True, label=_('Confirme clave de gmail'),max_length=60)
-
   def __init__(self, *args, **kwargs):
 
     self.helper = FormHelper()
@@ -24,18 +21,11 @@ class AgenciaForm(forms.ModelForm):
 
   def clean(self):
     cleaned_data = super(AgenciaForm, self).clean()
-    clave_gmail = cleaned_data.get("clave_gmail")
-    clave_gmail2 = cleaned_data.get("clave_gmail2")
-
-    if clave_gmail and clave_gmail2:
-      if clave_gmail != clave_gmail2:
-        raise forms.ValidationError(ugettext(u"Las claves de gmail no coinciden"))
-
     return cleaned_data
 
   class Meta:
     model=Agencia
-    fields = ('nombre', 'idioma', 'usuario_gmail', 'clave_gmail', 'clave_gmail2')
+    fields = ('nombre', 'idioma')
 
 class BorrarAgenciaForm(forms.Form):
   agencia_id=forms.IntegerField(widget=forms.widgets.HiddenInput, required=True)

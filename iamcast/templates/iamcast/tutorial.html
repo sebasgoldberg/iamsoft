@@ -56,7 +56,7 @@
     <dt>{% trans "Favicon" %}</dt>
       <dd>{% trans "Esta es una pequeña imagen que se muestra en los browsers (como Chrome o Firefox), en la parte de la pestaña donde aparece el título del sitio." %}</dd>
     <dt>{% trans "Titulo página inicial" %}</dt>
-      <dd>{% trans "Este será el título que verán los usuarios cuando accedan a su página estándar." %}</dd>
+      <dd>{% trans "Este será el título que verán los usuarios cuando accedan a su sitio web de la agencia." %}</dd>
     <dt>{% trans "Presentación página inicial" %}</dt>
       <dd>{% trans "Este es el texto que aparece debajo del título y presenta su agencia." %}</dd>
     <dt>{% trans "Mapa página de contacto" %}</dt>
@@ -66,9 +66,9 @@
     <dt>{% trans "Teléfonos" %}</dt>
       <dd>{% trans "Ingrese el o los teléfonos de su agencia." %}</dd>
   </dl>
-  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agencia/add/">{% trans "Crear agencia en la administración de" %} "{{agencia.nombre}}"</a>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agencia/add/">{% trans "Cargá los datos de tu agencia"%}</a>
 
-  <h2 id='diccionario_de_datos'>{% trans "Diccionario de datos" %}</h2>
+  <h2 id='diccionario_de_datos'>{% trans "Datos" %}</h2>
   <p>{% trans "Son los datos básicos necesarios para crear agenciados, trabajos, etc." %}</p>
   <p>{% trans "Ejemplos de estos datos básicos son: Ojos, Pelos, Pieles, Deportes, Compañias de teléfono, etc." %}</p>
   <p>{% trans "Dichos datos son muy fáciles de mantener, se pueden listar, crear, modificar y borrar." %}</p>
@@ -82,16 +82,16 @@
     </a>
     <ul class="dropdown-menu">
       <!-- dropdown menu links -->
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/danza/">{% trans "Listar danzas en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/deporte/">{% trans "Listar deportes en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/idioma/">{% trans "Listar idiomas en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/instrumento/">{% trans "Listar instrumentos en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/estadodientes/">{% trans "Listar estado dientes en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/ojos/">{% trans "Listar ojos en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/pelo/">{% trans "Listar pelos en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/piel/">{% trans "Listar pieles en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/talle/">{% trans "Listar talles en la administración de" %} "{{agencia.nombre}}"</a></li>
-      <li><a target="_blank" href="{{agencia.url_admin_agencia}}telefono/compania/">{% trans "Listar compañias de teléfono en la administración de" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/danza/">{% trans "Listar danzas en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/deporte/">{% trans "Listar deportes en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/idioma/">{% trans "Listar idiomas en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/instrumento/">{% trans "Listar instrumentos en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/estadodientes/">{% trans "Listar estado dientes en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/ojos/">{% trans "Listar ojos en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/pelo/">{% trans "Listar pelos en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/piel/">{% trans "Listar pieles en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}perfil/talle/">{% trans "Listar talles en la agencia" %} "{{agencia.nombre}}"</a></li>
+      <li><a target="_blank" href="{{agencia.url_admin_agencia}}telefono/compania/">{% trans "Listar compañias de teléfono en la agencia" %} "{{agencia.nombre}}"</a></li>
     </ul>
   </div>
 
@@ -102,9 +102,9 @@
     <dt>{% trans "Carga a través de la administración de " %} "{{agencia.nombre}}"</dt>
       <dd>{% trans "Aqui usted o sus agenciadores son los encargados de ingresar la información de cada agenciado. Por default el agenciado se crea como 'Activo' (este es un campo del formulario de cada agenciado)" %}</dd>
   </dl>
-  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/add/">{% trans "Crear agenciado en la administración de" %} "{{agencia.nombre}}"</a>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/add/">{% trans "Crear agenciado en la agencia" %} "{{agencia.nombre}}"</a>
   <dl>
-    <dt>{% trans "Carga a través del sitio estándar de " %} "{{agencia.nombre}}"</dt>
+    <dt>{% trans "Carga a través del sitio web de " %} "{{agencia.nombre}}"</dt>
       <dd>{% trans "Aqui sus agenciados son los responsables de ingresar sus datos. Previamente deben registrarse. Una vez registrados serán redireccionados al formulario donde podrán cargar toda la información de su perfil. Todo agenciado creado de está forma se creará como 'No Activo' (campo 'Activo' del formulario del perfil destildado). De está forma usted podrá distinguir los agenciados aprobados para su agencia de los no aprobados. " %}</dd>
   </dl>
 
@@ -116,7 +116,7 @@
     <dt>{% trans "Filtros" %}</dt>
       <dd>{% trans "Podrá aplicar varios filtros a las bússquedas que realice. Algunos de los filtros son: si está activo o inactivo, características físicas, habilidades, fecha de agenciamiento y ubicación (país, región, ciudad)." %}</dd>
   </dl>
-  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/">{% trans "Acceder al listado de agenciados en la administración de" %} "{{agencia.nombre}}"</a>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/">{% trans "Acceder al listado de agenciados en la agencia" %} "{{agencia.nombre}}"</a>
 
 
   <h2 id='trabajos'>{% trans "Trabajos" %}</h2>
@@ -136,11 +136,11 @@
       </dd>
     <dt>{% trans "Perfil Buscado" %}</dt>
       <dd>
-        {% trans "Un perfil buscado es un componente de un trabajo. Un trabajo puede tener asociado varios perfiles buscados, por ejemplo, para la filmación de una pelicula (el trabajo) podemos buscar protagonistas y extras (los perfiles buscados). Protagonistas es un perfil buscado y Extras es otro perfil buscado. Ambos pertenecen al trabajo película. Cada uno tendrá asociadas determinadas características, cache, etc. Un perfil buscado está compuesto por" %}
+        {% trans "Un perfil buscado es un componente de un trabajo. Un trabajo puede tener asociado varios perfiles buscados, por ejemplo, para la filmación de una pelicula (el trabajo) podemos buscar protagonistas y extras (los perfiles buscados). Protagonistas es un perfil buscado y Extras es otro perfil buscado. Ambos pertenecen al trabajo película. Cada uno tendrá asociadas determinadas características, cache, etc. Un perfil buscado:" %}
         <ul>
           <li>{% trans "Pertenece a un trabajo" %}</li>
-          <li>{% trans "Eventos del perfil buscado (similar a los eventos del trabajo pero en este caso son eventos específicos del perfil)" %}</li>
-          <li>{% trans "Postulaciones (las postulaciones de los agenciados hechas a los distintos perfiles)" %}</li>
+          <li>{% trans "Tiene eventos (similar a los eventos del trabajo pero en este caso son eventos específicos del perfil)" %}</li>
+          <li>{% trans "Tiene postulaciones (las postulaciones de los agenciados hechas a los distintos perfiles)" %}</li>
         </ul>
       </dd>
     <dt>{% trans "Postulación" %}</dt>
@@ -156,18 +156,18 @@
     <dt>{% trans "Estado" %}</dt>
       <dd>{% trans "El estado del trabajo. La idea es que a medidda que vamos pasando las distintas etapas de un trabajo se vaya cambiando su estado. " %}</dd>
     <dt>{% trans "Publicado" %}</dt>
-      <dd>{% trans "Este campo si está tildado indica que el trabajo debe ser publicado en la página estándar de la agencia. Su publicación se verá en la sección de búsquedas (Actualmente no debe tener ningún trabajo publicado):" %} <a target="_blank" href="{{agencia.url_sitio_agencia}}trabajo/busquedas/">{% trans "Ir a página de búsquedas en página estándar de" %} {{agencia.nombre}}</a></dd>
+      <dd>{% trans "Este campo si está tildado indica que el trabajo debe ser publicado en el sitio web de la agencia de la agencia. Su publicación se verá en la sección de búsquedas (Actualmente no debe tener ningún trabajo publicado):" %} <a target="_blank" href="{{agencia.url_sitio_agencia}}trabajo/busquedas/">{% trans "Ir a página de búsquedas en sitio web de la agencia" %} {{agencia.nombre}}</a></dd>
     <dt>{% trans "Eventos del trabajo" %}</dt>
       <dd>{% trans "Los eventos asociados al trabajo: casting, callback, prueba de ropa, realización." %}</dd>
     <dt>{% trans "Perfiles buscados" %}</dt>
       <dd>{% trans "Los perfiles buscados dentro del trabajo. Podrá ingresar la información principal de cada perfil buscado. Luego, al grabar el trabajo, se presentará un link a cada perfil buscado, de forma que pueda completar la información de detalle de cada perfil buscado." %}</dd>
   </dl>
-  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/trabajo/add/">{% trans "Crear un trabajo en la administración de" %} "{{agencia.nombre}}"</a>
+  <a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/trabajo/add/">{% trans "Crear un trabajo en la agencia" %} "{{agencia.nombre}}"</a>
 
 <h3 id='editando_perfiles_buscados_de_trabajo'>{% trans "Editando perfiles buscados de un trabajo" %}</h3>
 <p>{% trans "Una vez ya creado algún trabajo, usted podrá editar los perfiles buscados que haya creado en dicho trabajo. En la edición del perfil buscado podrá cambiar los datos principales, editar los eventos, y editar las postulaciones de agenciados. En la proxima sección explicaremos una forma muy útil de realizar portulaciones de agenciados a un perfil buscado." %}</p>
 <p>{% trans "Si usted aún no ha creado un perfil buscado podrá hacerlo haciendo clic en el siguiente botón:" %}</p>
-<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/rol/add/">{% trans "Agregar perfil buscado en la administración de" %} "{{agencia.nombre}}"</a>
+<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/rol/add/">{% trans "Agregar perfil buscado en la agencia" %} "{{agencia.nombre}}"</a>
 
 <h3 id='postulando_agenciados'>{% trans "Postulando agenciados" %}</h3>
 <p>{% trans "Una vez creado un perfil buscado para algún trabajo podemos comenzar a realizar postulaciones de agenciados en dicho perfil buscado." %}</p>
@@ -188,7 +188,7 @@
           {% trans "El estado de la postulación. A continuación se explica lo que representa cada estado:" %}
           <dl>
             <dt>{% trans "Postulación hecha por el agenciado" %}</dt>
-              <dd>{% trans "Este estado no debería seleccionarlo. Este es un estado que se asigna automáticamente en caso que el agenciado se auto postule para un perfil buscado desde el sitio estándar de su agencia." %}</dd>
+              <dd>{% trans "Este estado no debería seleccionarlo. Este es un estado que se asigna automáticamente en caso que el agenciado se auto postule para un perfil buscado desde el sitio web de su agencia." %}</dd>
             <dt>{% trans "Postulado para casting" %}</dt>
               <dd>{% trans "En caso que esté postulando agenciados para un casting pero todavía no los haya seleccionado." %}</dd>
             <dt>{% trans "Seleccionado para casting" %}</dt>
@@ -208,7 +208,7 @@
 </p>
 <p>{% trans "Luego de haber realizado este proceso, si accede al perfil buscado utilizado, podrá verificar que los agenciados seleccionados se encuentran postulados a dicho perfil." %}</p>
 <p>{% trans "También, al acceder a la información de cada agenciado, podrá ver en la parte inferior, en la sección 'Postulaciones', las postulaciones del agenciado con su correspondiente estado por postulación." %}</p>
-<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/">{% trans "Postular agenciados en la administración de" %} "{{agencia.nombre}}"</a>
+<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}agencia/agenciado/">{% trans "Postular agenciados en la agencia" %} "{{agencia.nombre}}"</a>
 
 <h3 id='envio_de_trabajo_por_email'>{% trans "Envío de trabajo por email" %}</h3>
 <p>{% trans "Una vez que ya ha creado un trabajo para alguna productora, que dicho trabajo tiene perfiles buscados, y que para cada perfil ha realizado postulaciones, es muy común la necesidad de enviar dicha información por email." %}</p>
@@ -224,7 +224,7 @@
   </ul>
   <li>{% trans "Por ultimo, para concretar el envío, debe seleccionar el botón enviar." %}</li>
 </ul>
-<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/trabajo/">{% trans "Seleccione algún trabajo y envíe un email en la administración de" %} "{{agencia.nombre}}"</a>
+<a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}trabajo/trabajo/">{% trans "Seleccione algún trabajo y envíe un email en la agencia" %} "{{agencia.nombre}}"</a>
 
 <h2 id='seguridad_grupos_usuarios_y_permisos'>{% trans "Seguridad, grupos, usuarios y permisos" %}</h2>
 <p>{% trans "Como bien sabe, usted cuenta con un super usuario para realizar todas las operaciones en la administración de su agencia. Este usuario tiene permisos para realizar cualquier tarea dentro de la administración." %}</p>
@@ -258,10 +258,10 @@
   </li>
   <li>{% trans "Por último solo resta grabar." %}</li>
 </ul>
-<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/user/add/">{% trans "Crear un usuario en la administración de" %} "{{agencia.nombre}}"</a></p>
-<p>{% trans "Tenga en cuenta que sus empleados podrán registrarse en la agencia como cualquier otro usuario desde" %} <a target="_blank" href="{{agencia.url_sitio_agencia}}usuario/registro/?next=/agenciado/">{% trans "el registro de usuarios de la página estándar" %}</a>.</p>
+<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/user/add/">{% trans "Crear un usuario en la agencia" %} "{{agencia.nombre}}"</a></p>
+<p>{% trans "Tenga en cuenta que sus empleados podrán registrarse en la agencia como cualquier otro usuario desde" %} <a target="_blank" href="{{agencia.url_sitio_agencia}}usuario/registro/?next=/agenciado/">{% trans "el registro de usuarios del sitio web de la agencia" %}</a>.</p>
 <p>{% trans "Luego usted podrá editar cada usuario que precise desde el listado de usuario y asignarle los permisos correspondientes." %}</p>
-<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/user/">{% trans "Acceder al listado de usuarios en la administración de" %} "{{agencia.nombre}}"</a></p>
+<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/user/">{% trans "Acceder al listado de usuarios en la agencia" %} "{{agencia.nombre}}"</a></p>
 
 <h3 id='crear_grupos'>{% trans "Crear grupos" %}</h3>
 <p>{% trans "Crear grupos puede ser muy util para definir en un único objeto los permisos que se asignarán a distintos usuarios (en lugar de definir estos permisos usuario por usuario)." %}</p>
@@ -272,7 +272,7 @@
   <dt>{% trans "Permisos" %}</dt>
     <dd>{% trans "Los permisos que tendrán los usuarios a los que se les asigne dicho grupo." %}</dd>
 </dl>
-<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/group/add/">{% trans "Crear un grupo en la administración de" %} "{{agencia.nombre}}"</a></p>
+<p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}auth/group/add/">{% trans "Crear un grupo en la agencia" %} "{{agencia.nombre}}"</a></p>
 
 {%comment%}
 
@@ -285,7 +285,7 @@
   <ul>
     <li>{% trans "" %}</li>
   </ul>
-  <p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}">{% trans "en la administración de" %} "{{agencia.nombre}}"</a></p>
+  <p><a class="btn btn-info" target="_blank" href="{{agencia.url_admin_agencia}}">{% trans "en la agencia" %} "{{agencia.nombre}}"</a></p>
 
 {%endcomment%}
 

@@ -38,65 +38,9 @@ class Command(BaseCommand):
     else:
       raise Exception(ugettext(u'Debe pasar un id o nombre de agencia como parámetro'))
 
-    if not saltar_verif_estado:
-      if agencia.estado_creacion!=Agencia.CREACION_INICIADA:
-        raise Exception(ugettext(u'La agencia tiene un estado inválido para ser creada'))
-
-    agencia.estado_creacion=Agencia.CREACION_EN_PROCESO
-    agencia.save()
-
-    password = User.objects.make_random_password()
-
-    array_llamada=[]
-
     try:
 
-      array_llamada = [
-        settings.AMBIENTE.script_crear_agencia,
-        str(agencia.id),
-        'iamcast',
-        agencia.usuario_gmail,
-        agencia.clave_gmail,
-        agencia.dominio,
-        settings.AMBIENTE.puerto_http,
-        settings.AMBIENTE.puerto_https,
-        settings.AMBIENTE.path_agencias,
-        agencia.user.username,
-        password,
-        settings.AMBIENTE.zonomi.api_key,
-        agencia.idioma,
-        ]
-
-      output=subprocess.check_output(array_llamada)
-
-      os.environ['DJANGO_SETTINGS_MODULE'] = "alternativa.settings"
-      array_llamada=[
-        agencia.get_manage_script(),
-        'crear_super_usuario',
-        '--username=%s'%agencia.user.username,
-        '--first_name=%s'%agencia.user.first_name,
-        '--last_name=%s'%agencia.user.last_name,
-        '--email=%s'%agencia.user.email,
-        '--password=%s'%agencia.user.password,
-      ]
-      del os.environ['DJANGO_SETTINGS_MODULE']
-      
-      output=subprocess.check_output(array_llamada)
-
-      if not suprimir_mail:
-        asunto = ugettext(u'La Creación de su Agencia Finalizó Exitosamente')
-        template = loader.get_template('iamcast/mail/exito_creacion_agencia.html')
-        context = Context({'agencia':agencia, 'password':password, 'ambiente': settings.AMBIENTE})
-        html_content = template.render(context)
-        msg = MailIamSoft(asunto,ugettext(u'El contenido de este email debe ser visualizado en formato HTML'),[agencia.user.email])
-        msg.set_html_body(html_content)
-        msg.send()
-
-      agencia.estado_creacion = Agencia.FINALIZADA_CON_EXITO
-      agencia.activa = True
-      agencia.save()
-
-      self.stdout.write(u'Creacion exitosa.\n')
+      agencia.crear_servicio()      
 
     except Exception as e:
       if hasattr(e,'output'):
@@ -114,4 +58,3 @@ class Command(BaseCommand):
       agencia.save()
       raise e
 
-    # @todo enviar mail con el resultado de la creación
