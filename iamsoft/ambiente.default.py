@@ -31,7 +31,7 @@ class Ambiente(BaseAmbiente):
     password='password'
 
   project_directory = '%s/' % os.path.abspath('%s/..' % os.path.split(os.path.abspath(__file__))[0])
-  log_directory = '%slog'
+  log_directory = '%slog' % project_directory
 
   class email:
     
