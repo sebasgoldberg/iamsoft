@@ -141,13 +141,9 @@ function crear_usuario_y_base_datos
 
 }
 
-function install_iamsoft
+function create_ambient_dir
 {
-  echo "Se realiza la instalación del proyecto iamsoft."
-
-  IAMSOFT_WD="$WD"
-  
-  AGENCIAS_WD="$(get_ambient_parameter 'path_agencias')"
+  DIR="$(get_ambient_parameter "$1")"
 
   if [ $? -ne 0 ]
   then
@@ -155,23 +151,33 @@ function install_iamsoft
     return 1
   fi
 
-  if [ ! -d "$AGENCIAS_WD" ]
+  if [ ! -d "$DIR" ]
   then
-    mkdir "$AGENCIAS_WD"
+    mkdir "$DIR"
     if [ $? -ne 0 ]
     then
-      echo "Error al crear '$AGENCIAS_WD'"
+      echo "Error al crear '$DIR'"
       exit 1
     fi
   fi
 
-  chgrp www-data "$AGENCIAS_WD"
+  chgrp www-data "$DIR"
 
   if [ $? -ne 0 ]
   then
-    echo "Error al cambiar grupo a www-data '$AGENCIAS_WD'"
+    echo "Error al cambiar grupo a www-data '$DIR'"
     exit 1
   fi
+}
+
+function install_iamsoft
+{
+  echo "Se realiza la instalación del proyecto iamsoft."
+
+  IAMSOFT_WD="$WD"
+  
+  create_ambient_dir 'path_agencias'
+  create_ambient_dir 'log_directory'
 
   mkdir "$IAMSOFT_WD/collectedstatic"
 
