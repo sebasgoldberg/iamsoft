@@ -115,7 +115,7 @@ function install_iampacks
 
 function get_ambient_parameter
 {
-  echo "$(python -c "from iamsoft.import ambiente; print ambiente.$1" )"
+  echo "$(python -c "from iamsoft.ambiente import ambiente; print ambiente.$1" )"
 }
 
 function crear_usuario_y_base_datos
@@ -146,15 +146,23 @@ function install_iamsoft
   echo "Se realiza la instalación del proyecto iamsoft."
 
   IAMSOFT_WD="$WD"
-
-  AGENCIAS_WD="$IAMSOFT_WD/agencias"
-
-  mkdir "$AGENCIAS_WD"
+  
+  AGENCIAS_WD="$(get_ambient_parameter 'path_agencias')"
 
   if [ $? -ne 0 ]
   then
-    echo "Error al crear '$AGENCIAS_WD'"
-    exit 1
+    echo 'ERROR: No se ha podido obtener el path de agencias del ambiente.'
+    return 1
+  fi
+
+  if [ ! -d "$AGENCIAS_WD" ]
+  then
+    mkdir "$AGENCIAS_WD"
+    if [ $? -ne 0 ]
+    then
+      echo "Error al crear '$AGENCIAS_WD'"
+      exit 1
+    fi
   fi
 
   chgrp www-data "$AGENCIAS_WD"
@@ -172,9 +180,6 @@ function install_iamsoft
   crear_usuario_y_base_datos
 
   "$IAMSOFT_WD/manage.py" syncdb
-
-  # @todo Agregar la parte faltante
-
 }
 
 install_standard_framework
@@ -183,8 +188,7 @@ install_iampacks
 
 install_ciudades
 
-# @todo Descomentar
-# install_iamsoft
+install_iamsoft
 
 exit 0
 
