@@ -161,7 +161,7 @@ function create_ambient_dir
     fi
   fi
 
-  chgrp www-data "$DIR"
+  chgrp -R www-data "$DIR"
 
   if [ $? -ne 0 ]
   then
@@ -178,6 +178,12 @@ function install_iamsoft
   
   create_ambient_dir 'path_agencias'
   create_ambient_dir 'log_directory'
+
+  # @todo asignar permisos al usuario para el archivo de log
+  LOG_FILE="$(get_ambient_parameter "log_file")"
+  touch "$LOG_FILE"
+  chmod 775 "$LOG_FILE"
+  chgrp www-data "$LOG_FILE"
 
   mkdir "$IAMSOFT_WD/collectedstatic"
 

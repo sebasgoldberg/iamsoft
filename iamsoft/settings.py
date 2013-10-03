@@ -186,7 +186,7 @@ LOGGING = {
         },
         'debug_file':{
             'level': 'DEBUG',
-            'filename': '%s/debug.log'%ambiente.log_directory,
+            'filename': ambiente.log_file,
             'class': 'logging.FileHandler',
             'formatter': 'verbose',
         }
