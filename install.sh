@@ -3,6 +3,18 @@
 ### Variables globales
 WD="$(readlink -f "$(dirname "$0")")"
 
+INSTALL_FRAMEWORK='X'
+INSTALL_IAMPACKS='X'
+INSTALL_CIUDADES='X'
+INSTALL_IAMSOFT='X'
+
+if [ "$1" = '--only-iamsoft' ]
+then
+  INSTALL_FRAMEWORK=' '
+  INSTALL_IAMPACKS=' '
+  INSTALL_CIUDADES=' '
+fi
+
 function install_django_crispy_forms
 {
   pip install --upgrade django-crispy-forms
@@ -16,6 +28,11 @@ function install_django_crispy_forms
 
 function install_standard_framework
 {
+  if [ "$INSTALL_FRAMEWORK" = ' ' ]
+  then
+    return 0
+  fi
+
   apt-get update
 
   apt-get -y install make
@@ -67,6 +84,11 @@ function install_standard_framework
 
 function install_ciudades
 {
+  if [ "$INSTALL_CIUDADES" = ' ' ]
+  then
+    return 0
+  fi
+
   cd "$WD"
   cd ..
 
@@ -85,6 +107,11 @@ function install_ciudades
 
 function install_iampacks
 {
+  if [ "$INSTALL_IAMPACKS" = ' ' ]
+  then
+    return 0
+  fi
+
   echo "Se realiza la instalación de los paquetes de iamsoft."
 
   #DIST_PACKAGE_DIR="$(readlink -f "$(dirname "$(python -c 'import django;print django.__file__')")/..")"
@@ -172,10 +199,24 @@ function create_ambient_dir
 
 function install_iamsoft
 {
+  if [ "$INSTALL_IAMSOFT" = ' ' ]
+  then
+    return 0
+  fi
+
   echo "Se realiza la instalación del proyecto iamsoft."
 
   IAMSOFT_WD="$WD"
-  
+
+  AMBIENTE_FILE="$IAMSOFT_WD/iamsoft/ambiente.py"
+  AMBIENTE_TEMPLATE_FILE="$IAMSOFT_WD/iamsoft/ambiente.default.py"
+
+  if [ ! -f "$AMBIENTE_FILE" ]
+  then
+    echo "ERROR: Archivo $AMBIENTE_FILE no encontrado. Copiar $AMBIENTE_TEMPLATE_FILE y editar la configuración correspondiente."
+    exit 1
+  fi  
+
   create_ambient_dir 'path_agencias'
   create_ambient_dir 'log_directory'
 

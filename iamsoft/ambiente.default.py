@@ -19,11 +19,6 @@ class Ambiente(BaseAmbiente):
 
   path_agencias='path_agencias'
   dominio_agencias='dominio_agencias'
-  script_crear_agencia='script_crear_agencia'
-  script_borrar_agencia='script_borrar_agencia'
-  class scripts:
-    activar_agencia='activar_agencia'
-    desactivar_agencia='desactivar_agencia'
 
   class db:
     name='name'

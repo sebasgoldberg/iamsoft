@@ -1,0 +1,7 @@
+INSTALL
+-------
+
+1) Clone this repository.
+2) Go to the root folder of this repository on your harddrive.
+3) Copy the ./iamsoft/ambiente.default.py to ./iamsoft/ambiente.py and edit it to set your configuration.
+4) execute: $ sudo ./install.sh
