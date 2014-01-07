@@ -5,3 +5,13 @@ INSTALL
 2) Go to the root folder of this repository on your harddrive.
 3) Copy the ./iamsoft/ambiente.default.py to ./iamsoft/ambiente.py and edit it to set your configuration.
 4) execute: $ sudo ./install.sh
+5) Create the SSL certificate (files iamsoft.pem and iamsoft.key) under /etc/apache2/ssl
+6) Create the apache2 configuration files for http and https
+7) Verify that the file /etc/apache2/ports.conf has the corresponding ports open.
+8) Restart apache2 service.
+
+CREATE ONE AGENCY
+1) Enter to iamsoft site.
+2) Create an account.
+3) Create an agency.
+4) execute: $ ./manage.py crear_agencias_pendientes
