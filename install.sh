@@ -52,7 +52,7 @@ function install_standard_framework
   pip install Django==1.4.3
 
 # Instalacion de paquete para manejo de thumbnails
-  pip install django-imagekit
+  pip install django-imagekit==2.0.4
   pip install requests
 
 # Instalacion de PyYaml

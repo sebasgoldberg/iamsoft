@@ -15,7 +15,7 @@ framework.
 """
 import os, sys
 
-sys.path.append('/home/cerebro/django-projects/iamsoft')
+sys.path.append(os.path.split(os.path.abspath(__file__))[0])
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "iamsoft.settings")
 
