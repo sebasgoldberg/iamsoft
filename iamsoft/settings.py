@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'iampacks.cross.mercadopago',
     'iampacks.cross.crontab',
     'iampacks.cross.zonomi',
+    'iampacks.cross.install',
     'home',
     'iamcast',
 )
