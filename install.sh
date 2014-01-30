@@ -188,7 +188,7 @@ function create_ambient_dir
     fi
   fi
 
-  chgrp -R www-data "$DIR"
+  sudo chgrp -R www-data "$DIR"
 
   if [ $? -ne 0 ]
   then
