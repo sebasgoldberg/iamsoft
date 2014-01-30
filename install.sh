@@ -224,7 +224,7 @@ function install_iamsoft
   LOG_FILE="$(get_ambient_parameter "log_file")"
   touch "$LOG_FILE"
   chmod 775 "$LOG_FILE"
-  chgrp www-data "$LOG_FILE"
+  sudo chgrp www-data "$LOG_FILE"
 
   mkdir "$IAMSOFT_WD/collectedstatic"
 
