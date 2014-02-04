@@ -526,7 +526,7 @@ class Agencia(models.Model):
 
       mysql_connection.close()
 
-    except e:
+    except Exception as e:
       self.estado_creacion = Agencia.FINALIZADA_CON_ERRORES
       self.save()
       raise e

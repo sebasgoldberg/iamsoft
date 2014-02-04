@@ -34,6 +34,11 @@ class Command(BaseCommand):
         except AgenciaNotFound:
           continue
 
+        # @todo Modificar por:
+        # hacer pull de iamcast
+        # crear el archivo ambiente.py a partir de template y datos de la agencia.
+        # ejecutar ./install.sh
+
         agencia.crear_servicio()
 
       except Exception as e:

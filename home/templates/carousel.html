@@ -16,7 +16,9 @@
   <ol class="carousel-indicators">
     <li data-target="#{{id_carousel}}" data-slide-to="0" class="active"></li>
     <li data-target="#{{id_carousel}}" data-slide-to="1"></li>
+    {%comment%}
     <li data-target="#{{id_carousel}}" data-slide-to="2"></li>
+    {%endcomment%}
   </ol>
   <div class="carousel-inner">
     <div class="item active">
@@ -34,6 +36,8 @@
         
       </div>
     </div>
+
+    {%comment%}
     <div class="item">
       <div class="contenedor_imagen_carousel_sitio"><img src="{{STATIC_URL }}/iamcast/images/carousel/admin/seleccion_agenciados_perfil.jpg" alt=""></div>
       <div class="carousel-caption">
@@ -41,6 +45,8 @@
         <p>{% trans "IamCast es una aplicación WEB que tiene como objetivo satisfacer la necesidad de las agencias de casting de tener control sobre: el manejo de la información, los procesos de búsqueda de perfiles, la publicación de la información." %}</p>
       </div>
     </div>
+    {%endcomment%}
+
   </div>
   <a class="left carousel-control" href="#{{id_carousel}}" data-slide="prev">&lsaquo;</a>
   <a class="right carousel-control" href="#{{id_carousel}}" data-slide="next">&rsaquo;</a>
