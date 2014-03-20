@@ -44,7 +44,7 @@ class Command(BaseCommand):
           output=''
 
         logger = logging.getLogger(__name__)
-        logger.error('Excepción ocurrida al intentar crear agencia con id "%s": %s' % (agencia.id,e))
+        logger.error('Excepcion ocurrida al intentar crear agencia con id "%s": %s' % (agencia.id,e))
         logger.error('Salida registrada: %s'%output)
         logger.error('Detalle de la excepción: %s' % traceback.format_exc())
 

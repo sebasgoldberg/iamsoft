@@ -3,7 +3,12 @@ from decimal import Decimal
 from base_ambiente import BaseAmbiente
 import os
 
+site_id = 'iamsoft'
+
 class Ambiente(BaseAmbiente):
+
+  site_id = site_id
+
   default_user = u'user'
   crontabs_dir = u'/var/spool/cron/crontabs'
 
@@ -24,8 +29,11 @@ class Ambiente(BaseAmbiente):
     name='name'
     user='user'
     password='password'
+    class root:
+      password='Cerebrin01'
 
   project_directory = '%s/' % os.path.abspath('%s/..' % os.path.split(os.path.abspath(__file__))[0])
+  wsgi_dir = os.path.dirname(__file__)
   log_directory = '%slog' % project_directory
   log_filename = 'debug.log'
   log_file = '%s/%s' % (log_directory, log_filename)

@@ -1,17 +1,34 @@
 INSTALL
 -------
 
-1) Clone this repository.
-2) Go to the root folder of this repository on your harddrive.
-3) Copy the ./iamsoft/ambiente.default.py to ./iamsoft/ambiente.py and edit it to set your configuration.
-4) execute: $ sudo ./install.sh
-5) Create the SSL certificate (files iamsoft.pem and iamsoft.key) under /etc/apache2/ssl
-6) Create the apache2 configuration files for http and https
-7) Verify that the file /etc/apache2/ports.conf has the corresponding ports open.
-8) Restart apache2 service.
+- Clone this repository.
+- Add to the sudoers file the following lines for the user who is going to excute the instalations:
+<user> ALL = (ALL) NOPASSWD: /bin/chgrp
+<user> ALL = (ALL) NOPASSWD: /usr/sbin/a2ensite
+<user> ALL = (ALL) NOPASSWD: /usr/sbin/service
+<user> ALL = (ALL) NOPASSWD: /usr/bin/openssl
+<user> ALL = (ALL) NOPASSWD: /bin/mv
+
+
+- Add to the sudoers file the following lines for the user who is going to erase the agencies:
+<user> ALL = (ALL) NOPASSWD: /usr/sbin/a2dissite
+<user> ALL = (ALL) NOPASSWD: /usr/sbin/service
+<user> ALL = (ALL) NOPASSWD: /bin/sed
+
+- Go to the root folder of this repository on your harddrive.
+- Copy the ./iamsoft/ambiente.default.py to ./iamsoft/ambiente.py and edit it to set your configuration.
+- execute: $ sudo ./install.sh
+- Create the SSL certificate (files iamsoft.pem and iamsoft.key) under /etc/apache2/ssl
+- Create the apache2 configuration files for http and https
+- Verify that the file /etc/apache2/ports.conf has the corresponding ports open.
+- Restart apache2 service.
+
+CRON
+----
+- Agencies Creation: echo -e ./manage.py crear_agencias_pendientes
 
 CREATE ONE AGENCY
-1) Enter to iamsoft site.
-2) Create an account.
-3) Create an agency.
-4) execute: $ ./manage.py crear_agencias_pendientes
+- Enter to iamsoft site.
+- Create an account.
+- Create an agency.
+- execute: $ ./manage.py crear_agencias_pendientes

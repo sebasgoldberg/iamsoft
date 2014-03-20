@@ -72,6 +72,8 @@ class Agencia(models.Model):
   CREACION_EN_PROCESO='CP'
   FINALIZADA_CON_ERRORES='FR'
   FINALIZADA_CON_EXITO='FX'
+  BORRADO_INICIADO='BI'
+  BORRADO_EN_PROCESO='BE'
   BORRADA_CON_ERRORES='BR'
   BORRADA_CON_EXITO='BX'
   ESTADO_CREACION = (
@@ -79,6 +81,8 @@ class Agencia(models.Model):
     (CREACION_EN_PROCESO,ugettext(u'Creación en proceso')),
     (FINALIZADA_CON_ERRORES,ugettext(u'Finalizada con errores')),
     (FINALIZADA_CON_EXITO,ugettext(u'Finalizada con éxito')),
+    (BORRADO_INICIADO,ugettext(u'Borrado Iniciado')),
+    (BORRADO_EN_PROCESO,ugettext(u'Borrado en proceso')),
     (BORRADA_CON_ERRORES,ugettext(u'Borrada con errores')),
     (BORRADA_CON_EXITO,ugettext(u'Borrada con éxito')),
     )
@@ -181,10 +185,16 @@ class Agencia(models.Model):
     return self.slug
 
   def get_mail_user(self):
-    return self.get_user()
+    return settings.AMBIENTE.email.user
+
+  def get_mail_password(self):
+    return settings.AMBIENTE.email.password
 
   def get_mail_port(self):
     return settings.AMBIENTE.email.port
+
+  def get_zonomi_api_key(self):
+    return settings.AMBIENTE.zonomi.api_key
 
   def url_base_agencia(self):
     return u'http://%s:%s'%(self.dominio,settings.AMBIENTE.puerto_http)
@@ -412,9 +422,9 @@ class Agencia(models.Model):
     self.testDesactivar()
     self.doDesactivar()
 
-  def __callScript(self,args,shell=False):
+  def __callScript(self,args,shell=False,**kwargs):
     try:
-      return subprocess.check_output(args,shell=shell)
+      return subprocess.check_call(args,shell=shell,**kwargs)
     except subprocess.CalledProcessError as e:
       logger = logging.getLogger(__name__)
       logger.error(traceback.format_exc())
@@ -434,104 +444,27 @@ class Agencia(models.Model):
     self.save()
     password = User.objects.make_random_password()
 
-    """
-    array_llamada=[]
-
-    array_llamada = [
-      str(settings.AMBIENTE.script_crear_agencia),
-      str(self.id),
-      str('iamcast'),
-      str(self.usuario_gmail),
-      str(self.clave_gmail),
-      str(self.dominio),
-      str(settings.AMBIENTE.puerto_http),
-      str(settings.AMBIENTE.puerto_https),
-      str(settings.AMBIENTE.path_agencias),
-      str(self.user.username),
-      str(password),
-      str(settings.AMBIENTE.zonomi.api_key),
-      str(self.idioma),
-      ]
-    """
-
-    try:
-      #self.__callScript(array_llamada)
-
-      os.makedirs(self.get_ruta_instalacion())
-      os.chdir(self.get_ruta_instalacion())
-      self.__callScript(['git', 'init'])
-      self.__callScript(['git', 'pull', settings.AMBIENTE.iamcast.agencia_git_url])
-
-      import MySQLdb 
-
-      mysql_connection = MySQLdb.connect(
-        'localhost', 
-        settings.AMBIENTE.iamcast.mysql_user,
-        settings.AMBIENTE.iamcast.mysql_pass
-        )
-
-      cursor = mysql_connection.cursor()
-
-      cursor.execute("create database %s character set utf8"%self.get_db_name())
-      cursor.execute("create user '%s'@'localhost' identified by '%s'"%(self.get_db_user(),password))
-      cursor.execute("grant all on %s.* to %s"%(self.get_db_name(),self.get_db_user()))
-
-      self.__callScript("adduser %s" % self.get_user(), shell=True)
-
-      template = loader.get_template('iamcast/servicio/ambiente.py')
-      context = Context({ 'agencia':self, 'password':password })
-      ambiente_content = template.render(context)
-      ambiente_file = open(self.get_ambiente_file_path(),'w')
-      ambiente_file.write(ambiente_content)
-      ambiente_file.close()
-
-      self.__callScript([
-        'sed',
-        '-i',
-        "s#sys.path.append(.*)#sys.path.append('%s')#"%self.get_ruta_instalacion(),
-        self.get_wsgi_file_path(),
-        ])
-
-      os.makedirs('uploads/agenciados/fotos')
-      os.makedirs('uploads/cache/agenciados/fotos')
-      os.makedirs('uploads/agencias/logos')
-      self.__callScript([
-        'chmod', '777', '-R', 'uploads'
-        ])
-      os.makedirs('collectedstatic')
-
-      os.environ['DJANGO_SETTINGS_MODULE'] = "alternativa.settings"
-
-      #self.__callScript('echo -e "no\n" | %s syncdb'%self.get_manage_script(),shell=True)
-      self.__callScript([self.get_manage_script(), 'syncdb', '--noinput'])
-      self.__callScript([self.get_manage_script(), 'migrate'])
-      #self.__callScript('echo -e "yes\\n" | %s collectstatic'%self.get_manage_script(),shell=True)
-      self.__callScript([self.get_manage_script(), 'collectstatic','--noinput'])
-      self.__callScript([self.get_manage_script(), 'compilemessages'])
-      self.__callScript([self.get_manage_script(), 'loadperfil', '--idioma=%s'%self.idioma ])
-      self.__callScript([self.get_manage_script(), 'loadgroups'])
-
-      del os.environ['DJANGO_SETTINGS_MODULE']
-
-      db_name_ciudades = settings.AMBIENTE.iamcast.db_name_ciudades
-      cursor.execute("insert into %s.cities_light_country select * from %s.cities_light_country"%(self.get_db_name(),db_name_ciudades))
-      cursor.execute("insert into %s.cities_light_region select * from %s.cities_light_region"%(self.get_db_name(),db_name_ciudades))
-      cursor.execute("insert into %s.cities_light_city select * from %s.cities_light_city"%(self.get_db_name(),db_name_ciudades))
-
-      """
-      @todo Implementar lo que sigue
-      sudo "$INSTALL_SCRIPTS_DIR/install/create_apache_conf.sh" "$AGENCIA" "$DOMINIO" "$PUERTO_HTTP" "$PUERTO_HTTPS" "$WD_AGENCIA" "$INSTALL_SCRIPTS_DIR/templates"
-      sudo "$INSTALL_SCRIPTS_DIR/install/set_ddns.sh" "$DOMINIO" "cerebro" "$ZONOMI_API_KEY"
-      """
-
-      mysql_connection.close()
-
-    except e:
-      self.estado_creacion = Agencia.FINALIZADA_CON_ERRORES
-      self.save()
-      raise e
+    os.makedirs(self.get_ruta_instalacion())
+    os.chdir(self.get_ruta_instalacion())
+    self.__callScript(['git', 'init'])
+    self.__callScript(['git', 'pull', settings.AMBIENTE.iamcast.agencia_git_url])
 
     os.environ['DJANGO_SETTINGS_MODULE'] = "alternativa.settings"
+
+    template = loader.get_template('iamcast/servicio/ambiente.py')
+    context = Context({ 
+      'agencia':self,
+      'password':password,
+      'admins': settings.AMBIENTE.admins,
+      'root_password': settings.AMBIENTE.db.root.password,
+      })
+    ambiente_content = template.render(context)
+    ambiente_file = open(self.get_ambiente_file_path(),'w')
+    ambiente_file.write(ambiente_content)
+    ambiente_file.close()
+
+    self.__callScript(['./install.sh'])
+
     array_llamada=[
       self.get_manage_script(),
       'crear_super_usuario',
@@ -541,14 +474,9 @@ class Agencia(models.Model):
       '--email=%s'%self.user.email,
       '--password=%s'%self.user.password,
     ]
+    self.__callScript(array_llamada)
+
     del os.environ['DJANGO_SETTINGS_MODULE']
-    
-    try:
-      self.__callScript(array_llamada)
-    except subprocess.CalledProcessError as e:
-      self.estado_creacion = Agencia.FINALIZADA_CON_ERRORES
-      self.save()
-      raise e
 
     asunto = ugettext(u'La Creación de su Agencia Finalizó Exitosamente')
     template = loader.get_template('iamcast/mail/exito_creacion_agencia.html')
@@ -618,10 +546,7 @@ class Agencia(models.Model):
       error = True
 
     if modificar_estado:
-      if error:
-        self.estado_creacion = Agencia.BORRADA_CON_ERRORES
-      else:
-        self.estado_creacion = Agencia.BORRADA_CON_EXITO
+      self.estado_creacion = Agencia.BORRADA_CON_EXITO
       self.activa = False
       self.save()
 

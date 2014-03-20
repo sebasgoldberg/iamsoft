@@ -134,12 +134,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
+    #'grappelli.dashboard',
+    'grappelli',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'imagekit',
     'crispy_forms',
-    #'south', 
+    'captcha',
+    'south', 
     #'cities_light',
     #'smart_selects',
     # Aplicaciones de la agencia
@@ -233,3 +236,5 @@ LOCALE_PATHS=(ambiente.project_directory+'locale',)
 #CITIES_LIGHT_CITY_SOURCES = ['http://download.geonames.org/export/dump/cities5000.zip']
 
 DIAS_PRUEBA_IAMCAST=7
+
+ALLOWED_HOSTS = ['iamsoft.com.ar']

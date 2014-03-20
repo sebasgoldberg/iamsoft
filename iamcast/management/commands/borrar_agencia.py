@@ -28,18 +28,7 @@ class Command(BaseCommand):
       raise Exception(_(u'Debe pasar un id de agencia como parámetro'))
 
     try:
-      array_llamada=[
-        settings.AMBIENTE.script_borrar_agencia,
-        str(agencia.id),
-        'iamcast',
-        settings.AMBIENTE.path_agencias,
-        agencia.dominio,
-        settings.AMBIENTE.zonomi.api_key
-        ]
-      output=subprocess.check_output(array_llamada)
-      agencia.estado_creacion = Agencia.BORRADA_CON_EXITO
-      agencia.activa = False
-      agencia.save()
+      agencia.borrar_servicio()
 
       """
       if not suprimir_mail:
