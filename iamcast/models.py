@@ -25,7 +25,46 @@ DIAS_CONTRATO=settings.AMBIENTE.iamcast.dias_contrato
 MONEDA_TARIFA_DIARIA = Pago.PESO_ARGENTINO
 TARIFA_DIARIA = settings.AMBIENTE.iamcast.tarifa_diaria 
 
-# Create your models here.
+class Moneda(models.Model):
+
+  codigo = models.CharField(max_length=3, verbose_name=_(u'Código'))
+  simbolo = models.CharField(max_length=3, verbose_name=_(u'Símbolo'))
+
+  class Meta:
+    ordering = ['-codigo']
+    verbose_name = _(u"Moneda")
+    verbose_name_plural = _(u"Monedas")
+
+  def __unicode__(self):
+    return self.codigo
+
+  @staticmethod
+  def get_default():
+    return Moneda.objects.first()
+
+class Tarifa(models.Model):
+
+  moneda = models.ForeignKey(Moneda, null=False, blank=False)
+  importe_compra = models.DecimalField(max_digits=10,decimal_places=2, verbose_name=_(u'Importe de compra'))
+  importe_servicio = models.DecimalField(max_digits=10,decimal_places=2, verbose_name=_(u'Importe de servicio'))
+
+  class Meta:
+    ordering = ['-moneda__codigo']
+    verbose_name = _(u"Tarifa")
+    verbose_name_plural = _(u"Tarifas")
+
+  def __unicode__(self):
+    return _(u'Servicio %s %s - Compra %s %s') % (
+      self.importe_servicio,
+      self.moneda,
+      self.importe_compra,
+      self.moneda,
+      )
+
+  @staticmethod
+  def get_vigente(moneda):
+    return Tarifa.objects.filter(moneda=moneda).first()
+
 class Contrato(models.Model):
   titulo = models.CharField(max_length=200, verbose_name=_(u'Titulo del contrato'))
   fecha_inicio = models.DateTimeField(verbose_name=_(u'Fecha inicio'), null=False, blank=False)
@@ -65,7 +104,7 @@ class Contrato(models.Model):
 
 class Agencia(models.Model):
   user = models.ForeignKey(User, null=False, blank=True, editable=False)
-  nombre = models.CharField(max_length=60, verbose_name=_(u'Nombre'), unique=True, help_text=_('Nombre de su agencia'))
+  nombre = models.CharField(max_length=60, verbose_name=_(u'Nombre agencia'), unique=True)
   slug = models.CharField(max_length=60, verbose_name=_(u'Slug'), unique=True)
   dominio = models.CharField(max_length=100, unique=True, verbose_name=_(u'Dominio'), null=False, blank=True, help_text=_(u'Si no utilizará su propio dominio DEJELO VACIO. Tenga en cuenta que si coloca algún valor aqui, habrá que solicitar a la entidad registrante de su dominio que apunte a nuestros servidores DNS. Por otro lado en caso de usar su propio dominio, se deberá contratratar un certificado de seguridad con alguna entidad reconocida de forma que su sitio se vea seguro para los usuarios que lo utilizan.'))
   CREACION_INICIADA='CI'
@@ -90,8 +129,6 @@ class Agencia(models.Model):
   estado_creacion = models.CharField(max_length=2,default=CREACION_INICIADA, verbose_name=(u'Estado creación'), choices=ESTADO_CREACION)
   activa = models.BooleanField(default=True, verbose_name=(u'Activa'))
   fecha_inicio = models.DateTimeField(verbose_name=_(u'Fecha inicio'), null=False, blank=False, default=datetime.now())
-  idioma = models.CharField(max_length=10, verbose_name=(u'Idioma preferido'), choices=settings.LANGUAGES, null=True, blank=False)
-  #fecha_vencimiento = models.DateTimeField(verbose_name=_(u'Fecha vencimiento'), null=False, blank=False, default=datetime.now()+timedelta(days=settings.DIAS_PRUEBA_IAMCAST))
 
   class Meta:
     ordering = ['-id']

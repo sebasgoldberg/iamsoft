@@ -13,12 +13,20 @@ from iampacks.cross.correo.mail import Mail
 from iamcast.models import Agencia
 from django.utils.translation import ugettext as _
 from iamcast.forms import AgenciaForm, BorrarAgenciaForm
-from iamcast.models import PagoContrato
+from iamcast.models import PagoContrato, Moneda, Tarifa
 from datetime import datetime
-
 
 def index(request):
   return render(request,'iamcast/index.html')
+
+def tarifas(request,id_moneda=None):
+  try:
+    moneda=Moneda.objects.get(pk=id_moneda)
+  except Moneda.DoesNotExist:
+    moneda=Moneda.get_default()
+  monedas=Moneda.objects.all()
+  tarifa=Tarifa.get_vigente(moneda=moneda)
+  return render(request, 'iamcast/tarifas.html', {'monedas':monedas, 'tarifa':tarifa})
 
 def crear_agencia(form, request):
   """

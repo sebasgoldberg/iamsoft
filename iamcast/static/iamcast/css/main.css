@@ -1,0 +1,16 @@
+ul.ventajas{
+  list-style-image: url('/static/iamcast/images/base/OK.svg');
+  font-size: large;
+}
+
+ul.ventajas li{
+  padding-top: 0.5em;
+}
+
+.titulo_tarifa{
+  text-align: center;
+}
+
+.importe_tarifa{
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from iamcast.models import Agencia, ContratoAgencia, PagoContrato
+from iamcast.models import Agencia, ContratoAgencia, PagoContrato, Moneda, Tarifa
 from iampacks.cross.mercadopago.admin import PagoAdmin
 
 class AgenciaAdmin(admin.ModelAdmin):
@@ -12,4 +12,6 @@ class AgenciaAdmin(admin.ModelAdmin):
 admin.site.register(Agencia,AgenciaAdmin)
 admin.site.register(ContratoAgencia)
 admin.site.register(PagoContrato,PagoAdmin)
+admin.site.register(Moneda)
+admin.site.register(Tarifa)
 

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{%block extraassets%}
+  <link href="{{ STATIC_URL }}iamcast/css/main.css" rel="stylesheet" media="screen">
+{%endblock%}
+
+{%block home_active%}active{%endblock%}
+
+{% block content %}
+
+  <div class='row'>
+    <div class='span12 page-header'>
+      <h1 class='text-center'>IamCast <small>Tarifas</small></h1>
+    </div>
+  </div>
+
+  <div class='row'>
+
+    <div class="navbar span6 offset3">
+      <div class="navbar-inner">
+        <a class="brand" href="#">{% trans "Monedas Posibles" %}</a>
+        <ul class="nav">
+          {%for moneda in monedas%}
+            <li {%if tarifa.moneda = moneda %}class="active"{%endif%}>
+              <a href="/iamcast/tarifas/{{moneda.id}}/">{{moneda.codigo}}</a>
+            </li>
+          {%endfor%}
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class='row'>
+
+    <div class="span4 offset1" >
+      
+      <div class='text-center'><a class='btn btn-primary btn-block' href='/iamcast/configurar/'><h2 class='text-center'>{% trans "Probar Servicio" %}</h2></a></div>
+      <div class='well'>
+        <h1 class='text-center alert alert-info'>{{tarifa.moneda.simbolo}}{{tarifa.importe_servicio}}</h1>
+        <ul class='ventajas'>
+          {% include 'iamcast/items_servicio.html'%}
+          <li>{% trans "Servidor en el que se ejecutará el aplicativo." %}</li>
+          <li>{% trans "Certificado de seguridad." %}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="span4 offset1">
+      <div class='text-center'>
+        <a class='btn btn-success btn-block' href='mailto:sebas.goldberg@gmail.com'><h2 class='text-center'>{% trans "Solicitar Compra" %}</h2></a>
+      </div>
+      <div class='well'>
+        <h1 class='text-center alert alert-success'>{{tarifa.moneda.simbolo}}{{tarifa.importe_compra}}</h1>
+        <ul class='ventajas'>
+          {% include 'iamcast/items_servicio.html'%}
+          <li>{% trans "Posibilidad de ejecutarlo en su propio servidor." %}</li>
+          <li>{% trans "Sin tarifas mensuales." %}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}

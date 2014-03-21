@@ -5,6 +5,13 @@
 
 {% block content %}
 
+  <div class='row'>
+    <div class='span12 page-header'>
+      <h1 class='text-center'>IamSoft <small>Servicios</small></h1>
+    </div>
+  </div>
+
+  <div class="row well">
   <h2 id="consultoria_tecnica_sap">{% trans "Consultoría técnica SAP (ABAP)" %}</h2>
   <p>{% trans "Nuestra experiencia en consultoría técnica SAP certificada es amplia." %}</p>
 <p>{% trans "Hemos participado en una amplia cantidad de proyectos, en todos ellos aplicando metodologías de desarrollo que aseguren la alta calidad de los entregables." %}</p>
@@ -22,7 +29,9 @@
   <li>{% trans "Módulos particulares: FI, SD, MM, HCM" %}</li>
   <li>{% trans "Soluciones: ERP, CRM, Retail, Banking" %}</li>
 </ul>
+</div>
 
+<div class="row well">
 <h2 id="desarrollo_web">{% trans "Desarrollo de aplicaciones WEB (Linux/MySQL/Python/Django)" %}</h2>
 <p>{% trans "El desarrollo de aplicaciones WEB es un area que se encuentra en crecimiento dentro de nuestra empresa." %}</p>
 <p>{% trans "Brindamos consultoría en el desarrollo de aplicaciones web basadas en software libre." %}</p>
@@ -35,4 +44,5 @@
 <p>{% trans "Todas las herramientas/tecnologías mencionadas, son de código abierto lo que implica libertad. Libertad de uso y de modificación" %}</p>
 <p>{% trans "Esto nos permite no depender de grandes corporaciones, lo que hace que no tengamos que lidiar con los altos costos, problemas legales y burocracia. Somos libres. Y así podemos ofrecer libertad a nuestros clientes." %}</p>
 <p>{% trans "A partir de estas herramientas/tecnologías las fronteras son solo la imaginación nuestra y de nuestros clientes." %}</p>
+</div>
 {% endblock %}
