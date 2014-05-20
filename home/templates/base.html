@@ -76,9 +76,7 @@
                 <li><a href="/iamcast/configurar/">{% trans "Probar" %}</a></li>
               </ul>
             </li>
-            {%comment%}
             <li class='{%block contacto_active%}{%endblock%}'><a href="/contacto/"><span><i class='icon-envelope icon-white'></i> {% trans "Contacto" %}</span></a> </li>
-            {%endcomment%}
 
 
 
@@ -89,7 +87,9 @@
           <ul class="nav">
             {%block menu_usuario%}
               {% include 'usuario/dropdown_menu.html' with link_cuenta_usuario='/cuenta/usuario/' %}
+              {%comment%}
               {% include 'idioma/language_menu.html' %}
+              {%endcomment%}
             {%endblock%}
           </ul>
           </div>
