@@ -39,14 +39,6 @@ class Ambiente(BaseAmbiente):
   log_file = '%s/%s' % (log_directory, log_filename)
 
   class email:
-    
-    """
-    use_tls = True
-    host = 'host'
-    user = 'user'
-    password = 'password'
-    port = 587
-    """
 
     use_tls = True
     host = 'host'
@@ -55,8 +47,6 @@ class Ambiente(BaseAmbiente):
     port = 587
 
   class mercado_pago:
-    #client_id='1495799923023357'
-    #client_secret='Jxlm7QqG3y7fUtnfwsPcwTAzxCtzhBUI'
     client_id = 'client_id'
     client_secret = 'client_secret'
     password = 'password'

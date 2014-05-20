@@ -4,7 +4,7 @@ tags
 *.swo
 *.pyc
 agencia-ssl
-ambiente.py
+iamsoft/ambiente.py
 .coverage
 collectedstatic/
 django.mo
