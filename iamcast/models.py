@@ -21,9 +21,8 @@ from iampacks.cross.zonomi.models import Zonomi
 import logging
 
 GMAIL_SIGNUP_URL=u'https://accounts.google.com/SignUp'
-DIAS_CONTRATO=settings.AMBIENTE.iamcast.dias_contrato
+DIAS_CONTRATO=30
 MONEDA_TARIFA_DIARIA = Pago.PESO_ARGENTINO
-TARIFA_DIARIA = settings.AMBIENTE.iamcast.tarifa_diaria 
 
 class Moneda(models.Model):
 
@@ -40,7 +39,7 @@ class Moneda(models.Model):
 
   @staticmethod
   def get_default():
-    return Moneda.objects.first()
+    return Moneda.objects.filter(codigo=Pago.PESO_ARGENTINO)
 
 class Tarifa(models.Model):
 
@@ -61,9 +60,16 @@ class Tarifa(models.Model):
       self.moneda,
       )
 
+  def get_tarifa_diaria_servicio(self):
+    return self.importe_servicio / DIAS_CONTRATO
+
   @staticmethod
   def get_vigente(moneda):
     return Tarifa.objects.filter(moneda=moneda).first()
+
+  @staticmethod
+  def get_default():
+    return Tarifa.get_vigente(Moneda.get_default())
 
 class Contrato(models.Model):
   titulo = models.CharField(max_length=200, verbose_name=_(u'Titulo del contrato'))
@@ -305,7 +311,7 @@ class Agencia(models.Model):
       item_title=titulo_pago,
       item_quantity=DIAS_CONTRATO,
       item_currency_id=MONEDA_TARIFA_DIARIA,
-      item_unit_price=TARIFA_DIARIA
+      item_unit_price=Tarifa.get_default().get_tarifa_diaria_servicio()
     )
 
     pago.save()

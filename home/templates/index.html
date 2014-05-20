@@ -1,27 +1,39 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{%block extraassets%}
+  <style>
+    .cabecera{
+      background: linear-gradient(45deg, #020031 0%,#6d3353 100%);
+      background-image: linear-gradient(45deg, rgb(2, 0, 49) 0%, rgb(109, 51, 83) 100%);
+      background-position-x: initial;
+      background-position-y: initial;
+      background-size: initial;
+      background-repeat-x: initial;
+      background-repeat-y: initial;
+      background-attachment: initial;
+      background-origin: initial;
+      background-clip: initial;
+      background-color: initial;
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 );
+      color:white;
+    }
+    body {
+      padding-top: 35px;
+    }
+  </style>
+{%endblock%}
+
 {%block home_active%}active{%endblock%}
 
-{% block content %}
-
-  <div class="row">
-
-    <div class="span4">
-      {% block hero %}
-        <div class="hero-unit">
-
-            <h2>IamSoft, calidad en desarrollo de software</h2>
-            <p>Usted tiene una idea, pero no sabe como implementarla... nosotros sabemos, y lo hacemos bien.</p>
-
-        </div>
-      {% endblock %}
-    </div>
-
-    <div class="span8" >
-      {%include "carousel.html"%}
-    </div>
+{%block cabecera%}
+  <div class="hero-unit text-center cabecera">
+    <h2>IamSoft, calidad en desarrollo de software</h2>
+    <p>Usted tiene una idea, pero no sabe como implementarla... nosotros sabemos, y lo hacemos bien.</p>
   </div>
+{%endblock%}
+
+{% block content %}
 
   <div class='row'>
 

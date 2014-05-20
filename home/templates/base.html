@@ -17,7 +17,17 @@
     <style type="text/css">
       body {
         padding-top: 60px;
-        padding-bottom: 40px;
+        margin-bottom: 0px;
+      }
+
+      .pie{
+        background-color: black;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .pie div ul{
+        list-style-type: none;
       }
     </style>
     <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
@@ -91,6 +101,9 @@
 
   {%comment%}{% include 'idioma/language_form.html' %}{%endcomment%}
 
+  {%block cabecera%}
+  {%endblock%}
+
   <div class='container'>
 
       {% if messages %}
@@ -104,17 +117,12 @@
 
   </div>
 
-  <hr>
+{% include 'idioma/language_form.html' %}
 
   {% block footer %}
-    <div id="footer">
-      <div class="container">
-        <p class="muted credit">IamCast - contacto.iamsoft@gmail.com - +54 9 (11) 5057-3209</p>
-      </div>
-    </div>
+    {%include 'iamsoft/footer.html'%}
   {% endblock %}
 
-{% include 'idioma/language_form.html' %}
 
 </body>
 </html>
